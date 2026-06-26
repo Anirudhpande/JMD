@@ -675,7 +675,7 @@ export default function Admin({ user, onLogout }) {
                           </div>
 
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                            <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Upload Product Image</label>
+                            <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Upload Primary Image</label>
                             <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                               <input 
                                 type="file" 
@@ -695,21 +695,137 @@ export default function Admin({ user, onLogout }) {
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                          <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Product Image URL (Optional Bypass)</label>
+                          <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Primary Image URL (Bypass)</label>
                           <input 
                             type="text" 
-                            value={editingProduct ? editingProduct.images[0] : newProductData.images[0]}
+                            value={editingProduct ? (editingProduct.images[0] || '') : (newProductData.images[0] || '')}
                             onChange={(e) => {
                               const val = e.target.value;
                               if (editingProduct) {
-                                setEditingProduct(prev => ({ ...prev, images: [val] }));
+                                setEditingProduct(prev => ({ ...prev, images: [val, ...prev.images.slice(1)] }));
                               } else {
-                                setNewProductData(prev => ({ ...prev, images: [val] }));
+                                setNewProductData(prev => ({ ...prev, images: [val, ...prev.images.slice(1)] }));
                               }
                             }}
                             placeholder="https://..."
                             style={{ padding: '0.85rem 1rem', border: '1px solid var(--color-border-light)', backgroundColor: '#FFFFFF', fontSize: '0.9rem' }} 
                           />
+                        </div>
+
+                        {/* PRODUCT GALLERY MANAGER */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', borderTop: '1px solid var(--color-border-light)', paddingTop: '1.5rem', marginTop: '0.5rem' }}>
+                          <label style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-accent)' }}>Product Gallery / Additional Images</label>
+                          
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                            {(editingProduct ? editingProduct.images : newProductData.images).map((img, idx) => {
+                              if (!img) return null;
+                              return (
+                                <div key={idx} style={{ position: 'relative', border: '1px solid var(--color-border-light)', padding: '0.5rem', backgroundColor: '#FFFFFF', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                  <img src={img} alt={`Gallery ${idx + 1}`} style={{ width: '80px', height: '80px', objectFit: 'cover', marginBottom: '0.5rem' }} />
+                                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted-on-light)', fontWeight: 600 }}>{idx === 0 ? 'Primary' : `Image ${idx + 1}`}</span>
+                                  {idx > 0 && (
+                                    <button 
+                                      type="button" 
+                                      onClick={() => {
+                                        const currentImages = editingProduct ? [...editingProduct.images] : [...newProductData.images];
+                                        currentImages.splice(idx, 1);
+                                        if (editingProduct) {
+                                          setEditingProduct(prev => ({ ...prev, images: currentImages }));
+                                        } else {
+                                          setNewProductData(prev => ({ ...prev, images: currentImages }));
+                                        }
+                                      }}
+                                      style={{ position: 'absolute', top: '0.25rem', right: '0.25rem', backgroundColor: 'var(--color-danger)', color: '#FFFFFF', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '18px', height: '18px', fontSize: '0.65rem' }}
+                                      title="Remove Image"
+                                    >
+                                      &times;
+                                    </button>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+
+                          <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flexGrow: 1 }}>
+                              <label style={{ fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Add Image URL to Gallery</label>
+                              <input 
+                                type="text" 
+                                id="new-gallery-image-url"
+                                placeholder="https://..."
+                                style={{ padding: '0.85rem 1rem', border: '1px solid var(--color-border-light)', backgroundColor: '#FFFFFF', fontSize: '0.9rem' }} 
+                              />
+                            </div>
+                            <button 
+                              type="button"
+                              onClick={() => {
+                                const input = document.getElementById('new-gallery-image-url');
+                                const url = input.value.trim();
+                                if (!url) return;
+                                const currentImages = editingProduct ? [...editingProduct.images] : [...newProductData.images];
+                                currentImages.push(url);
+                                if (editingProduct) {
+                                  setEditingProduct(prev => ({ ...prev, images: currentImages }));
+                                } else {
+                                  setNewProductData(prev => ({ ...prev, images: currentImages }));
+                                }
+                                input.value = '';
+                              }}
+                              className="btn btn-secondary"
+                              style={{ height: '48px', padding: '0 1.5rem', fontSize: '0.75rem' }}
+                            >
+                              Add URL
+                            </button>
+                          </div>
+
+                          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              onChange={async (e) => {
+                                const file = e.target.files[0];
+                                if (!file) return;
+                                try {
+                                  const { supabase } = await import('../supabase.js');
+                                  let imageUrl = '';
+                                  if (supabase) {
+                                    const fileExt = file.name.split('.').pop();
+                                    const fileName = `${Date.now()}.${fileExt}`;
+                                    const filePath = `products/${fileName}`;
+
+                                    const { error } = await supabase.storage
+                                      .from('stone-images')
+                                      .upload(filePath, file);
+
+                                    if (error) {
+                                      alert('Upload failed: ' + error.message);
+                                      return;
+                                    }
+                                    const { data: { publicUrl } } = supabase.storage
+                                      .from('stone-images')
+                                      .getPublicUrl(filePath);
+                                    imageUrl = publicUrl;
+                                  } else {
+                                    imageUrl = `https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/${file.name}`;
+                                  }
+                                  const currentImages = editingProduct ? [...editingProduct.images] : [...newProductData.images];
+                                  currentImages.push(imageUrl);
+                                  if (editingProduct) {
+                                    setEditingProduct(prev => ({ ...prev, images: currentImages }));
+                                  } else {
+                                    setNewProductData(prev => ({ ...prev, images: currentImages }));
+                                  }
+                                } catch (err) {
+                                  console.error('Upload failed:', err);
+                                }
+                              }} 
+                              style={{ display: 'none' }} 
+                              id="admin-gallery-file-upload" 
+                            />
+                            <label htmlFor="admin-gallery-file-upload" className="btn btn-secondary" style={{ display: 'inline-flex', gap: '0.5rem', height: '48px', padding: '0 1.5rem', cursor: 'pointer', alignItems: 'center', fontSize: '0.75rem' }}>
+                              <Upload size={14} /> Upload & Add to Gallery
+                            </label>
+                          </div>
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
