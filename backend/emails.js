@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import https from 'https';
 
 dotenv.config();
 
@@ -15,7 +16,88 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const isEmailConfigured = !!(process.env.SMTP_HOST && process.env.SMTP_USER);
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const isEmailConfigured = !!(RESEND_API_KEY || (process.env.SMTP_HOST && process.env.SMTP_USER));
+
+// Helper function to make HTTP POST requests with JSON payload using Node's built-in https module
+function postJson(url, headers, body) {
+  return new Promise((resolve, reject) => {
+    const parsedUrl = new URL(url);
+    const options = {
+      hostname: parsedUrl.hostname,
+      path: parsedUrl.pathname,
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let responseBody = '';
+      res.on('data', (chunk) => {
+        responseBody += chunk;
+      });
+      res.on('end', () => {
+        let parsed;
+        try {
+          parsed = JSON.parse(responseBody);
+        } catch (e) {
+          parsed = { message: responseBody };
+        }
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve({ ok: true, status: res.statusCode, body: parsed });
+        } else {
+          resolve({ ok: false, status: res.statusCode, body: parsed });
+        }
+      });
+    });
+
+    req.on('error', (err) => {
+      reject(err);
+    });
+
+    req.write(JSON.stringify(body));
+    req.end();
+  });
+}
+
+// Unified sendMail function that routes through Resend API (HTTP) if available, falling back to SMTP
+async function sendMail({ from, to, subject, html }) {
+  if (RESEND_API_KEY) {
+    let sender = from;
+    if (process.env.RESEND_FROM) {
+      sender = process.env.RESEND_FROM;
+    } else if (!process.env.SMTP_FROM || process.env.SMTP_FROM.includes('gmail.com')) {
+      sender = 'JMD Global Stones <onboarding@resend.dev>';
+    }
+
+    const res = await postJson('https://api.resend.com/emails', {
+      'Authorization': `Bearer ${RESEND_API_KEY}`
+    }, {
+      from: sender,
+      to,
+      subject,
+      html
+    });
+
+    if (!res.ok) {
+      throw new Error(res.body?.message || `Resend API failed with status ${res.status}`);
+    }
+    return res.body;
+  } else if (process.env.SMTP_HOST && process.env.SMTP_USER) {
+    return transporter.sendMail({
+      from,
+      to,
+      subject,
+      html
+    });
+  } else {
+    console.log(`[MOCK EMAIL] To: ${to} | Subject: ${subject}`);
+    return { mock: true };
+  }
+}
+
 
 const BRAND_HEADER = `
   <div style="background-color: #111111; color: #F5F0E8; padding: 2.5rem; text-align: center; border-bottom: 2px solid #C9A96E;">
@@ -130,15 +212,13 @@ export const emails = {
       html: htmlContent
     };
 
-    if (isEmailConfigured) {
-      try {
-        await transporter.sendMail(mailOptions);
+    try {
+      await sendMail(mailOptions);
+      if (isEmailConfigured) {
         console.log(`Tax Invoice email sent to ${order.customer_details.email} for order #${order.id}`);
-      } catch (err) {
-        console.error(`Failed to send confirmation email to customer:`, err);
       }
-    } else {
-      console.log(`[MOCK EMAIL] Tax Invoice for Order #${order.id} sent to ${order.customer_details.email}`);
+    } catch (err) {
+      console.error(`Failed to send confirmation email to customer:`, err);
     }
   },
 
@@ -169,14 +249,10 @@ export const emails = {
       html: htmlContent
     };
 
-    if (isEmailConfigured) {
-      try {
-        await transporter.sendMail(mailOptions);
-      } catch (err) {
-        console.error('Failed to send admin order alert email:', err);
-      }
-    } else {
-      console.log(`[MOCK EMAIL] Admin Alert: New Order #${order.id} Placed.`);
+    try {
+      await sendMail(mailOptions);
+    } catch (err) {
+      console.error('Failed to send admin order alert email:', err);
     }
   },
 
@@ -225,15 +301,13 @@ export const emails = {
       html: htmlContent
     };
 
-    if (isEmailConfigured) {
-      try {
-        await transporter.sendMail(mailOptions);
+    try {
+      await sendMail(mailOptions);
+      if (isEmailConfigured) {
         console.log(`Shipping notification email sent to ${order.customer_details.email} for order #${order.id}`);
-      } catch (err) {
-        console.error(`Failed to send shipping email to customer:`, err);
       }
-    } else {
-      console.log(`[MOCK EMAIL] Shipping notification for Order #${order.id} sent to ${order.customer_details.email}`);
+    } catch (err) {
+      console.error(`Failed to send shipping email to customer:`, err);
     }
   },
 
@@ -266,15 +340,13 @@ export const emails = {
       html: htmlContent
     };
 
-    if (isEmailConfigured) {
-      try {
-        await transporter.sendMail(mailOptions);
+    try {
+      await sendMail(mailOptions);
+      if (isEmailConfigured) {
         console.log(`Low stock alert email sent to admin for product: ${product.name}`);
-      } catch (err) {
-        console.error('Failed to send low stock warning:', err);
       }
-    } else {
-      console.log(`[MOCK EMAIL] Low Stock Alert: ${product.name} is down to ${product.stock} units.`);
+    } catch (err) {
+      console.error('Failed to send low stock warning:', err);
     }
   }
 };
