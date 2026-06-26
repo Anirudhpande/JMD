@@ -795,7 +795,15 @@ export const db = {
       const res = await pool.query('SELECT * FROM site_settings');
       const settings = {};
       res.rows.forEach(row => {
-        settings[row.key] = typeof row.value === 'string' ? JSON.parse(row.value) : row.value;
+        let val = row.value;
+        if (typeof val === 'string') {
+          try {
+            val = JSON.parse(val);
+          } catch (e) {
+            // Keep as plain string if it fails to parse as JSON
+          }
+        }
+        settings[row.key] = val;
       });
       return settings;
     }
