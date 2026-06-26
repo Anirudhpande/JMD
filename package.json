@@ -1,0 +1,14 @@
+{
+  "name": "jmd-global-stones-monorepo",
+  "version": "1.0.0",
+  "description": "E-commerce platform for JMD Global Stones",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm install && npm install --prefix frontend && npm install --prefix backend",
+    "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\"",
+    "start": "concurrently \"npm run build --prefix frontend && npm run preview --prefix frontend\" \"npm run start --prefix backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

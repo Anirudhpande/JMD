@@ -1,0 +1,48 @@
+{
+  "products": [],
+  "orders": [],
+  "reviews": [],
+  "users": [],
+  "shipping_zones": [
+    {
+      "id": 1,
+      "zone_name": "UK Zone 1",
+      "rate": 68
+    },
+    {
+      "id": 2,
+      "zone_name": "UK Zone 2",
+      "rate": 68
+    },
+    {
+      "id": 3,
+      "zone_name": "UK Zone 3",
+      "rate": 68
+    },
+    {
+      "id": 4,
+      "zone_name": "UK Zone 4",
+      "rate": 68
+    },
+    {
+      "id": 5,
+      "zone_name": "UK Zone 5",
+      "rate": 68
+    },
+    {
+      "id": 6,
+      "zone_name": "UK Zone 6",
+      "rate": 68
+    },
+    {
+      "id": 7,
+      "zone_name": "UK Zone 7",
+      "rate": 68
+    },
+    {
+      "id": 8,
+      "zone_name": "UK Zone 8",
+      "rate": 68
+    }
+  ]
+}
