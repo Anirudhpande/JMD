@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, User, Phone, LogIn } from 'lucide-react';
+import { apiFetch } from '../api.js';
 
 export default function Auth({ onLogin }) {
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function Auth({ onLogin }) {
     e.preventDefault();
     setError('');
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await apiFetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -74,7 +75,7 @@ export default function Auth({ onLogin }) {
     setError('');
     setSuccess('');
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await apiFetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, name, phone, role: 'customer' })

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Star, Truck, AlertTriangle, ChevronDown, ChevronUp, CheckCircle, Package, Layers, Info } from 'lucide-react';
+import { apiFetch } from '../api.js';
 
 export default function ProductDetail({ addToCart }) {
   const { slug } = useParams();
@@ -29,7 +30,7 @@ export default function ProductDetail({ addToCart }) {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/products/${slug}`)
+    apiFetch(`/api/products/${slug}`)
       .then(res => res.json())
       .then(data => {
         setProduct(data);
@@ -39,7 +40,7 @@ export default function ProductDetail({ addToCart }) {
         
         // Fetch group variants if variant_group_id exists
         if (data.variant_group_id) {
-          fetch(`/api/variant-groups/${data.variant_group_id}`)
+          apiFetch(`/api/variant-groups/${data.variant_group_id}`)
             .then(res => res.json())
             .then(variants => {
               setGroupVariants(variants);
@@ -50,7 +51,7 @@ export default function ProductDetail({ addToCart }) {
         }
 
         // Fetch related products (same category, different slug)
-        fetch('/api/products')
+        apiFetch('/api/products')
           .then(res => res.json())
           .then(allProducts => {
             const related = allProducts.filter(

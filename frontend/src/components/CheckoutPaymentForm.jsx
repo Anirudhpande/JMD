@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Check, ShieldCheck, AlertCircle } from 'lucide-react';
+import { apiFetch } from '../api.js';
 
 export default function CheckoutPaymentForm({
   subtotal,
@@ -37,7 +38,7 @@ export default function CheckoutPaymentForm({
 
     try {
       // 1. Create order on backend (returns order ID)
-      const orderRes = await fetch('/api/orders', {
+      const orderRes = await apiFetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
@@ -60,7 +61,7 @@ export default function CheckoutPaymentForm({
 
       // Stripe Credit Card path
       // 2. Call backend to create PaymentIntent client secret
-      const intentRes = await fetch('/api/payments/create-intent', {
+      const intentRes = await apiFetch('/api/payments/create-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: total * 100, orderId })
@@ -80,7 +81,7 @@ export default function CheckoutPaymentForm({
         await new Promise((resolve) => setTimeout(resolve, 2000));
         
         // Trigger backend webhook simulator
-        const webhookRes = await fetch('/api/webhooks/stripe', {
+        const webhookRes = await apiFetch('/api/webhooks/stripe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

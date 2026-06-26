@@ -19,6 +19,7 @@ import {
   ToggleLeft,
   ToggleRight
 } from 'lucide-react';
+import { apiFetch } from '../api.js';
 
 // TipTap Rich Text Editor Sub-component
 function TipTapEditor({ value, onChange }) {
@@ -118,11 +119,11 @@ export default function Admin({ user, onLogout }) {
     setLoading(true);
     try {
       const [prodsRes, ordsRes, revsRes, zonesRes, settingsRes] = await Promise.all([
-        fetch('/api/products'),
-        fetch('/api/orders'),
-        fetch('/api/reviews'),
-        fetch('/api/shipping-zones'),
-        fetch('/api/site-settings')
+        apiFetch('/api/products'),
+        apiFetch('/api/orders'),
+        apiFetch('/api/reviews'),
+        apiFetch('/api/shipping-zones'),
+        apiFetch('/api/site-settings')
       ]);
       
       const prods = await prodsRes.json();
@@ -176,7 +177,7 @@ export default function Admin({ user, onLogout }) {
 
   const handleOrderStatusUpdate = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`/api/orders/${orderId}`, {
+      const response = await apiFetch(`/api/orders/${orderId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -191,7 +192,7 @@ export default function Admin({ user, onLogout }) {
 
   const handleApproveReview = async (reviewId) => {
     try {
-      const response = await fetch(`/api/reviews/${reviewId}/approve`, { method: 'PUT' });
+      const response = await apiFetch(`/api/reviews/${reviewId}/approve`, { method: 'PUT' });
       if (response.ok) {
         setReviews(prev => prev.map(r => r.id === reviewId ? { ...r, is_approved: true } : r));
       }
@@ -203,7 +204,7 @@ export default function Admin({ user, onLogout }) {
   const handleDeleteReview = async (reviewId) => {
     if (!confirm('Are you sure you want to delete this review?')) return;
     try {
-      const response = await fetch(`/api/reviews/${reviewId}`, { method: 'DELETE' });
+      const response = await apiFetch(`/api/reviews/${reviewId}`, { method: 'DELETE' });
       if (response.ok) {
         setReviews(prev => prev.filter(r => r.id !== reviewId));
       }
@@ -262,7 +263,7 @@ export default function Admin({ user, onLogout }) {
     const payload = isEdit ? editingProduct : newProductData;
 
     try {
-      const response = await fetch(url, {
+      const response = await apiFetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -295,7 +296,7 @@ export default function Admin({ user, onLogout }) {
   const handleDeleteProduct = async (prodId) => {
     if (!confirm('Delete this product permanently?')) return;
     try {
-      const response = await fetch(`/api/products/${prodId}`, { method: 'DELETE' });
+      const response = await apiFetch(`/api/products/${prodId}`, { method: 'DELETE' });
       if (response.ok) {
         setProducts(prev => prev.filter(p => p.id !== prodId));
       }
@@ -306,7 +307,7 @@ export default function Admin({ user, onLogout }) {
 
   const handleSaveZoneRate = async (zoneId, newRate) => {
     try {
-      const response = await fetch(`/api/shipping-zones/${zoneId}`, {
+      const response = await apiFetch(`/api/shipping-zones/${zoneId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rate: newRate })
@@ -322,7 +323,7 @@ export default function Admin({ user, onLogout }) {
 
   const handleSaveSiteSetting = async (key, value) => {
     try {
-      const response = await fetch(`/api/site-settings/${key}`, {
+      const response = await apiFetch(`/api/site-settings/${key}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ value })

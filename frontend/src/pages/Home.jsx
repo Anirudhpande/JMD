@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Truck, ShieldCheck, CheckSquare, MessageSquare, ArrowRight, Star } from 'lucide-react';
+import { apiFetch } from '../api.js';
 
 const categories = [
   { name: 'Sandstone', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png', slug: 'sandstone' },
@@ -49,11 +50,11 @@ export default function Home({ addToCart }) {
     document.querySelector('meta[name="description"]')?.setAttribute("content", "Buy premium sandstone and porcelain paving slabs in the UK. Raj Green, Kandla Grey and porcelain patio slabs with direct-import pricing and UK delivery.");
     
     Promise.all([
-      fetch('/api/products').then(res => {
+      apiFetch('/api/products').then(res => {
         if (!res.ok) throw new Error('Failed to load products');
         return res.json();
       }),
-      fetch('/api/site-settings').then(res => {
+      apiFetch('/api/site-settings').then(res => {
         if (!res.ok) throw new Error('Failed to load settings');
         return res.json();
       })

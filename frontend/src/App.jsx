@@ -4,6 +4,7 @@ import { ShoppingBag, User, X, Phone, Mail, MapPin, Menu, LogOut, MessageSquare 
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { supabase } from './supabase.js';
+import { apiFetch } from './api.js';
 
 // Import Pages
 import Home from './pages/Home.jsx';
@@ -64,12 +65,12 @@ function AppContent() {
 
   // Load shipping zones and site settings on startup
   useEffect(() => {
-    fetch('/api/shipping-zones')
+    apiFetch('/api/shipping-zones')
       .then(res => res.json())
       .then(data => setShippingZones(data))
       .catch(err => console.error('Error fetching shipping zones:', err));
 
-    fetch('/api/site-settings')
+    apiFetch('/api/site-settings')
       .then(res => res.json())
       .then(data => {
         if (data && data.whatsapp_number) {
@@ -92,12 +93,12 @@ function AppContent() {
             role: 'customer'
           };
           try {
-            const res = await fetch(`/api/profiles/${session.user.id}`);
+            const res = await apiFetch(`/api/profiles/${session.user.id}`);
             if (res.ok) {
               const profile = await res.json();
               setUser(profile);
             } else {
-              const upsertRes = await fetch('/api/profiles/upsert', {
+              const upsertRes = await apiFetch('/api/profiles/upsert', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userObj)

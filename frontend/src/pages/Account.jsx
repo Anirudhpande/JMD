@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Package, Calendar } from 'lucide-react';
+import { apiFetch } from '../api.js';
 
 export default function Account({ user, onLogout }) {
   useEffect(() => {
@@ -10,7 +11,7 @@ export default function Account({ user, onLogout }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/orders')
+    apiFetch('/api/orders')
       .then(res => res.json())
       .then(data => {
         const customerOrders = data.filter(o => o.user_id === user.id);

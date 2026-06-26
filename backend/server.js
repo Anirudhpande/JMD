@@ -17,6 +17,9 @@ app.use(helmet());
 // Configure CORS policy dynamically
 const allowedOrigins = [
   process.env.SITE_URL || 'http://localhost:5173',
+  'http://localhost:5173',
+  'https://jmd-beryl.vercel.app',
+  'https://jmd-production.up.railway.app',
   'https://jmdglobalstones.co.uk',
   'https://www.jmdglobalstones.co.uk'
 ];

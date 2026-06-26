@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Star, SlidersHorizontal, Check, X, ShieldCheck, Truck, ShoppingBag, Eye } from 'lucide-react';
+import { apiFetch } from '../api.js';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -41,7 +42,7 @@ export default function Products() {
     document.title = "Buy Natural Stone Paving & Porcelain Slabs | JMD Global Stones";
     document.querySelector('meta[name="description"]')?.setAttribute("content", "Explore our extensive catalog of natural sandstone, slate, porcelain, limestone, and brick paving slabs. Calibrated flags with fast UK delivery.");
     
-    fetch('/api/products')
+    apiFetch('/api/products')
       .then(res => {
         if (!res.ok) throw new Error('Failed to load products');
         return res.json();

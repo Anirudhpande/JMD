@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Printer, ArrowLeft, Check, AlertTriangle } from 'lucide-react';
+import { apiFetch } from '../api.js';
 
 export default function Invoice() {
   const { orderId } = useParams();
@@ -11,7 +12,7 @@ export default function Invoice() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await fetch(`/api/orders/${orderId}`);
+        const response = await apiFetch(`/api/orders/${orderId}`);
         if (response.ok) {
           const data = await response.json();
           const normalizedOrder = {
