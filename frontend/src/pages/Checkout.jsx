@@ -38,40 +38,39 @@ export default function Checkout({
   const getZoneForOutcode = (outcode) => {
     outcode = outcode.toUpperCase().trim();
     
-    // Zone 8: PA, ZE
-    if (outcode.startsWith('ZE') || outcode.startsWith('PA')) return 8;
+    // Zone 8: PA*, ZE*
+    const zone8Prefixes = ['PA', 'ZE'];
+    if (zone8Prefixes.some(pref => outcode.startsWith(pref))) return 8;
     
-    // Zone 7: HS, IM, KA
-    if (outcode.startsWith('HS') || outcode.startsWith('IM') || outcode.startsWith('KA')) return 7;
+    // Zone 7: HS*, IM*, KA*
+    const zone7Prefixes = ['HS', 'IM', 'KA'];
+    if (zone7Prefixes.some(pref => outcode.startsWith(pref))) return 7;
     
-    // Zone 6: IV, KW, PH, GY, JE, W1-W6
-    if (outcode.startsWith('IV') || outcode.startsWith('KW') || outcode.startsWith('PH') || outcode.startsWith('GY') || outcode.startsWith('JE')) return 6;
-    if (/^W[1-6][A-Z]?$/.test(outcode)) return 6; // W1-W6
+    // Zone 6: IV*, KW*, PH*, W1*-W14*
+    const zone6Prefixes = ['IV', 'KW', 'PH'];
+    if (zone6Prefixes.some(pref => outcode.startsWith(pref))) return 6;
+    if (/^W\d/i.test(outcode)) return 6; // W followed by a number
     
-    // Zone 5: AB, BT, DD, DG, FK, G1-G4, G, KY, ML, TD
-    if (outcode.startsWith('AB') || outcode.startsWith('BT') || outcode.startsWith('DD') || outcode.startsWith('DG') || outcode.startsWith('FK') || outcode.startsWith('KY') || outcode.startsWith('ML') || outcode.startsWith('TD')) return 5;
-    if (outcode.startsWith('G') && !outcode.startsWith('GY') && !outcode.startsWith('GU') && !outcode.startsWith('GL')) {
-      return 5;
-    }
+    // Zone 5: AB*, BT*, DD*, DG*, FK*, G1*-G90*, KY*, TD*, TR*
+    const zone5Prefixes = ['AB', 'BT', 'DD', 'DG', 'FK', 'KY', 'TD', 'TR'];
+    if (zone5Prefixes.some(pref => outcode.startsWith(pref))) return 5;
+    if (/^G\d/i.test(outcode)) return 5; // G followed by a number
     
-    // Zone 4: E, EC, N, NW, SE, SW, W (London), WC
-    if (/^(EC|N|NW|SE|SW|WC)$/.test(outcode) || /^EC\d/.test(outcode) || /^N\d/.test(outcode) || /^NW\d/.test(outcode) || /^SE\d/.test(outcode) || /^SW\d/.test(outcode) || /^WC\d/.test(outcode)) return 4;
-    if (outcode.startsWith('E') && !outcode.startsWith('EH') && !outcode.startsWith('EN') && !outcode.startsWith('EX')) {
-      return 4;
-    }
-    if (outcode.startsWith('W') && !outcode.startsWith('WA') && !outcode.startsWith('WN') && !outcode.startsWith('WD') && !outcode.startsWith('WR') && !outcode.startsWith('WS') && !outcode.startsWith('WV') && !outcode.startsWith('WF')) {
-      return 4;
-    }
-
-    // Zone 3: BR, CM, CR, DA, DT, EH, EN, EX, HA, AL, BD, BS, CB, etc.
-    const zone3Prefixes = ['BR', 'CM', 'CR', 'DA', 'DT', 'EH', 'EN', 'EX', 'HA', 'AL', 'BD', 'BS', 'CB', 'CF', 'CH', 'CO', 'CV', 'DE', 'DN', 'DY', 'FY', 'GL', 'HD', 'HG', 'HP', 'HR', 'HU', 'HX', 'IG', 'IP', 'LD', 'LE', 'LS', 'LU', 'M', 'MK', 'NG', 'NN', 'NP', 'NR', 'OL', 'OX', 'PE', 'PO', 'PR', 'RG', 'RH', 'RM', 'S', 'SA', 'SG', 'SK', 'SL', 'SN', 'SO', 'SR', 'SS', 'ST', 'TF', 'TN', 'TS', 'UB', 'WD', 'WF', 'WR', 'WS', 'WV', 'YO'];
+    // Zone 4: E1*-E98*, EC*, SE*, SW*, WC*
+    const zone4Prefixes = ['EC', 'SE', 'SW', 'WC'];
+    if (zone4Prefixes.some(pref => outcode.startsWith(pref))) return 4;
+    if (/^E\d/i.test(outcode)) return 4; // E followed by a number
+    
+    // Zone 3: BR*, CM*, CR*, DA*, DT*, EH*, EN*, EX*, HA*, IG*, KT*, LD*, LL*, ML*, N1*-N81*, NW*, PL*, RM*, SA*, SM*, SY*, TA*, TN*, TQ*, TW*, UB*
+    const zone3Prefixes = ['BR', 'CM', 'CR', 'DA', 'DT', 'EH', 'EN', 'EX', 'HA', 'IG', 'KT', 'LD', 'LL', 'ML', 'NW', 'PL', 'RM', 'SA', 'SM', 'SY', 'TA', 'TN', 'TQ', 'TW', 'UB'];
     if (zone3Prefixes.some(pref => outcode.startsWith(pref))) return 3;
-
-    // Zone 2: BA, BH, BN, CA, CT, DL, GU, LA, ME, LL, LN, SP, SY, TA, WA, WN
-    const zone2Prefixes = ['BA', 'BH', 'BN', 'CA', 'CT', 'DL', 'GU', 'LA', 'ME', 'LL', 'LN', 'SP', 'SY', 'TA', 'WA', 'WN'];
+    if (/^N\d/i.test(outcode)) return 3; // N followed by a number
+    
+    // Zone 2: BA*, BH*, BN*, CA*, CT*, DL*, GU*, LA*, ME*, NE*, PO*, RG*, RH*, SO*, SP*, TS*, YO*
+    const zone2Prefixes = ['BA', 'BH', 'BN', 'CA', 'CT', 'DL', 'GU', 'LA', 'ME', 'NE', 'PO', 'RG', 'RH', 'SO', 'SP', 'TS', 'YO'];
     if (zone2Prefixes.some(pref => outcode.startsWith(pref))) return 2;
-
-    // Default to UK Zone 1
+    
+    // Default to UK Zone 1 (covers B1*-B99*, L1*-L80*, M1*-M99*, S1*-S99*, BB*, BD*, etc. as they do not match any higher zones)
     return 1;
   };
 
