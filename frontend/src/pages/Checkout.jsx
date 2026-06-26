@@ -211,7 +211,8 @@ export default function Checkout({
   // Cart Calculations (Ex-VAT calculations)
   const cartSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const cartVat = cartSubtotal * 0.20;
-  const shippingCost = matchedZone ? matchedZone.rate : 0;
+  const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const shippingCost = matchedZone ? matchedZone.rate * totalQty : 0;
   const cartTotal = cartSubtotal + cartVat + shippingCost;
 
   // Sync details from authenticated user profile if logged in

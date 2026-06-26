@@ -272,10 +272,11 @@ async function initializePostgresSchema(client) {
     }
 
     // 4. Seed default shipping zones
+    const rates = [68.00, 68.00, 85.00, 95.00, 120.00, 160.00, 180.00, 200.00];
     const defaultZones = Array.from({ length: 8 }, (_, i) => ({
       id: i + 1,
       zone_name: `UK Zone ${i + 1}`,
-      rate: 68.00
+      rate: rates[i]
     }));
     for (const z of defaultZones) {
       await client.query(
@@ -287,7 +288,7 @@ async function initializePostgresSchema(client) {
     // 5. Seed default settings
     const defaultSettings = {
       logo_url: "",
-      whatsapp_number: "447458148586",
+      whatsapp_number: "447450148506",
       maintenance_mode: false,
       home_hero_headline: "Enduring Stone.",
       home_hero_subheadline: "Architectural Form.",
@@ -300,7 +301,7 @@ async function initializePostgresSchema(client) {
       ],
       why_choose_us: "We treat our stone as a luxury architectural material. Direct import pricing, strict thickness calibrations, and nationwide lorry delivery make us the trusted partner for landscape designers across the UK.",
       footer: {
-        contact_phone: "07458148586",
+        contact_phone: "07450148506",
         contact_email: "sales@jmdglobalstones.co.uk",
         company_no: "12807959",
         vat_no: "GB 358688337",
@@ -753,10 +754,11 @@ export const db = {
     }
     const store = readLocalDb();
     if (!store.shipping_zones || store.shipping_zones.length === 0) {
+      const rates = [68.00, 68.00, 85.00, 95.00, 120.00, 160.00, 180.00, 200.00];
       store.shipping_zones = Array.from({ length: 8 }, (_, i) => ({
         id: i + 1,
         zone_name: `UK Zone ${i + 1}`,
-        rate: 68.00
+        rate: rates[i]
       }));
       writeLocalDb(store);
     }
