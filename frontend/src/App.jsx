@@ -35,7 +35,7 @@ function AppContent() {
   
   // Shipping & settings
   const [shippingZones, setShippingZones] = useState([]);
-  const [whatsappNumber, setWhatsappNumber] = useState('447458148586');
+  const [whatsappNumber, setWhatsappNumber] = useState('447450148506');
 
   // Consent & widgets
   const [cookieConsentAccepted, setCookieConsentAccepted] = useState(() => {
@@ -373,10 +373,10 @@ function AppContent() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '0.85rem', color: 'var(--text-muted-on-dark)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                   <Phone size={16} style={{ color: 'var(--color-accent)' }} />
-                  <span>07458148586</span>
+                  <span>07450148506</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <Phone size={16} style={{ color: 'var(--color-accent)' }} />
+                  <Mail size={16} style={{ color: 'var(--color-accent)' }} />
                   <span>sales@jmdglobalstones.co.uk</span>
                 </div>
               </div>

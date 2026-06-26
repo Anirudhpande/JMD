@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin, MessageSquare, Send } from 'lucide-react';
 export default function Contact() {
   React.useEffect(() => {
     document.title = "Contact JMD Global Stones | Wirral & Southampton Yards";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Get in touch with JMD Global Stones. Call or WhatsApp 07458148586, email sales@jmdglobalstones.co.uk, or visit our Wirral HQ and Southampton yard locations.");
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Get in touch with JMD Global Stones. Call or WhatsApp 07450148506, email sales@jmdglobalstones.co.uk, or visit our Wirral HQ and Southampton yard locations.");
   }, []);
 
   const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ export default function Contact() {
   };
 
   const handleWhatsApp = () => {
-    window.open('https://wa.me/447458148586', '_blank');
+    window.open('https://wa.me/447450148506', '_blank');
   };
 
   return (
@@ -156,7 +156,7 @@ export default function Contact() {
             <div style={{ display: 'flex', justifyContent: 'space-around', padding: '1.5rem', border: '1px solid var(--color-border-light)', fontSize: '0.85rem', backgroundColor: 'transparent' }} className="info-bar">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-on-light)' }}>
                 <Phone size={16} style={{ color: 'var(--color-accent)' }} />
-                <span>07458148586</span>
+                <span>07450148506</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-on-light)' }}>
                 <Mail size={16} style={{ color: 'var(--color-accent)' }} />
