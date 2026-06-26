@@ -74,9 +74,9 @@ app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), asyn
         order.status = 'processing';
         await db.updateOrderStatus(orderId, 'processing');
         
-        // Dispatch emails
-        await emails.sendOrderConfirmation(order);
-        await emails.sendAdminNewOrderAlert(order);
+        // Dispatch emails (run in background, do not block webhook response)
+        emails.sendOrderConfirmation(order).catch(err => console.error('Webhook customer email error:', err));
+        emails.sendAdminNewOrderAlert(order).catch(err => console.error('Webhook admin email error:', err));
       }
     } catch (error) {
       console.error(`Error updating order #${orderId} on payment success:`, error);
@@ -266,10 +266,10 @@ app.post('/api/orders', async (req, res) => {
 
     const order = await db.createOrder(verifiedOrder);
 
-    // If Bank Transfer, send confirmation emails immediately
+    // If Bank Transfer, send confirmation emails in the background (no await to prevent checkout hang)
     if (order.payment_method === 'bank_transfer') {
-      await emails.sendOrderConfirmation(order);
-      await emails.sendAdminNewOrderAlert(order);
+      emails.sendOrderConfirmation(order).catch(err => console.error('Background customer email error:', err));
+      emails.sendAdminNewOrderAlert(order).catch(err => console.error('Background admin email error:', err));
     }
 
     // Trigger low stock alerts
@@ -292,9 +292,9 @@ app.put('/api/orders/:id', async (req, res) => {
   try {
     const order = await db.updateOrderStatus(req.params.id, status);
     if (order) {
-      // Trigger status update email on Dispatch
+      // Trigger status update email on Dispatch in background
       if (status === 'dispatched') {
-        await emails.sendOrderDispatchedEmail(order);
+        emails.sendOrderDispatchedEmail(order).catch(err => console.error('Background dispatch email error:', err));
       }
       res.json(order);
     } else {
