@@ -175,12 +175,12 @@ export const emails = {
                   <td style="padding: 1rem 0 0.5rem 0; font-size: 0.85rem; text-align: right; font-weight: 600;">£${Number(order.subtotal).toFixed(2)}</td>
                 </tr>
                 <tr>
-                  <td colspan="2" style="padding: 0.25rem 0; font-size: 0.85rem; color: #4A453E; text-align: right;">VAT @ 20%:</td>
-                  <td style="padding: 0.25rem 0; font-size: 0.85rem; text-align: right; font-weight: 600;">£${Number(order.vat).toFixed(2)}</td>
-                </tr>
-                <tr>
                   <td colspan="2" style="padding: 0.25rem 0; font-size: 0.85rem; color: #4A453E; text-align: right;">UK Zone Carriage:</td>
                   <td style="padding: 0.25rem 0; font-size: 0.85rem; text-align: right; font-weight: 600;">£${Number(order.shipping).toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="padding: 0.25rem 0; font-size: 0.85rem; color: #4A453E; text-align: right;">VAT @ 20%:</td>
+                  <td style="padding: 0.25rem 0; font-size: 0.85rem; text-align: right; font-weight: 600;">£${Number(order.vat).toFixed(2)}</td>
                 </tr>
                 <tr style="border-top: 2px solid #C9A96E;">
                   <td colspan="2" style="padding: 1rem 0; text-align: right; font-weight: bold; text-transform: uppercase; font-size: 0.9rem;">Invoice Total (inc VAT):</td>

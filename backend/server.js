@@ -36,16 +36,21 @@ app.use(cors({
 }));
 
 // Stripe client initialization
-const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
+const rawSecretKey = process.env.STRIPE_SECRET_KEY;
+const cleanSecretKey = rawSecretKey ? rawSecretKey.trim().replace(/^['"]|['"]$/g, '') : null;
+const stripe = cleanSecretKey ? new Stripe(cleanSecretKey) : null;
 
 // 1. Stripe Webhook Endpoint (MUST be configured BEFORE global express.json() middleware)
 app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
   
-  if (stripe && sig && process.env.STRIPE_WEBHOOK_SECRET) {
+  const rawWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const cleanWebhookSecret = rawWebhookSecret ? rawWebhookSecret.trim().replace(/^['"]|['"]$/g, '') : null;
+  
+  if (stripe && sig && cleanWebhookSecret) {
     try {
-      event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+      event = stripe.webhooks.constructEvent(req.body, sig, cleanWebhookSecret);
     } catch (err) {
       console.error(`Webhook signature verification failed: ${err.message}`);
       return res.status(400).send(`Webhook Error: ${err.message}`);
