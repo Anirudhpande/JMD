@@ -210,10 +210,10 @@ export default function Checkout({
 
   // Cart Calculations (Ex-VAT calculations)
   const cartSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const cartVat = cartSubtotal * 0.20;
   const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
   const shippingCost = matchedZone ? matchedZone.rate * totalQty : 0;
-  const cartTotal = cartSubtotal + cartVat + shippingCost;
+  const cartVat = (cartSubtotal + shippingCost) * 0.20;
+  const cartTotal = cartSubtotal + shippingCost + cartVat;
 
   // Sync details from authenticated user profile if logged in
   useEffect(() => {
@@ -490,16 +490,16 @@ export default function Checkout({
                     <span style={{ fontWeight: 500 }}>£{cartSubtotal.toFixed(2)}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
-                    <span style={{ color: 'var(--text-muted-on-light)' }}>VAT (20%)</span>
-                    <span style={{ fontWeight: 500 }}>£{cartVat.toFixed(2)}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
                     <span style={{ color: 'var(--text-muted-on-light)' }}>Carriage & Shipping</span>
                     <span style={{ fontWeight: 500 }}>
                       {matchedZone ? `£${shippingCost.toFixed(2)}` : (
                         <em style={{ fontSize: '0.75rem', color: 'var(--text-muted-on-light)' }}>Computed at checkout</em>
                       )}
                     </span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
+                    <span style={{ color: 'var(--text-muted-on-light)' }}>VAT (20%)</span>
+                    <span style={{ fontWeight: 500 }}>£{cartVat.toFixed(2)}</span>
                   </div>
 
                   <div style={{ borderTop: '1px solid var(--color-border-light)', paddingTop: '1.5rem', marginTop: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

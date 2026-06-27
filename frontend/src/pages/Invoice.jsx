@@ -173,12 +173,12 @@ export default function Invoice() {
                   <td style={{ padding: '0.75rem 0.5rem', textAlign: 'right', fontWeight: 500 }}>£{order.subtotal.toFixed(2)}</td>
                 </tr>
                 <tr style={{ borderBottom: '1px solid #EAEAEA' }}>
-                  <td style={{ padding: '0.75rem 0.5rem', color: '#555555' }}>VAT (20%)</td>
-                  <td style={{ padding: '0.75rem 0.5rem', textAlign: 'right', fontWeight: 500 }}>£{order.vat.toFixed(2)}</td>
-                </tr>
-                <tr style={{ borderBottom: '1px solid #EAEAEA' }}>
                   <td style={{ padding: '0.75rem 0.5rem', color: '#555555' }}>Carriage / Shipping</td>
                   <td style={{ padding: '0.75rem 0.5rem', textAlign: 'right', fontWeight: 500 }}>£{order.shipping.toFixed(2)}</td>
+                </tr>
+                <tr style={{ borderBottom: '1px solid #EAEAEA' }}>
+                  <td style={{ padding: '0.75rem 0.5rem', color: '#555555' }}>VAT (20%)</td>
+                  <td style={{ padding: '0.75rem 0.5rem', textAlign: 'right', fontWeight: 500 }}>£{order.vat.toFixed(2)}</td>
                 </tr>
                 <tr style={{ borderTop: '2px solid #111111', fontSize: '1.15rem' }}>
                   <td style={{ padding: '1rem 0.5rem', fontWeight: 700, textTransform: 'uppercase' }}>Invoice Total</td>

@@ -252,9 +252,9 @@ app.post('/api/orders', async (req, res) => {
     
     // Recalculate totals server-side for safety
     const subtotal = orderData.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const vat = subtotal * 0.20;
     const shipping = orderData.shipping;
-    const total = subtotal + vat + shipping;
+    const vat = (subtotal + shipping) * 0.20;
+    const total = subtotal + shipping + vat;
     
     const verifiedOrder = {
       ...orderData,
