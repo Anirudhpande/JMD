@@ -208,7 +208,7 @@ function AppContent() {
           
           {/* Logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-            <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '52px', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+            <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '48px', objectFit: 'contain', mixBlendMode: 'multiply' }} />
           </Link>
 
           {/* Navigation Links */}
@@ -319,7 +319,7 @@ function AppContent() {
             {/* Col 1 */}
             <div>
               <div style={{ marginBottom: '1.5rem' }}>
-                <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '52px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
+                <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '48px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
               </div>
               <p style={{ fontSize: '0.85rem', lineHeight: 1.7, color: 'var(--text-muted-on-dark)', marginBottom: '1.75rem' }}>
                 Premium UK supplier of authentic Indian Sandstone, slate, limestone, and porcelain slabs. Sourced directly from our quarries, delivered nationwide.
