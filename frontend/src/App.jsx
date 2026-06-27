@@ -397,7 +397,7 @@ function AppContent() {
 
       {/* Floating green WhatsApp widget with hover tooltip */}
       <a 
-        href={`https://wa.me/${whatsappNumber}?text=Hi%20Roopesh%2C%20I%20am%20interested%20in%20JMD%20Global%20Stones%20paving%20slabs.`} 
+        href={`https://wa.me/${whatsappNumber}`} 
         target="_blank" 
         rel="noopener noreferrer" 
         className="whatsapp-widget" 
