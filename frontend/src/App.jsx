@@ -207,10 +207,8 @@ function AppContent() {
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '90px' }}>
           
           {/* Logo */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', fontWeight: 500, letterSpacing: '0.08em', color: 'var(--text-on-light)' }}>
-              JMD GLOBAL STONES
-            </span>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+            <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '42px', objectFit: 'contain', mixBlendMode: 'multiply' }} />
           </Link>
 
           {/* Navigation Links */}
@@ -320,9 +318,9 @@ function AppContent() {
             
             {/* Col 1 */}
             <div>
-              <h4 style={{ color: 'var(--text-on-dark)', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '1.2rem', marginBottom: '1.5rem', fontWeight: 500, fontFamily: 'var(--font-heading)' }}>
-                JMD Global Stones
-              </h4>
+              <div style={{ marginBottom: '1.5rem' }}>
+                <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '42px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
+              </div>
               <p style={{ fontSize: '0.85rem', lineHeight: 1.7, color: 'var(--text-muted-on-dark)', marginBottom: '1.75rem' }}>
                 Premium UK supplier of authentic Indian Sandstone, slate, limestone, and porcelain slabs. Sourced directly from our quarries, delivered nationwide.
               </p>
