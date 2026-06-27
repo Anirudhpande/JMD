@@ -214,21 +214,11 @@ export default function Invoice() {
                 </tr>
               );
             })}
-            {/* Blank row 1 */}
-            <tr style={{ height:'22px' }}>
-              {[0,1,2,3,4,5,6].map(i=><td key={i} style={{ padding:'5px 8px' }}/>)}
-              <td style={{ padding:'5px 8px' }}/>
-            </tr>
-            {/* Blank row 2 — shows £ - */}
-            <tr style={{ height:'22px' }}>
-              {[0,1,2,3,4,5,6].map(i=><td key={i} style={{ padding:'5px 8px' }}/>)}
-              <td style={{ padding:'5px 8px', textAlign:'right', color:'#555' }}>£ &nbsp;-</td>
-            </tr>
           </tbody>
         </table>
 
         {/* TOTALS TABLE */}
-        <div style={{ display:'flex', justifyContent:'flex-end', marginBottom:'20px' }}>
+        <div style={{ display:'flex', justifyContent:'flex-end', marginBottom:'10px' }}>
           <table style={{ borderCollapse:'collapse', fontSize:'11px', border:'1px solid #000' }}>
             <tbody>
               {[
@@ -246,13 +236,11 @@ export default function Invoice() {
           </table>
         </div>
 
-        {/* COMMENTS / NOTES */}
-        <div style={{ marginBottom:'10px' }}>
+        {/* COMMENTS / NOTES + Each Pack Has */}
+        <div style={{ marginBottom:'8px' }}>
           <strong>Comments / Notes:</strong>
         </div>
-
-        {/* Each Pack Has */}
-        <div style={{ marginBottom:'18px' }}>
+        <div style={{ marginBottom:'10px' }}>
           <div><strong><u>**- Each Pack Has:</u></strong></div>
           {order.items.map((item, i) => (
             <div key={i}>{deducePieces(item.variant_size)} Pcs {extractDimensions(item.variant_size)}</div>
@@ -260,17 +248,16 @@ export default function Invoice() {
         </div>
 
         {/* TERMS */}
-        <div style={{ fontSize:'12px', lineHeight:1.7 }}>
+        <div style={{ fontSize:'12px', lineHeight:1.7, marginBottom:'10px' }}>
           <strong>Terms &amp; Conditions:</strong>
           <div style={{ marginTop:'4px' }}>
             <div>- Order to be shipped only once payment has been received and cleared in full</div>
             <div>- Delivery within 5-7 Days</div>
-            <div>- Quotation valid for 7 days</div>
           </div>
         </div>
 
         {/* DIGITAL DISCLAIMER */}
-        <div style={{ marginTop:'2.5rem', textAlign:'center', fontSize:'10px', color:'#888', fontStyle:'italic' }}>
+        <div style={{ marginTop:'1rem', textAlign:'center', fontSize:'10px', color:'#888', fontStyle:'italic' }}>
           This is a digitally generated document and does not require a physical signature.
         </div>
 
@@ -279,7 +266,7 @@ export default function Invoice() {
       <style>{`
         @page {
           size: A4;
-          margin: 10mm 12mm;
+          margin: 0;  /* removes browser URL header/footer completely */
         }
         @media print {
           .no-print { display: none !important; }
@@ -302,7 +289,7 @@ export default function Invoice() {
             inset: 0;
             width: 100%;
             margin: 0 !important;
-            padding: 0 10mm !important;
+            padding: 8mm 12mm !important;  /* emulate page margins now that @page margin is 0 */
             font-size: 10px !important;
             line-height: 1.35 !important;
             max-width: 100% !important;
