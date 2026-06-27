@@ -122,7 +122,7 @@ export default function Invoice() {
       </div>
 
       {/* ══════════ PRINTABLE INVOICE ══════════ */}
-      <div className="print-container" style={{ fontFamily:'Arial,Helvetica,sans-serif', fontSize:'12px', color:'#000', background:'#fff', maxWidth:'800px', margin:'2rem auto', padding:'2rem 2.5rem', lineHeight:1.45 }}>
+      <div className="print-container" style={{ fontFamily:'Arial,Helvetica,sans-serif', fontSize:'12px', color:'#000', background:'#fff', maxWidth:'800px', margin:'2rem auto', padding:'2rem 2.5rem', lineHeight:1.45, display:'flex', flexDirection:'column', minHeight:'96vh' }}>
 
         {/* HEADER: Logo centred */}
         <div style={{ textAlign:'center', marginBottom:'6px' }}>
@@ -146,7 +146,7 @@ export default function Invoice() {
                 Customer:&nbsp;<span style={{ fontWeight:'normal' }}>{(cd.name || '').toUpperCase()}</span>
               </td>
               <td style={{ width:'5%' }}/>
-              <td style={{ width:'22%', padding:'0 0 7px 0', fontWeight:'bold', verticalAlign:'top' }}>Quote Number:</td>
+              <td style={{ width:'22%', padding:'0 0 7px 0', fontWeight:'bold', verticalAlign:'top' }}>Invoice Number:</td>
               <td style={{ width:'38%', padding:'0 0 7px 0', verticalAlign:'top' }}>{order.id}</td>
             </tr>
             <tr>
@@ -154,7 +154,7 @@ export default function Invoice() {
                 Contact Person:&nbsp;<span style={{ fontWeight:'normal' }}>{cd.name || ''}</span>
               </td>
               <td/>
-              <td style={{ padding:'0 0 7px 0', fontWeight:'bold', verticalAlign:'top' }}>Quote Date:</td>
+              <td style={{ padding:'0 0 7px 0', fontWeight:'bold', verticalAlign:'top' }}>Invoice Date:</td>
               <td style={{ padding:'0 0 7px 0', verticalAlign:'top' }}>{fmtDate(quoteDate)}</td>
             </tr>
             <tr>
@@ -256,8 +256,8 @@ export default function Invoice() {
           </div>
         </div>
 
-        {/* DIGITAL DISCLAIMER */}
-        <div style={{ marginTop:'1rem', textAlign:'center', fontSize:'10px', color:'#888', fontStyle:'italic' }}>
+        {/* DIGITAL DISCLAIMER — fixed at very bottom of the print area */}
+        <div style={{ marginTop:'auto', paddingTop:'2rem', borderTop:'1px solid #eee', textAlign:'center', fontSize:'10px', color:'#aaa', fontStyle:'italic' }}>
           This is a digitally generated document and does not require a physical signature.
         </div>
 
