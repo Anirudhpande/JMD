@@ -1,4 +1,26 @@
 {
+  "redirects": [
+    {
+      "source": "/product/:slug/",
+      "destination": "/products/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/product/:slug",
+      "destination": "/products/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/:category/",
+      "destination": "/products?category=:category",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/:category",
+      "destination": "/products?category=:category",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
