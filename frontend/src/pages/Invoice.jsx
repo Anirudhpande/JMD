@@ -129,44 +129,25 @@ export default function Invoice() {
           </div>
 
           {/* Client & Quote Metadata Layout */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '2rem', marginBottom: '2rem', fontSize: '0.85rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', fontSize: '0.85rem' }}>
             {/* Left Col: Customer details */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-              <div>
-                <strong>Customer:</strong> {order.customer_details.name.toUpperCase()}
-              </div>
-              <div>
-                <strong>Contact Person:</strong> {order.customer_details.name}
-              </div>
-              <div style={{ marginTop: '0.2rem' }}>
-                <strong>Phone:</strong> {order.customer_details.phone || '+44 7467 505748'}
-              </div>
-              <div style={{ marginTop: '0.8rem' }}>
-                <strong>Delivery Postcode:</strong> {matchedPostcode}
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '45%' }}>
+              <div><strong>Customer:</strong> {order.customer_details.name.toUpperCase()}</div>
+              <div style={{ marginTop: '0.2rem' }}><strong>Contact Person:</strong> {order.customer_details.name}</div>
+              <div style={{ marginTop: '0.2rem' }}><strong>Phone:</strong> {order.customer_details.phone || '+44 7467 505748'}</div>
+              <div style={{ marginTop: '0.8rem' }}><strong>Delivery Postcode:</strong> {matchedPostcode}</div>
             </div>
 
-            {/* Right Col: Quote meta details */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span><strong>Quote Number:</strong></span>
-                <span style={{ width: '120px', textAlign: 'left' }}>{order.id}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span><strong>Quote Date:</strong></span>
-                <span style={{ width: '120px', textAlign: 'left' }}>{quoteDate.toLocaleDateString('en-GB').replace(/\//g, '-')}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span><strong>Expiry Date:</strong></span>
-                <span style={{ width: '120px', textAlign: 'left' }}>{expiryDate.toLocaleDateString('en-GB').replace(/\//g, '-')}</span>
-              </div>
+            {/* Right Col: Quote meta details structured as a key-value grid */}
+            <div style={{ width: '45%', display: 'grid', gridTemplateColumns: '120px 1fr', rowGap: '0.5rem', alignContent: 'start' }}>
+              <strong>Quote Number:</strong> <span>{order.id}</span>
+              <strong>Quote Date:</strong> <span>{quoteDate.toLocaleDateString('en-GB').replace(/\//g, '-')}</span>
+              <strong>Expiry Date:</strong> <span>{expiryDate.toLocaleDateString('en-GB').replace(/\//g, '-')}</span>
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.8rem' }}>
-                <span><strong>Sender:</strong></span>
-                <span style={{ width: '120px', textAlign: 'left', display: 'flex', flexDirection: 'column' }}>
-                  <span>Roopesh Kapur</span>
-                  <span style={{ fontSize: '0.75rem', color: '#555555' }}>(Director)</span>
-                </span>
+              <strong style={{ marginTop: '0.8rem' }}>Sender:</strong>
+              <div style={{ marginTop: '0.8rem', display: 'flex', flexDirection: 'column' }}>
+                <span>Roopesh Kapur</span>
+                <span style={{ fontSize: '0.75rem', color: '#555555' }}>(Director)</span>
               </div>
             </div>
           </div>
@@ -290,39 +271,48 @@ export default function Invoice() {
 
       <style>{`
         @media print {
-          body, html {
-            background-color: #FFFFFF !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+          /* Hide everything on the page */
+          body * {
+            visibility: hidden !important;
           }
-          .invoice-page-wrapper {
-            padding: 0 !important;
-            background-color: #FFFFFF !important;
-            min-height: auto !important;
+          
+          /* Only show the invoice container and its children */
+          .print-container, .print-container * {
+            visibility: visible !important;
           }
-          .container {
-            max-width: 100% !important;
-            padding: 0 !important;
-            margin: 0 !important;
-          }
+          
+          /* Position the print container at the top left of the page */
           .print-container {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
             border: none !important;
             padding: 0 !important;
             margin: 0 !important;
-            page-break-inside: avoid !important;
+            font-size: 11px !important; /* Scale down fonts */
+            line-height: 1.3 !important;
           }
-          .no-print {
-            display: none !important;
+          
+          .print-container img {
+            height: 52px !important; /* Scale down logo */
           }
+
           .invoice-table {
             border: 1px solid #111111 !important;
             border-collapse: collapse !important;
+            margin-bottom: 1rem !important;
           }
+          
           .invoice-table th, .invoice-table td {
             border: 1px solid #111111 !important;
-            padding: 0.5rem !important;
+            padding: 0.4rem !important; /* Tighter cell padding */
+            font-size: 10px !important;
+          }
+          
+          /* Hide navigation bar */
+          .no-print {
+            display: none !important;
           }
         }
       `}</style>
