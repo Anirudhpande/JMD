@@ -625,6 +625,17 @@ export const db = {
           newOrder.created_at
         ]
       );
+      
+      // Auto-increment the site settings starting number to sync with admin panel!
+      try {
+        const nextNum = parseInt(nextId, 10);
+        if (!isNaN(nextNum)) {
+          await this.updateSiteSetting('invoice_starting_number', nextNum);
+        }
+      } catch (err) {
+        console.error('Failed to auto-increment setting:', err);
+      }
+
       return newOrder;
     }
 
@@ -643,12 +654,27 @@ export const db = {
     store.products = updatedProducts;
     if (!store.orders) store.orders = [];
     store.orders.push(newOrder);
+
+    // Auto-increment local settings starting number to sync with admin panel!
+    try {
+      const nextNum = parseInt(nextId, 10);
+      if (!isNaN(nextNum)) {
+        if (!store.site_settings) store.site_settings = {};
+        store.site_settings.invoice_starting_number = nextNum;
+      }
+    } catch (err) {}
+
     writeLocalDb(store);
 
     if (isSupabaseConfigured) {
       try {
         await this.saveProducts(updatedProducts);
         await supabase.from('orders').insert([newOrder]);
+        // Auto-increment Supabase settings starting number!
+        const nextNum = parseInt(nextId, 10);
+        if (!isNaN(nextNum)) {
+          await supabase.from('site_settings').upsert({ key: 'invoice_starting_number', value: nextNum });
+        }
       } catch (err) {
         console.error('Supabase sync order error:', err);
       }
