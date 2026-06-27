@@ -68,7 +68,7 @@ export default function Invoice() {
   }
 
   return (
-    <div style={{ backgroundColor: '#FDFCFA', padding: '4rem 0', minHeight: '100vh' }}>
+    <div className="invoice-page-wrapper" style={{ backgroundColor: '#FDFCFA', padding: '4rem 0', minHeight: '100vh' }}>
       <div className="container" style={{ maxWidth: '900px' }}>
         
         {/* Navigation Bar (hidden during print) */}
@@ -87,9 +87,9 @@ export default function Invoice() {
           {/* Invoice Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #111111', paddingBottom: '2rem', marginBottom: '2.5rem' }}>
             <div>
-              <h1 style={{ fontSize: '2.2rem', fontFamily: 'var(--font-heading)', letterSpacing: '0.02em', textTransform: 'uppercase', margin: 0 }}>
-                JMD Global Stones
-              </h1>
+              <div style={{ marginBottom: '1rem' }}>
+                <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '56px', objectFit: 'contain' }} />
+              </div>
               <p style={{ fontSize: '0.75rem', color: '#666666', marginTop: '0.5rem', lineHeight: 1.5 }}>
                 JMD Global Stones Pvt Ltd<br />
                 Company No: 12807959 | VAT No: GB 358688337<br />
@@ -107,7 +107,7 @@ export default function Invoice() {
           </div>
 
           {/* Client & Shipping Metadata */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', marginBottom: '3rem' }}>
+          <div className="invoice-metadata" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', marginBottom: '3rem' }}>
             <div>
               <h3 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', borderBottom: '1px solid #111111', paddingBottom: '0.35rem', marginBottom: '0.85rem', fontWeight: 700 }}>Invoiced To:</h3>
               <p style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '0.25rem' }}>{order.customer_details.name}</p>
@@ -141,7 +141,7 @@ export default function Invoice() {
           </div>
 
           {/* Items Table */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '3rem', fontSize: '0.85rem' }}>
+          <table className="invoice-table" style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '3rem', fontSize: '0.85rem' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #111111', textAlign: 'left' }}>
                 <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase' }}>Product Description</th>
@@ -165,7 +165,7 @@ export default function Invoice() {
           </table>
 
           {/* Summary Breakdown */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <div className="invoice-summary" style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <table style={{ width: '100%', maxWidth: '380px', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
               <tbody>
                 <tr style={{ borderBottom: '1px solid #EAEAEA' }}>
@@ -189,7 +189,7 @@ export default function Invoice() {
           </div>
 
           {/* Invoice Footer */}
-          <div style={{ marginTop: '5rem', borderTop: '1px solid #EAEAEA', paddingTop: '1.5rem', textAlign: 'center', fontSize: '0.75rem', color: '#777777', lineHeight: 1.5 }}>
+          <div className="invoice-footer" style={{ marginTop: '5rem', borderTop: '1px solid #EAEAEA', paddingTop: '1.5rem', textAlign: 'center', fontSize: '0.75rem', color: '#777777', lineHeight: 1.5 }}>
             <p style={{ marginBottom: '0.5rem' }}>If you have any questions concerning this invoice, contact our billing office at billing@jmdglobalstones.co.uk.</p>
             <strong style={{ color: '#111111' }}>Thank you for your business.</strong>
           </div>
@@ -197,6 +197,46 @@ export default function Invoice() {
         </div>
 
       </div>
+
+      <style>{`
+        @media print {
+          body, html {
+            background-color: #FFFFFF !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          .invoice-page-wrapper {
+            padding: 0 !important;
+            background-color: #FFFFFF !important;
+            min-height: auto !important;
+          }
+          .container {
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+          .print-container {
+            border: none !important;
+            padding: 1.5rem !important;
+            margin: 0 !important;
+            page-break-inside: avoid !important;
+          }
+          .invoice-metadata {
+            margin-bottom: 1.5rem !important;
+          }
+          .invoice-table {
+            margin-bottom: 1.5rem !important;
+          }
+          .invoice-table td {
+            padding: 0.65rem 0.5rem !important;
+          }
+          .invoice-footer {
+            margin-top: 2.5rem !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
