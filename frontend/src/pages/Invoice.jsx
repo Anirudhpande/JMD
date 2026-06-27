@@ -120,12 +120,6 @@ export default function Invoice() {
           {/* Centered Brand Header */}
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
             <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '70px', objectFit: 'contain', margin: '0 auto' }} />
-            
-            <p style={{ fontSize: '0.7rem', color: '#111111', marginTop: '1rem', lineHeight: 1.5, letterSpacing: '0.01em' }}>
-              Registered Office: Twelve Quays House, Egerton Wharf, Wirral, United Kingdom, CH41 1LD<br />
-              Website: www.jmdglobalstones.co.uk | Email: sales@jmdglobalstones.co.uk | Phone: 07450 148506<br />
-              Company House No.: 12807959 | VAT No.: GB 358688337
-            </p>
           </div>
 
           {/* Client & Quote Metadata Layout */}
@@ -189,8 +183,8 @@ export default function Invoice() {
                 );
               })}
               
-              {/* Empty padding spreadsheet rows matching user image exactly */}
-              {Array.from({ length: 2 }).map((_, idx) => (
+              {/* Empty padding spreadsheet rows matching user image exactly (only if more than 1 item) */}
+              {order.items.length > 1 && Array.from({ length: 2 }).map((_, idx) => (
                 <tr key={`pad-${idx}`} style={{ height: '28px' }}>
                   <td style={{ border: '1px solid #111111' }}></td>
                   <td style={{ border: '1px solid #111111' }}></td>
@@ -229,26 +223,14 @@ export default function Invoice() {
             </table>
           </div>
 
-          {/* Comments & Package contents block */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', borderTop: '1px solid #EAEAEA', paddingTop: '1.5rem', marginBottom: '2.5rem' }}>
+          {/* Comments & Notes */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', borderTop: '1px solid #EAEAEA', paddingTop: '1.5rem', marginBottom: '2rem' }}>
             <div>
               <strong style={{ fontSize: '0.85rem' }}>Comments / Notes:</strong>
             </div>
-            
-            {order.items.length > 0 && (
-              <div>
-                <strong style={{ textDecoration: 'underline' }}>**- Each Pack Has:</strong>
-                <div style={{ marginTop: '0.35rem' }}>
-                  {order.items.map((item, idx) => {
-                    const pcs = deducePieces(item.variant_size);
-                    const size = extractDimensions(item.variant_size);
-                    return (
-                      <div key={idx}>{pcs} Pcs {size}</div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+            <p style={{ margin: 0, fontSize: '0.8rem', color: '#555555', lineHeight: 1.5 }}>
+              Please inspect material specifications and delivery outcodes upon receipt. For dispatch scheduling or related queries, kindly reference your Quote/Invoice Number.
+            </p>
           </div>
 
           {/* Terms & Conditions list */}
@@ -266,10 +248,22 @@ export default function Invoice() {
             This is an electronically generated document and does not require a physical signature.
           </div>
 
+          {/* Center-Aligned Company Footer Details */}
+          <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.7rem', color: '#777777', lineHeight: 1.5, borderTop: '1px solid #F0ECE6', paddingTop: '1rem' }}>
+            Registered Office: Twelve Quays House, Egerton Wharf, Wirral, United Kingdom, CH41 1LD<br />
+            Website: www.jmdglobalstones.co.uk | Email: sales@jmdglobalstones.co.uk | Phone: 07450 148506<br />
+            Company House No.: 12807959 | VAT No.: GB 358688337
+          </div>
+
         </div>
       </div>
 
       <style>{`
+        @page {
+          size: auto;
+          margin: 0mm; /* Disables default browser header (title/date) and footer (URL/page numbers) */
+        }
+        
         @media print {
           /* Hide everything on the page */
           body * {
@@ -281,33 +275,33 @@ export default function Invoice() {
             visibility: visible !important;
           }
           
-          /* Position the print container at the top left of the page */
+          /* Position print container at top left and add physical page padding */
           .print-container {
             position: absolute !important;
             left: 0 !important;
             top: 0 !important;
             width: 100% !important;
             border: none !important;
-            padding: 0 !important;
+            padding: 1.5cm 1.5cm 1cm 1.5cm !important; /* Emulates page margins */
             margin: 0 !important;
-            font-size: 11px !important; /* Scale down fonts */
-            line-height: 1.3 !important;
+            font-size: 10.5px !important; /* Scale down fonts to guarantee 1-page fit */
+            line-height: 1.35 !important;
           }
           
           .print-container img {
-            height: 52px !important; /* Scale down logo */
+            height: 48px !important; /* Scale down logo */
           }
 
           .invoice-table {
             border: 1px solid #111111 !important;
             border-collapse: collapse !important;
-            margin-bottom: 1rem !important;
+            margin-bottom: 0.85rem !important;
           }
           
           .invoice-table th, .invoice-table td {
             border: 1px solid #111111 !important;
-            padding: 0.4rem !important; /* Tighter cell padding */
-            font-size: 10px !important;
+            padding: 0.35rem !important; /* Tighter cell padding */
+            font-size: 9.5px !important;
           }
           
           /* Hide navigation bar */
