@@ -162,12 +162,12 @@ export default function Invoice() {
                 Phone:&nbsp;<span style={{ fontWeight:'normal' }}>{cd.phone || ''}</span>
               </td>
               <td/>
-              <td style={{ padding:'0 0 7px 0', fontWeight:'bold', verticalAlign:'top' }}>Expiry Date:</td>
-              <td style={{ padding:'0 0 7px 0', verticalAlign:'top' }}>{fmtDate(expiryDate)}</td>
+              <td/>
+              <td/>
             </tr>
             <tr>
               <td style={{ padding:'0 0 7px 0', fontWeight:'bold', verticalAlign:'top' }}>
-                Delivery Postcode:&nbsp;<span style={{ fontWeight:'normal' }}>{postcode}</span>
+                Delivery Address:&nbsp;<span style={{ fontWeight:'normal' }}>{cd.address || ''}</span>
               </td>
               <td/>
               <td style={{ padding:'0 0 7px 0', fontWeight:'bold', verticalAlign:'top' }}>Sender:</td>
@@ -182,14 +182,14 @@ export default function Invoice() {
         <table className="invoice-table" style={{ width:'100%', borderCollapse:'collapse', border:'1px solid #000', marginBottom:'14px', fontSize:'11px' }}>
           <thead>
             <tr style={{ background:'#d9d9d9', borderBottom:'1px solid #000' }}>
-              <th style={{ ...C({ textAlign:'center', width:'26%', borderRight:'1px solid #000' }) }}>Description</th>
-              <th style={{ ...C({ textAlign:'center', width:'10%', borderRight:'1px solid #000' }) }}>Size (mm)</th>
-              <th style={{ ...C({ textAlign:'center', width:'9%',  borderRight:'1px solid #000' }) }}>Thickness</th>
-              <th style={{ ...C({ textAlign:'center', width:'8%',  borderRight:'1px solid #000' }) }}>Qty<br/>(packs)</th>
-              <th style={{ ...C({ textAlign:'center', width:'12%', borderRight:'1px solid #000' }) }}>Coverage<br/>/ Pack in<br/>m²</th>
-              <th style={{ ...C({ textAlign:'center', width:'12%', borderRight:'1px solid #000' }) }}>Total coverage<br/>in m²</th>
-              <th style={{ ...C({ textAlign:'center', width:'11%', borderRight:'1px solid #000' }) }}>Rate (£/m²)</th>
-              <th style={{ ...C({ textAlign:'center', width:'12%' }) }}>Line Total<br/>(£)</th>
+              <th style={C({ textAlign:'center', width:'26%' })}>Description</th>
+              <th style={C({ textAlign:'center', width:'10%' })}>Size (mm)</th>
+              <th style={C({ textAlign:'center', width:'9%'  })}>Thickness</th>
+              <th style={C({ textAlign:'center', width:'8%'  })}>Qty<br/>(packs)</th>
+              <th style={C({ textAlign:'center', width:'12%' })}>Coverage<br/>/ Pack in<br/>m²</th>
+              <th style={C({ textAlign:'center', width:'12%' })}>Total coverage<br/>in m²</th>
+              <th style={C({ textAlign:'center', width:'11%' })}>Rate (£/m²)</th>
+              <th style={C({ textAlign:'center', width:'12%' })}>Line Total<br/>(£)</th>
             </tr>
           </thead>
           <tbody>
@@ -202,7 +202,7 @@ export default function Invoice() {
               const rate      = (parseFloat(item.price) / cov).toFixed(2);
               const lineTotal = (parseFloat(item.price) * qty).toFixed(2);
               return (
-                <tr key={i} style={{ borderBottom:'1px solid #ddd' }}>
+                <tr key={i}>
                   <td style={C({ textAlign:'left' })}>{cleanProductName(item.product_name)}</td>
                   <td style={C({ textAlign:'center' })}>{size}</td>
                   <td style={C({ textAlign:'center' })}>{thick}</td>
@@ -263,8 +263,8 @@ export default function Invoice() {
         <div style={{ fontSize:'12px', lineHeight:1.7 }}>
           <strong>Terms &amp; Conditions:</strong>
           <div style={{ marginTop:'4px' }}>
+            <div>- Order to be shipped only once payment has been received and cleared in full</div>
             <div>- Delivery within 5-7 Days</div>
-            <div>- Dispatch of order is subject to receipt of cleared payment in full</div>
             <div>- Quotation valid for 7 days</div>
           </div>
         </div>
