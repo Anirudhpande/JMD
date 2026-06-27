@@ -1058,7 +1058,7 @@ export default function Admin({ user, onLogout }) {
                       </div>
 
                       {/* WhatsApp Config */}
-                      <div style={{ border: '1px solid var(--color-border-light)', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#FFFFFF' }}>
+                      <div style={{ border: '1px solid var(--color-border-light)', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#FFFFFF', marginBottom: '1.5rem' }}>
                         <div>
                           <strong style={{ fontSize: '0.9rem' }}>WhatsApp Support Number</strong>
                           <p style={{ fontSize: '0.75rem', color: 'var(--text-muted-on-light)' }}>UK phone number matching the floating support widget link.</p>
@@ -1073,6 +1073,30 @@ export default function Admin({ user, onLogout }) {
                           <button 
                             type="button" 
                             onClick={() => handleSaveSiteSetting('whatsapp_number', tempSettings.whatsapp_number)}
+                            className="btn btn-primary" 
+                            style={{ padding: '0 1rem', fontSize: '0.75rem', height: '37px' }}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Starting Invoice Number Config */}
+                      <div style={{ border: '1px solid var(--color-border-light)', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#FFFFFF' }}>
+                        <div>
+                          <strong style={{ fontSize: '0.9rem' }}>Starting Invoice Number</strong>
+                          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted-on-light)' }}>The base sequence number from which future orders will increment (e.g. 100475).</p>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <input 
+                            type="number" 
+                            value={tempSettings.invoice_starting_number || 100475}
+                            onChange={(e) => setTempSettings({ ...tempSettings, invoice_starting_number: parseInt(e.target.value) || 100475 })}
+                            style={{ padding: '0.5rem', border: '1px solid var(--color-border-light)', fontSize: '0.9rem', width: '180px' }} 
+                          />
+                          <button 
+                            type="button" 
+                            onClick={() => handleSaveSiteSetting('invoice_starting_number', tempSettings.invoice_starting_number)}
                             className="btn btn-primary" 
                             style={{ padding: '0 1rem', fontSize: '0.75rem', height: '37px' }}
                           >

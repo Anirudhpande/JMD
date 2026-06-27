@@ -548,9 +548,50 @@ export const db = {
   },
 
   async createOrder(orderData) {
+    let nextId = orderData.id;
+    
+    if (!nextId) {
+      if (pool) {
+        try {
+          const idRes = await pool.query('SELECT id FROM orders');
+          const numericIds = idRes.rows
+            .map(row => parseInt(row.id, 10))
+            .filter(id => !isNaN(id) && id >= 100475);
+          const nextIdNum = numericIds.length > 0 ? Math.max(...numericIds) + 1 : 100476;
+          nextId = nextIdNum.toString();
+        } catch (err) {
+          console.error('Error fetching sequential ID, falling back to random:', err);
+          nextId = `ord-${Math.floor(100000 + Math.random() * 900000)}`;
+        }
+      } else if (isSupabaseConfigured) {
+        try {
+          const { data, error } = await supabase.from('orders').select('id');
+          if (!error && data) {
+            const numericIds = data
+              .map(row => parseInt(row.id, 10))
+              .filter(id => !isNaN(id) && id >= 100475);
+            const nextIdNum = numericIds.length > 0 ? Math.max(...numericIds) + 1 : 100476;
+            nextId = nextIdNum.toString();
+          } else {
+            nextId = `ord-${Math.floor(100000 + Math.random() * 900000)}`;
+          }
+        } catch (err) {
+          nextId = `ord-${Math.floor(100000 + Math.random() * 900000)}`;
+        }
+      } else {
+        const store = readLocalDb();
+        const ordersList = store.orders || [];
+        const numericIds = ordersList
+          .map(o => parseInt(o.id, 10))
+          .filter(id => !isNaN(id) && id >= 100475);
+        const nextIdNum = numericIds.length > 0 ? Math.max(...numericIds) + 1 : 100476;
+        nextId = nextIdNum.toString();
+      }
+    }
+
     const newOrder = {
       ...orderData,
-      id: orderData.id || `ord-${Math.floor(100000 + Math.random() * 900000)}`,
+      id: nextId,
       status: orderData.status || 'pending',
       created_at: new Date().toISOString()
     };
