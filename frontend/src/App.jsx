@@ -199,7 +199,7 @@ function AppContent() {
       
       {/* Top Banner - Deep Charcoal */}
       <div style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', textAlign: 'center', padding: '0.6rem 1rem', fontSize: '0.75rem', letterSpacing: '0.12em', textTransform: 'uppercase', borderBottom: '1px solid var(--color-border-dark)', fontWeight: 500 }}>
-        Genuine Stone, UK Stock & Direct Import Prices — Nationwide Lorry Delivery
+        100% Genuine Stones of Best Quality available to Retail Users.
       </div>
 
       {/* Header - Warm Off-White */}
