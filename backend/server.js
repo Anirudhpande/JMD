@@ -99,6 +99,23 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+// Temporary Stripe debug helper
+app.get('/api/debug-stripe', (req, res) => {
+  const rawKey = process.env.STRIPE_SECRET_KEY;
+  if (!rawKey) {
+    return res.json({ status: 'no_key_configured' });
+  }
+  res.json({
+    length: rawKey.length,
+    startsWithRk: rawKey.startsWith('rk_'),
+    endsWithJvog: rawKey.endsWith('jVog'),
+    hasWhitespace: /\s/.test(rawKey),
+    hasQuotes: /^['"]|['"]$/.test(rawKey),
+    trimmedLength: rawKey.trim().length,
+    sanitizedLength: cleanSecretKey ? cleanSecretKey.length : 0
+  });
+});
+
 // AUTH & PROFILES ENDPOINTS
 app.post('/api/auth/login', async (req, res) => {
   const { email, password } = req.body;
