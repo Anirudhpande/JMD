@@ -1047,7 +1047,7 @@ export const db = {
     writeLocalDb(store);
     const { password: _, ...safeUser } = newUser;
     return safeUser;
-  }
+  },
   async logActivity({ event_type, description, user_name = null, user_email = null, meta = null }) {
     const id = `act-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     const created_at = new Date().toISOString();
