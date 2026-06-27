@@ -99,7 +99,7 @@ export default function Invoice() {
   const postcodeMatch = (cd.address || '').match(/[A-Z]{1,2}[0-9R][0-9A-Z]?\s*[0-9][A-Z]{2}/i);
   const postcode      = postcodeMatch ? postcodeMatch[0].toUpperCase() : '';
 
-  const C = (extra = {}) => ({ border: '1px solid #aaa', padding: '4px 6px', ...extra });
+  const C = (extra = {}) => ({ padding: '5px 8px', ...extra });
 
   return (
     <>
@@ -108,7 +108,15 @@ export default function Invoice() {
         <Link to={order.user_id !== 'guest' ? '/account' : '/'} style={{ display:'flex', alignItems:'center', gap:'0.4rem', fontSize:'0.85rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.04em', color:'#333' }}>
           <ArrowLeft size={15}/> Return to Account
         </Link>
-        <button onClick={() => window.print()} style={{ display:'flex', alignItems:'center', gap:'0.4rem', padding:'0.5rem 1.25rem', background:'#222', color:'#fff', border:'none', cursor:'pointer', fontSize:'0.85rem', fontWeight:600 }}>
+        <button
+          onClick={() => {
+            const prev = document.title;
+            document.title = '';
+            window.print();
+            document.title = prev;
+          }}
+          style={{ display:'flex', alignItems:'center', gap:'0.4rem', padding:'0.5rem 1.25rem', background:'#222', color:'#fff', border:'none', cursor:'pointer', fontSize:'0.85rem', fontWeight:600 }}
+        >
           <Printer size={15}/> Print Invoice
         </button>
       </div>
@@ -171,17 +179,17 @@ export default function Invoice() {
         </table>
 
         {/* ITEMS TABLE */}
-        <table className="invoice-table" style={{ width:'100%', borderCollapse:'collapse', border:'1px solid #aaa', marginBottom:'14px', fontSize:'11px' }}>
+        <table className="invoice-table" style={{ width:'100%', borderCollapse:'collapse', border:'1px solid #000', marginBottom:'14px', fontSize:'11px' }}>
           <thead>
-            <tr style={{ background:'#d9d9d9' }}>
-              <th style={C({ textAlign:'center', width:'26%' })}>Description</th>
-              <th style={C({ textAlign:'center', width:'10%' })}>Size (mm)</th>
-              <th style={C({ textAlign:'center', width:'9%'  })}>Thickness</th>
-              <th style={C({ textAlign:'center', width:'8%'  })}>Qty<br/>(packs)</th>
-              <th style={C({ textAlign:'center', width:'12%' })}>Coverage<br/>/ Pack in<br/>m²</th>
-              <th style={C({ textAlign:'center', width:'12%' })}>Total coverage<br/>in m²</th>
-              <th style={C({ textAlign:'center', width:'11%' })}>Rate (£/m²)</th>
-              <th style={C({ textAlign:'center', width:'12%' })}>Line Total<br/>(£)</th>
+            <tr style={{ background:'#d9d9d9', borderBottom:'1px solid #000' }}>
+              <th style={{ ...C({ textAlign:'center', width:'26%', borderRight:'1px solid #000' }) }}>Description</th>
+              <th style={{ ...C({ textAlign:'center', width:'10%', borderRight:'1px solid #000' }) }}>Size (mm)</th>
+              <th style={{ ...C({ textAlign:'center', width:'9%',  borderRight:'1px solid #000' }) }}>Thickness</th>
+              <th style={{ ...C({ textAlign:'center', width:'8%',  borderRight:'1px solid #000' }) }}>Qty<br/>(packs)</th>
+              <th style={{ ...C({ textAlign:'center', width:'12%', borderRight:'1px solid #000' }) }}>Coverage<br/>/ Pack in<br/>m²</th>
+              <th style={{ ...C({ textAlign:'center', width:'12%', borderRight:'1px solid #000' }) }}>Total coverage<br/>in m²</th>
+              <th style={{ ...C({ textAlign:'center', width:'11%', borderRight:'1px solid #000' }) }}>Rate (£/m²)</th>
+              <th style={{ ...C({ textAlign:'center', width:'12%' }) }}>Line Total<br/>(£)</th>
             </tr>
           </thead>
           <tbody>
@@ -194,7 +202,7 @@ export default function Invoice() {
               const rate      = (parseFloat(item.price) / cov).toFixed(2);
               const lineTotal = (parseFloat(item.price) * qty).toFixed(2);
               return (
-                <tr key={i}>
+                <tr key={i} style={{ borderBottom:'1px solid #ddd' }}>
                   <td style={C({ textAlign:'left' })}>{cleanProductName(item.product_name)}</td>
                   <td style={C({ textAlign:'center' })}>{size}</td>
                   <td style={C({ textAlign:'center' })}>{thick}</td>
@@ -208,30 +216,30 @@ export default function Invoice() {
             })}
             {/* Blank row 1 */}
             <tr style={{ height:'22px' }}>
-              {[0,1,2,3,4,5,6].map(i=><td key={i} style={C()}/>)}
-              <td style={C()}/>
+              {[0,1,2,3,4,5,6].map(i=><td key={i} style={{ padding:'5px 8px' }}/>)}
+              <td style={{ padding:'5px 8px' }}/>
             </tr>
             {/* Blank row 2 — shows £ - */}
             <tr style={{ height:'22px' }}>
-              {[0,1,2,3,4,5,6].map(i=><td key={i} style={C()}/>)}
-              <td style={C({ textAlign:'right', color:'#555' })}>£ &nbsp;-</td>
+              {[0,1,2,3,4,5,6].map(i=><td key={i} style={{ padding:'5px 8px' }}/>)}
+              <td style={{ padding:'5px 8px', textAlign:'right', color:'#555' }}>£ &nbsp;-</td>
             </tr>
           </tbody>
         </table>
 
         {/* TOTALS TABLE */}
         <div style={{ display:'flex', justifyContent:'flex-end', marginBottom:'20px' }}>
-          <table style={{ borderCollapse:'collapse', fontSize:'11px', border:'1px solid #aaa' }}>
+          <table style={{ borderCollapse:'collapse', fontSize:'11px', border:'1px solid #000' }}>
             <tbody>
               {[
-                ['Sub Total',    `£ \u00a0${fmtNum(order.subtotal)}`],
-                ['Delivery',     order.shipping > 0 ? `£ \u00a0${fmtNum(order.shipping)}` : '£'],
-                ['VAT @ 20%',   `£ \u00a0${fmtNum(order.vat)}`],
-                ['Total Payable',`£ \u00a0${fmtNum(order.total)}`],
+                ['Sub Total',    `£  ${fmtNum(order.subtotal)}`],
+                ['Delivery',     order.shipping > 0 ? `£  ${fmtNum(order.shipping)}` : '£'],
+                ['VAT @ 20%',   `£  ${fmtNum(order.vat)}`],
+                ['Total Payable',`£  ${fmtNum(order.total)}`],
               ].map(([label, val], i) => (
                 <tr key={i}>
-                  <td style={{ ...C({ textAlign:'right', fontWeight:'bold', paddingRight:'14px', minWidth:'110px' }) }}>{label}</td>
-                  <td style={{ ...C({ textAlign:'right', minWidth:'90px', fontWeight: label === 'Total Payable' ? 'bold' : 'normal' }) }}>{val}</td>
+                  <td style={{ padding:'4px 14px 4px 8px', textAlign:'right', fontWeight:'bold', minWidth:'110px', borderBottom: i < 3 ? '1px solid #ddd' : 'none' }}>{label}</td>
+                  <td style={{ padding:'4px 8px', textAlign:'right', minWidth:'90px', fontWeight: label === 'Total Payable' ? 'bold' : 'normal', borderBottom: i < 3 ? '1px solid #ddd' : 'none' }}>{val}</td>
                 </tr>
               ))}
             </tbody>
