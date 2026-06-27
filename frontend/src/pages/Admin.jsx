@@ -18,7 +18,12 @@ import {
   Truck, 
   Upload,
   ToggleLeft,
-  ToggleRight
+  ToggleRight,
+  Activity,
+  LogIn,
+  UserPlus,
+  ShoppingBag,
+  RefreshCw
 } from 'lucide-react';
 import { apiFetch } from '../api.js';
 
@@ -90,6 +95,7 @@ export default function Admin({ user, onLogout }) {
   const [reviews, setReviews] = useState([]);
   const [shippingZones, setShippingZones] = useState([]);
   const [siteSettings, setSiteSettings] = useState({});
+  const [activityLogs, setActivityLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Editing Product states
@@ -119,12 +125,13 @@ export default function Admin({ user, onLogout }) {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [prodsRes, ordsRes, revsRes, zonesRes, settingsRes] = await Promise.all([
+      const [prodsRes, ordsRes, revsRes, zonesRes, settingsRes, logsRes] = await Promise.all([
         apiFetch('/api/products'),
         apiFetch('/api/orders'),
         apiFetch('/api/reviews'),
         apiFetch('/api/shipping-zones'),
-        apiFetch('/api/site-settings')
+        apiFetch('/api/site-settings'),
+        apiFetch('/api/activity-logs?limit=200')
       ]);
       
       const prods = await prodsRes.json();
@@ -132,6 +139,7 @@ export default function Admin({ user, onLogout }) {
       const revs = await revsRes.json();
       const zones = await zonesRes.json();
       const settings = await settingsRes.json();
+      const logs = await logsRes.json();
       
       const normalizedOrds = (ords || []).map(o => ({
         ...o,
@@ -156,6 +164,7 @@ export default function Admin({ user, onLogout }) {
       setShippingZones(zones);
       setSiteSettings(settings);
       setTempSettings(settings);
+      setActivityLogs(Array.isArray(logs) ? logs : []);
     } catch (error) {
       console.error('Error fetching CMS admin registry data:', error);
     } finally {
@@ -395,6 +404,12 @@ export default function Admin({ user, onLogout }) {
               style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.25rem 1rem', border: '1px solid var(--color-border-light)', backgroundColor: activeTab === 'settings' ? '#FFFFFF' : 'transparent', color: activeTab === 'settings' ? 'var(--color-accent)' : 'var(--text-muted-on-light)', fontWeight: activeTab === 'settings' ? 600 : 500, cursor: 'pointer', textAlign: 'left', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.8rem' }}
             >
               <Settings size={16} /> Site Settings
+            </button>
+            <button 
+              onClick={() => { setActiveTab('activity'); setEditingProduct(null); setIsAddingProduct(false); fetchData(); }}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.25rem 1rem', border: '1px solid var(--color-border-light)', backgroundColor: activeTab === 'activity' ? '#FFFFFF' : 'transparent', color: activeTab === 'activity' ? 'var(--color-accent)' : 'var(--text-muted-on-light)', fontWeight: activeTab === 'activity' ? 600 : 500, cursor: 'pointer', textAlign: 'left', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.8rem' }}
+            >
+              <Activity size={16} /> Activity Log
             </button>
           </aside>
 
@@ -1191,6 +1206,67 @@ export default function Admin({ user, onLogout }) {
 
                   </div>
                 )}
+                {/* ACTIVITY LOG TAB */}
+                {activeTab === 'activity' && (() => {
+                  const eventIcon = (type) => {
+                    switch(type) {
+                      case 'user_login': return <LogIn size={14} style={{ color: '#2B82D9' }} />;
+                      case 'user_registered': return <UserPlus size={14} style={{ color: 'var(--color-success)' }} />;
+                      case 'order_placed': return <ShoppingCart size={14} style={{ color: 'var(--color-accent)' }} />;
+                      case 'order_status_changed': return <RefreshCw size={14} style={{ color: '#9B59B6' }} />;
+                      case 'cart_addition': return <ShoppingBag size={14} style={{ color: '#E67E22' }} />;
+                      default: return <Activity size={14} style={{ color: 'var(--text-muted-on-light)' }} />;
+                    }
+                  };
+                  const eventLabel = (type) => {
+                    switch(type) {
+                      case 'user_login': return 'Sign In';
+                      case 'user_registered': return 'New Customer';
+                      case 'order_placed': return 'Order Placed';
+                      case 'order_status_changed': return 'Status Updated';
+                      case 'cart_addition': return 'Added to Basket';
+                      default: return type;
+                    }
+                  };
+                  const fmtTime = (ts) => {
+                    const d = new Date(ts);
+                    return d.toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                  };
+
+                  return (
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '1rem' }}>
+                        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', fontWeight: 400 }}>Activity Log</h2>
+                        <button onClick={fetchData} className="btn btn-secondary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <RefreshCw size={14} /> Refresh
+                        </button>
+                      </div>
+
+                      {activityLogs.length === 0 ? (
+                        <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-muted-on-light)', border: '1px dashed var(--color-border-light)' }}>
+                          <Activity size={36} style={{ marginBottom: '1rem', opacity: 0.4 }} />
+                          <p style={{ fontSize: '0.9rem' }}>No activity recorded yet. Events will appear here as customers interact with the site.</p>
+                        </div>
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+                          {activityLogs.map((log, i) => (
+                            <div key={log.id} style={{ display: 'grid', gridTemplateColumns: '140px 120px 1fr auto', gap: '1rem', alignItems: 'center', padding: '0.85rem 1rem', borderBottom: '1px solid var(--color-border-light)', backgroundColor: i % 2 === 0 ? 'transparent' : '#FAFAF8', fontSize: '0.82rem' }}>
+                              <span style={{ color: 'var(--text-muted-on-light)', fontSize: '0.75rem' }}>{fmtTime(log.created_at)}</span>
+                              <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                {eventIcon(log.event_type)}
+                                {eventLabel(log.event_type)}
+                              </span>
+                              <span style={{ color: 'var(--text-on-light)' }}>{log.description}</span>
+                              <span style={{ color: 'var(--text-muted-on-light)', fontSize: '0.72rem', whiteSpace: 'nowrap' }}>
+                                {log.user_email || ''}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </>
             )}
 
