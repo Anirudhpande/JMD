@@ -28,6 +28,10 @@ const deducePieces = (v) => {
 const fmtNum = (n) =>
   Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
+// Strip the " - 900x600mm Pack 30 Pieces (Single Size)" style suffix from product names
+const cleanProductName = (name) =>
+  String(name || '').replace(/\s*-\s*\d+x\d+.*$/i, '').trim();
+
 export default function Invoice() {
   const { orderId } = useParams();
   const [order, setOrder]     = useState(null);
@@ -183,7 +187,7 @@ export default function Invoice() {
           <tbody>
             {order.items.map((item, i) => {
               const size      = extractDimensions(item.variant_size);
-              const thick     = deduceThickness(item.product_name);
+              const thick     = deduceThickness(cleanProductName(item.product_name));
               const qty       = item.quantity;
               const cov       = extractCoverage(item.variant_size);
               const totCov    = (cov * qty).toFixed(1);
@@ -191,7 +195,7 @@ export default function Invoice() {
               const lineTotal = (parseFloat(item.price) * qty).toFixed(2);
               return (
                 <tr key={i}>
-                  <td style={C({ textAlign:'left' })}>{item.product_name}</td>
+                  <td style={C({ textAlign:'left' })}>{cleanProductName(item.product_name)}</td>
                   <td style={C({ textAlign:'center' })}>{size}</td>
                   <td style={C({ textAlign:'center' })}>{thick}</td>
                   <td style={C({ textAlign:'center' })}>{qty}</td>
