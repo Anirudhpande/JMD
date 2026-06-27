@@ -3,6 +3,23 @@ import { useParams, Link } from 'react-router-dom';
 import { Printer, ArrowLeft, Check, AlertTriangle } from 'lucide-react';
 import { apiFetch } from '../api.js';
 
+const extractCoverage = (variantSize) => {
+  const match = String(variantSize || '').match(/(\d+(\.\d+)?)\s*m²/i);
+  return match ? parseFloat(match[1]) : 18.9;
+};
+
+const extractDimensions = (variantSize) => {
+  const match = String(variantSize || '').match(/\d+x\d+/);
+  return match ? match[0] : 'Mixed';
+};
+
+const deduceThickness = (productName) => {
+  const name = String(productName || '').toLowerCase();
+  if (name.includes('porcelain')) return '20mm';
+  if (name.includes('brick')) return '65mm';
+  return '22mm';
+};
+
 export default function Invoice() {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
@@ -141,26 +158,41 @@ export default function Invoice() {
           </div>
 
           {/* Items Table */}
-          <table className="invoice-table" style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '3rem', fontSize: '0.85rem' }}>
+          <table className="invoice-table" style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '3rem', fontSize: '0.85rem', border: '1px solid #111111' }}>
             <thead>
-              <tr style={{ borderBottom: '2px solid #111111', textAlign: 'left' }}>
-                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase' }}>Product Description</th>
-                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', textAlign: 'center' }}>Size Specification</th>
-                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', textAlign: 'center' }}>Qty</th>
-                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', textAlign: 'right' }}>Unit Price (ex. VAT)</th>
-                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', textAlign: 'right' }}>Line Total (ex. VAT)</th>
+              <tr style={{ backgroundColor: '#EBE4D9', borderBottom: '2px solid #111111' }}>
+                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', border: '1px solid #111111', textAlign: 'left' }}>Description</th>
+                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', border: '1px solid #111111', textAlign: 'center' }}>Size (mm)</th>
+                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', border: '1px solid #111111', textAlign: 'center' }}>Thickness</th>
+                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', border: '1px solid #111111', textAlign: 'center' }}>Qty (packs)</th>
+                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', border: '1px solid #111111', textAlign: 'center' }}>Coverage / Pack (m²)</th>
+                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', border: '1px solid #111111', textAlign: 'center' }}>Total Coverage (m²)</th>
+                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', border: '1px solid #111111', textAlign: 'right' }}>Rate (£/m²)</th>
+                <th style={{ padding: '0.75rem 0.5rem', fontWeight: 700, textTransform: 'uppercase', border: '1px solid #111111', textAlign: 'right' }}>Line Total (£)</th>
               </tr>
             </thead>
             <tbody>
-              {order.items.map((item, index) => (
-                <tr key={index} style={{ borderBottom: '1px solid #EAEAEA' }}>
-                  <td style={{ padding: '1rem 0.5rem', fontWeight: 500 }}>{item.product_name}</td>
-                  <td style={{ padding: '1rem 0.5rem', textAlign: 'center', color: '#555555' }}>{item.variant_size}</td>
-                  <td style={{ padding: '1rem 0.5rem', textAlign: 'center' }}>{item.quantity}</td>
-                  <td style={{ padding: '1rem 0.5rem', textAlign: 'right' }}>£{parseFloat(item.price).toFixed(2)}</td>
-                  <td style={{ padding: '1rem 0.5rem', textAlign: 'right', fontWeight: 500 }}>£{(parseFloat(item.price) * item.quantity).toFixed(2)}</td>
-                </tr>
-              ))}
+              {order.items.map((item, index) => {
+                const size = extractDimensions(item.variant_size);
+                const thickness = deduceThickness(item.product_name);
+                const qty = item.quantity;
+                const coverage = extractCoverage(item.variant_size);
+                const totalCoverage = (coverage * qty).toFixed(1);
+                const rate = (parseFloat(item.price) / coverage).toFixed(2);
+                const lineTotal = (parseFloat(item.price) * qty).toFixed(2);
+                return (
+                  <tr key={index}>
+                    <td style={{ padding: '1rem 0.5rem', fontWeight: 500, border: '1px solid #111111' }}>{item.product_name}</td>
+                    <td style={{ padding: '1rem 0.5rem', textAlign: 'center', color: '#555555', border: '1px solid #111111' }}>{size}</td>
+                    <td style={{ padding: '1rem 0.5rem', textAlign: 'center', color: '#555555', border: '1px solid #111111' }}>{thickness}</td>
+                    <td style={{ padding: '1rem 0.5rem', textAlign: 'center', border: '1px solid #111111' }}>{qty}</td>
+                    <td style={{ padding: '1rem 0.5rem', textAlign: 'center', color: '#555555', border: '1px solid #111111' }}>{coverage.toFixed(1)}</td>
+                    <td style={{ padding: '1rem 0.5rem', textAlign: 'center', color: '#555555', border: '1px solid #111111' }}>{totalCoverage}</td>
+                    <td style={{ padding: '1rem 0.5rem', textAlign: 'right', border: '1px solid #111111' }}>£{rate}</td>
+                    <td style={{ padding: '1rem 0.5rem', textAlign: 'right', fontWeight: 500, border: '1px solid #111111' }}>£{parseFloat(lineTotal).toFixed(2)}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
 
@@ -227,9 +259,12 @@ export default function Invoice() {
             margin-bottom: 1.5rem !important;
           }
           .invoice-table {
+            border: 1px solid #111111 !important;
+            border-collapse: collapse !important;
             margin-bottom: 1.5rem !important;
           }
-          .invoice-table td {
+          .invoice-table th, .invoice-table td {
+            border: 1px solid #111111 !important;
             padding: 0.65rem 0.5rem !important;
           }
           .invoice-footer {
