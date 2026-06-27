@@ -126,8 +126,8 @@ export default function Invoice() {
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', fontSize: '0.85rem' }}>
             {/* Left Col: Customer details */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '45%' }}>
-              <div><strong>Customer:</strong> {order.customer_details.name.toUpperCase()}</div>
-              <div style={{ marginTop: '0.2rem' }}><strong>Contact Person:</strong> {order.customer_details.name}</div>
+              <div><strong>Customer:</strong> {(order.customer_details.name || 'PREMIUM LANDSCAPING').toUpperCase()}</div>
+              <div style={{ marginTop: '0.2rem' }}><strong>Contact Person:</strong> {order.customer_details.name || 'Jake'}</div>
               <div style={{ marginTop: '0.2rem' }}><strong>Phone:</strong> {order.customer_details.phone || '+44 7467 505748'}</div>
               <div style={{ marginTop: '0.8rem' }}><strong>Delivery Postcode:</strong> {matchedPostcode}</div>
             </div>
@@ -260,11 +260,19 @@ export default function Invoice() {
 
       <style>{`
         @page {
-          size: auto;
-          margin: 0mm; /* Disables default browser header (title/date) and footer (URL/page numbers) */
+          margin: 0 !important; /* Disables default browser header (title/date) and footer (URL/page numbers) */
         }
         
         @media print {
+          /* Force print viewport to exactly one page height and hide overflow */
+          html, body {
+            height: 100% !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #FFFFFF !important;
+          }
+
           /* Hide everything on the page */
           body * {
             visibility: hidden !important;
