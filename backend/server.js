@@ -122,6 +122,12 @@ app.post('/api/auth/login', async (req, res) => {
   try {
     const user = await db.authenticateUser(email, password);
     if (user) {
+      db.logActivity({
+        event_type: 'user_login',
+        description: `${user.name || user.email} signed in`,
+        user_name: user.name || null,
+        user_email: user.email
+      }).catch(() => {});
       res.json({ success: true, user });
     } else {
       res.status(401).json({ success: false, message: 'Invalid email or password.' });
@@ -135,6 +141,12 @@ app.post('/api/auth/register', async (req, res) => {
   const { email, password, name, phone, role } = req.body;
   try {
     const user = await db.registerUser({ email, password, name, phone, role });
+    db.logActivity({
+      event_type: 'user_registered',
+      description: `New customer registered: ${name || email}`,
+      user_name: name || null,
+      user_email: email
+    }).catch(() => {});
     res.status(201).json({ success: true, user });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
@@ -288,6 +300,16 @@ app.post('/api/orders', async (req, res) => {
 
     const order = await db.createOrder(verifiedOrder);
 
+    // Log activity
+    const cd = order.customer_details || {};
+    db.logActivity({
+      event_type: 'order_placed',
+      description: `Order #${order.id} placed by ${cd.name || cd.email || 'customer'} — £${total.toFixed(2)}`,
+      user_name: cd.name || null,
+      user_email: cd.email || null,
+      meta: { order_id: order.id, total, payment_method: order.payment_method }
+    }).catch(() => {});
+
     // If Bank Transfer, send confirmation emails in the background (no await to prevent checkout hang)
     if (order.payment_method === 'bank_transfer') {
       emails.sendOrderConfirmation(order).catch(err => console.error('Background customer email error:', err));
@@ -314,6 +336,11 @@ app.put('/api/orders/:id', async (req, res) => {
   try {
     const order = await db.updateOrderStatus(req.params.id, status);
     if (order) {
+      db.logActivity({
+        event_type: 'order_status_changed',
+        description: `Order #${req.params.id} status updated to "${status}" by admin`,
+        meta: { order_id: req.params.id, status }
+      }).catch(() => {});
       // Trigger status update email on Dispatch in background
       if (status === 'dispatched') {
         emails.sendOrderDispatchedEmail(order).catch(err => console.error('Background dispatch email error:', err));
@@ -429,6 +456,27 @@ app.put('/api/site-settings/:key', async (req, res) => {
   try {
     const setting = await db.updateSiteSetting(req.params.key, req.body.value);
     res.json(setting);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// ACTIVITY LOGS ENDPOINTS
+app.get('/api/activity-logs', async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 100;
+    const logs = await db.getActivityLogs(limit);
+    res.json(logs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post('/api/activity-logs', async (req, res) => {
+  try {
+    const { event_type, description, user_name, user_email, meta } = req.body;
+    await db.logActivity({ event_type, description, user_name, user_email, meta });
+    res.status(201).json({ success: true });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

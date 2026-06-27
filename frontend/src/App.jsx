@@ -148,6 +148,22 @@ function AppContent() {
         quantity: quantity
       }];
     });
+
+    // Log cart addition activity (fire and forget)
+    const savedUser = localStorage.getItem('jmd_user');
+    const u = savedUser ? JSON.parse(savedUser) : null;
+    apiFetch('/api/activity-logs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_type: 'cart_addition',
+        description: `${u?.name || 'Guest'} added ${quantity}x "${product.name}" to basket`,
+        user_name: u?.name || null,
+        user_email: u?.email || null,
+        meta: { product_id: product.id, product_name: product.name, quantity, price }
+      })
+    }).catch(() => {});
+
     navigate('/cart');
   };
 

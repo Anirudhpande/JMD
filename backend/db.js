@@ -233,6 +233,18 @@ async function initializePostgresSchema(client) {
     );
   `);
 
+  await client.query(`
+    CREATE TABLE IF NOT EXISTS activity_logs (
+      id TEXT PRIMARY KEY,
+      event_type TEXT NOT NULL,
+      description TEXT NOT NULL,
+      user_name TEXT,
+      user_email TEXT,
+      meta JSONB,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+  `);
+
   const productCountRes = await client.query('SELECT COUNT(*) FROM products');
   const productCount = parseInt(productCountRes.rows[0].count);
   
@@ -1035,5 +1047,45 @@ export const db = {
     writeLocalDb(store);
     const { password: _, ...safeUser } = newUser;
     return safeUser;
+  }
+  async logActivity({ event_type, description, user_name = null, user_email = null, meta = null }) {
+    const id = `act-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const created_at = new Date().toISOString();
+    if (pool) {
+      try {
+        await pool.query(
+          'INSERT INTO activity_logs (id, event_type, description, user_name, user_email, meta, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+          [id, event_type, description, user_name, user_email, meta ? JSON.stringify(meta) : null, created_at]
+        );
+      } catch (err) {
+        console.error('Failed to write activity log:', err.message);
+      }
+      return;
+    }
+    // Local fallback
+    try {
+      const store = readLocalDb();
+      if (!store.activity_logs) store.activity_logs = [];
+      store.activity_logs.unshift({ id, event_type, description, user_name, user_email, meta, created_at });
+      if (store.activity_logs.length > 500) store.activity_logs = store.activity_logs.slice(0, 500);
+      writeLocalDb(store);
+    } catch (err) {
+      console.error('Failed to write local activity log:', err.message);
+    }
+  },
+
+  async getActivityLogs(limit = 100) {
+    if (pool) {
+      const res = await pool.query(
+        'SELECT * FROM activity_logs ORDER BY created_at DESC LIMIT $1',
+        [limit]
+      );
+      return res.rows.map(r => ({
+        ...r,
+        meta: r.meta || null
+      }));
+    }
+    const store = readLocalDb();
+    return (store.activity_logs || []).slice(0, limit);
   }
 };
