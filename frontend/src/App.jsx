@@ -173,8 +173,13 @@ function AppContent() {
 
   const handleLogin = (userData) => {
     setUser(userData);
+    const params = new URLSearchParams(window.location.search);
+    const redirectUrl = params.get('redirect');
+    
     if (userData.role === 'admin') {
       navigate('/admin');
+    } else if (redirectUrl) {
+      navigate(redirectUrl);
     } else {
       navigate('/account');
     }

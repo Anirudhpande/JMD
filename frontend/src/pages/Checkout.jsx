@@ -226,6 +226,17 @@ export default function Checkout({
     }
   }, []);
 
+  // Guard: Redirect to login if user attempts checkout without signing in
+  useEffect(() => {
+    if (checkoutStep === 'checkout') {
+      const savedUser = localStorage.getItem('jmd_user');
+      if (!savedUser) {
+        setCheckoutStep('cart');
+        navigate('/login?redirect=/cart');
+      }
+    }
+  }, [checkoutStep, navigate]);
+
   if (checkoutStep === 'success') {
     return (
       <div style={{ backgroundColor: 'var(--bg-light)', padding: '8rem 0', minHeight: '90vh', display: 'flex', alignItems: 'center' }}>
@@ -258,6 +269,12 @@ export default function Checkout({
       </div>
     );
   }
+
+  const isFormValid = checkoutName.trim() !== '' && 
+                      checkoutEmail.trim() !== '' && 
+                      checkoutPhone.trim() !== '' && 
+                      checkoutAddress.trim() !== '' && 
+                      checkoutPostcode.trim() !== '';
 
   return (
     <div style={{ backgroundColor: 'var(--bg-light)', padding: '6rem 0', minHeight: '100vh' }}>
@@ -321,7 +338,19 @@ export default function Checkout({
                     <button onClick={clearCart} className="btn btn-secondary" style={{ padding: '0.75rem 1.5rem', fontSize: '0.75rem' }}>
                       Clear Basket
                     </button>
-                    <button onClick={() => setCheckoutStep('checkout')} className="btn btn-primary" style={{ padding: '1rem 2.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <button 
+                      onClick={() => {
+                        const savedUser = localStorage.getItem('jmd_user');
+                        if (!savedUser) {
+                          alert("Please sign in or register to proceed to checkout.");
+                          navigate('/login?redirect=/cart');
+                        } else {
+                          setCheckoutStep('checkout');
+                        }
+                      }} 
+                      className="btn btn-primary" 
+                      style={{ padding: '1rem 2.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                    >
                       Proceed to Checkout <ArrowRight size={15} />
                     </button>
                   </div>
@@ -442,26 +471,32 @@ export default function Checkout({
 
                   {/* Payment element wrapper (only active when postcode lookup matches a zone and no loading/errors exist) */}
                   {matchedZone && !postcodeError && !postcodeLoading ? (
-                    <CheckoutPaymentForm
-                      subtotal={cartSubtotal}
-                      vat={cartVat}
-                      shipping={shippingCost}
-                      total={cartTotal}
-                      paymentMethod={paymentMethod}
-                      customerDetails={{
-                        name: checkoutName,
-                        email: checkoutEmail,
-                        phone: checkoutPhone,
-                        address: `${checkoutAddress}, ${checkoutPostcode.toUpperCase()}`
-                      }}
-                      cart={cart}
-                      clearCart={clearCart}
-                      onSuccess={(orderId) => {
-                        setLastPlacedOrderId(orderId);
-                        setCheckoutStep('success');
-                      }}
-                      onError={(msg) => setCheckoutError(msg)}
-                    />
+                    isFormValid ? (
+                      <CheckoutPaymentForm
+                        subtotal={cartSubtotal}
+                        vat={cartVat}
+                        shipping={shippingCost}
+                        total={cartTotal}
+                        paymentMethod={paymentMethod}
+                        customerDetails={{
+                          name: checkoutName,
+                          email: checkoutEmail,
+                          phone: checkoutPhone,
+                          address: `${checkoutAddress}, ${checkoutPostcode.toUpperCase()}`
+                        }}
+                        cart={cart}
+                        clearCart={clearCart}
+                        onSuccess={(orderId) => {
+                          setLastPlacedOrderId(orderId);
+                          setCheckoutStep('success');
+                        }}
+                        onError={(msg) => setCheckoutError(msg)}
+                      />
+                    ) : (
+                      <div style={{ backgroundColor: '#FDF2F2', padding: '1.25rem', border: '1px solid var(--color-danger)', fontSize: '0.75rem', color: 'var(--color-danger)', textAlign: 'center', marginTop: '0.5rem', fontWeight: 600 }}>
+                        Please fill in all the shipping and billing details to unlock the payment section.
+                      </div>
+                    )
                   ) : (
                     <div style={{ backgroundColor: '#EBE4D9', padding: '1.25rem', border: '1px solid var(--color-border-light)', fontSize: '0.75rem', color: 'var(--text-muted-on-light)', textAlign: 'center', marginTop: '0.5rem' }}>
                       Please enter a valid UK postcode to calculate carriage and unlock payment.
