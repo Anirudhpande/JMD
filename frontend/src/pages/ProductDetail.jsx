@@ -283,6 +283,68 @@ export default function ProductDetail({ addToCart }) {
                 ))}
               </div>
             )}
+
+            {/* Similar Products Carousel */}
+            {relatedProducts.length > 0 && (
+              <div style={{ marginTop: '4rem' }}>
+                <h3 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '0.75rem', color: 'var(--text-on-light)' }}>
+                  View Similar Products
+                </h3>
+                <div style={{ 
+                  display: 'flex', 
+                  gap: '1.25rem', 
+                  overflowX: 'auto', 
+                  paddingBottom: '1rem',
+                  scrollbarWidth: 'thin',
+                  scrollSnapType: 'x mandatory'
+                }} className="similar-products-scroll">
+                  {relatedProducts.map((prod) => (
+                    <Link 
+                      key={prod.id} 
+                      to={`/products/${prod.slug}`} 
+                      style={{ 
+                        width: '200px', 
+                        flexShrink: 0, 
+                        textDecoration: 'none', 
+                        color: 'inherit',
+                        border: '1px solid var(--color-border-light)',
+                        backgroundColor: '#FFFFFF',
+                        scrollSnapAlign: 'start',
+                        transition: 'var(--transition-smooth)'
+                      }}
+                      className="nav-hover-gold similar-product-card"
+                    >
+                      <div style={{ height: '140px', overflow: 'hidden' }}>
+                        <img 
+                          src={prod.images[0]} 
+                          alt={prod.name} 
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                        />
+                      </div>
+                      <div style={{ padding: '1rem' }}>
+                        <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 600 }}>{prod.category}</span>
+                        <h4 style={{ 
+                          fontSize: '0.85rem', 
+                          margin: '0.35rem 0', 
+                          fontWeight: 500,
+                          lineHeight: 1.3,
+                          height: '2.6rem',
+                          overflow: 'hidden',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical'
+                        }} title={prod.name}>
+                          {prod.name.split(' - ')[0]}
+                        </h4>
+                        <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-on-light)' }}>
+                          £{prod.price.toFixed(2)} <span style={{ fontSize: '0.65rem', fontWeight: 400, color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Details Column */}
@@ -619,39 +681,6 @@ export default function ProductDetail({ addToCart }) {
             </div>
           </div>
         </section>
-
-        {/* Related Products */}
-        {relatedProducts.length > 0 && (
-          <div>
-            <h2 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', marginBottom: '3rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '1.25rem', fontWeight: 400 }}>
-              Related Products
-            </h2>
-            <div className="product-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-              {relatedProducts.map((prod) => (
-                <div key={prod.id} className="product-card">
-                  <Link to={`/products/${prod.slug}`}>
-                    <div className="product-image-wrapper">
-                      <img src={prod.images[0]} alt={prod.name} className="product-image-primary" />
-                      <img src={prod.images[1] || prod.images[0]} alt={prod.name} className="product-image-secondary" />
-                    </div>
-                  </Link>
-                  <div className="product-info">
-                    <span className="product-cat">{prod.category}</span>
-                    <Link to={`/products/${prod.slug}`}>
-                      <h3 className="product-title" style={{ minHeight: '3.2rem' }}>{prod.name}</h3>
-                    </Link>
-                    <div className="product-price" style={{ marginBottom: '1.25rem' }}>
-                      £{prod.price.toFixed(2)}
-                    </div>
-                    <Link to={`/products/${prod.slug}`} className="btn btn-primary" style={{ width: '100%', fontSize: '0.75rem', letterSpacing: '0.1em', padding: '0.85rem 1rem', textAlign: 'center' }}>
-                      View Details
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
       </div>
       
