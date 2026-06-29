@@ -170,11 +170,6 @@ export default function Auth({ onLogin }) {
               <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', height: '52px', fontSize: '0.8rem', letterSpacing: '0.12em' }}>
                 <LogIn size={15} /> Sign In
               </button>
-
-              <div style={{ borderTop: '1px solid var(--color-border-light)', paddingTop: '1.5rem', marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--text-muted-on-light)', textAlign: 'center', lineHeight: 1.6 }}>
-                <p style={{ marginBottom: '0.35rem' }}><strong style={{ color: 'var(--text-on-light)' }}>Admin Login:</strong> admin@jmdglobalstones.co.uk / admin123</p>
-                <p><strong style={{ color: 'var(--text-on-light)' }}>Customer Login:</strong> customer@jmdglobalstones.co.uk / customer123</p>
-              </div>
             </form>
           ) : (
             /* REGISTER FORM */
