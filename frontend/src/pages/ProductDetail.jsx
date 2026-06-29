@@ -220,7 +220,7 @@ export default function ProductDetail({ addToCart }) {
         thickness: '20mm Vitrified Sawn'
       };
       case 'Bricks': return {
-        origin: 'Pakistan / India',
+        origin: 'Rajasthan, India',
         classification: 'Handmade Clay Facing Brick',
         finish: 'Standard / Handmade',
         slip: 'N/A (Walling Product)',

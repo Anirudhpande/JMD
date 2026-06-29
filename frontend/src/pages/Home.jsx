@@ -240,12 +240,12 @@ export default function Home({ addToCart }) {
           <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '5rem', alignItems: 'center' }} className="spotlight-layout">
             
             {/* Left Image Column */}
-            <div style={{ position: 'relative' }}>
-              <Link to={`/products/${spotlightProducts[spotlightIdx].slug}`}>
+            <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+              <Link to={`/products/${spotlightProducts[spotlightIdx].slug}`} style={{ width: '100%', display: 'block' }}>
                 <img 
                   src={spotlightProducts[spotlightIdx].image} 
                   alt={spotlightProducts[spotlightIdx].title} 
-                  style={{ width: '100%', aspectRatio: '1.3', objectFit: 'cover', border: '1px solid var(--color-border-dark)' }}
+                  style={{ width: '100%', aspectRatio: '1', objectFit: 'contain', backgroundColor: '#ffffff', border: '1px solid var(--color-border-dark)' }}
                 />
               </Link>
               <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', backgroundColor: 'rgba(17,17,17,0.85)', padding: '0.5rem 1rem', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>
