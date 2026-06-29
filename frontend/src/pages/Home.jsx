@@ -83,25 +83,44 @@ export default function Home({ addToCart }) {
     return () => clearInterval(timer);
   }, []);
 
-  // Featured Products Carousel — ping-pong direction so it never jumps back
+  // Featured Products Carousel — measured container, 2 cards visible, ping-pong
   const [activeProdIdx, setActiveProdIdx] = useState(0);
-  const [prodPaused, setProdPaused] = useState(false);
-  const prodDirRef = React.useRef(1); // 1 = forward, -1 = backward
+  const [prodPaused, setProdPaused]       = useState(false);
+  const [cardPx, setCardPx]               = useState(400);
+  const viewportRef  = React.useRef(null);
+  const prodDirRef   = React.useRef(1);
+  const VISIBLE      = 2;   // cards shown at a time
+  const GAP_PX       = 32;  // 2rem
 
+  // Measure card width — depends on `loading` so it fires after the carousel div renders
+  useEffect(() => {
+    if (loading) return; // div not in DOM yet
+    const measure = () => {
+      if (viewportRef.current) {
+        const w = viewportRef.current.offsetWidth;
+        setCardPx(Math.floor((w - GAP_PX * (VISIBLE - 1)) / VISIBLE));
+      }
+    };
+    // rAF ensures the browser has painted the layout before we read offsetWidth
+    const raf = requestAnimationFrame(measure);
+    window.addEventListener('resize', measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', measure);
+    };
+  }, [loading]); // re-run when loading flips to false
+
+  // Auto-advance, capped so last page always shows full cards
   useEffect(() => {
     if (!featuredProducts.length) return;
+    const maxIdx = Math.max(0, featuredProducts.length - VISIBLE);
+    if (maxIdx === 0) return; // nothing to scroll
     const timer = setInterval(() => {
       if (prodPaused) return;
       setActiveProdIdx(prev => {
         const next = prev + prodDirRef.current;
-        if (next >= featuredProducts.length - 1) {
-          prodDirRef.current = -1;
-          return featuredProducts.length - 1;
-        }
-        if (next <= 0) {
-          prodDirRef.current = 1;
-          return 0;
-        }
+        if (next >= maxIdx) { prodDirRef.current = -1; return maxIdx; }
+        if (next <= 0)      { prodDirRef.current =  1; return 0; }
         return next;
       });
     }, 1500);
@@ -278,22 +297,23 @@ export default function Home({ addToCart }) {
             </Link>
           </div>
 
-          {/* Carousel viewport — clips overflow, CSS transform slides the track */}
+          {/* Carousel — viewport clips, track slides by exact pixels */}
           <div
-            style={{ overflow: 'hidden', position: 'relative' }}
+            ref={viewportRef}
+            style={{ overflow: 'hidden' }}
             onMouseEnter={() => setProdPaused(true)}
             onMouseLeave={() => setProdPaused(false)}
           >
             <div
               style={{
                 display: 'flex',
-                gap: '2rem',
+                gap: `${GAP_PX}px`,
                 transition: 'transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                transform: `translateX(calc(-${activeProdIdx} * (280px + 2rem)))`,
+                transform: `translateX(-${activeProdIdx * (cardPx + GAP_PX)}px)`,
               }}
             >
-              {featuredProducts.map((prod, idx) => (
-                <div key={prod.id} className="product-card" style={{ flexShrink: 0, width: '280px' }}>
+              {featuredProducts.map((prod) => (
+                <div key={prod.id} className="product-card" style={{ flexShrink: 0, width: `${cardPx}px` }}>
                   <Link to={`/products/${prod.slug}`}>
                     <div className="product-image-wrapper">
                       <img src={prod.images[0]} alt={prod.name} className="product-image-primary" />
@@ -333,7 +353,7 @@ export default function Home({ addToCart }) {
             {featuredProducts.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setActiveProdIdx(idx)}
+                onClick={() => { setActiveProdIdx(idx); }}
                 style={{
                   width: idx === activeProdIdx ? '24px' : '6px',
                   height: '6px',
