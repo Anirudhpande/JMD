@@ -259,6 +259,11 @@ button, input, select, textarea {
   transform: scale(1.03);
 }
 
+.product-card.no-hover-swap:hover .product-image-primary {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
 .product-card:hover .product-image-secondary {
   opacity: 1;
   transform: scale(1.03);

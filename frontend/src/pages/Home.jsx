@@ -28,9 +28,37 @@ const reviews = [
   }
 ];
 
+const spotlightProducts = [
+  {
+    name: "County Anthracite Porcelain",
+    title: "The Wirral Poolside & Terrace Residence",
+    text: "For this modern coastal project, the architects selected JMD's County Anthracite Porcelain paving slabs. Featuring straight-sawn calibrated edges and a premium textured, anti-slip surface, this vitrified porcelain delivers clean lines and sophisticated dark tones.",
+    image: "/images/county-anthracite.png",
+    slug: "county-anthracite-porcelain-paving-slabs-900x600mm",
+    attributes: "R11 Slip rating | Vitrified"
+  },
+  {
+    name: "Raj Green Indian Sandstone",
+    title: "The Cheshire Manor Restoration",
+    text: "An elegant country garden terrace paved with Raj Green Indian Sandstone. The natural riven surface texture and forest green/sage tones blend beautifully with the traditional architecture, providing a highly durable, character-filled outdoor area.",
+    image: "/images/raj-green-sandstone.png",
+    slug: "raj-green-indian-sandstone-paving-slabs-project-pack-18-9m2",
+    attributes: "22mm Calibrated | Natural Riven"
+  },
+  {
+    name: "Persia Beige Porcelain",
+    title: "Modern Courtyard Oasis",
+    text: "A sleek, light-toned courtyard utilizing Persia Beige Porcelain. With its warm cream tones and subtle natural stone veining, it creates an expansive, bright feeling, requiring near-zero maintenance and offering excellent slip resistance.",
+    image: "/images/persia-beige.jpg",
+    slug: "persia-beige-porcelain-paving-slabs-900x600mm",
+    attributes: "Vitrified Outdoor | Low Absorption"
+  }
+];
+
 export default function Home({ addToCart }) {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [activeReviewIdx, setActiveReviewIdx] = useState(0);
+  const [spotlightIdx, setSpotlightIdx] = useState(0);
   const [loading, setLoading] = useState(true);
   const [settings, setSettings] = useState({
     home_hero_headline: "Enduring Stone.",
@@ -81,6 +109,14 @@ export default function Home({ addToCart }) {
     const timer = setInterval(() => {
       setActiveReviewIdx(prev => (prev + 1) % reviews.length);
     }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Spotlight Auto-Rotate
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSpotlightIdx(prev => (prev + 1) % spotlightProducts.length);
+    }, 4500);
     return () => clearInterval(timer);
   }, []);
 
@@ -205,11 +241,13 @@ export default function Home({ addToCart }) {
             
             {/* Left Image Column */}
             <div style={{ position: 'relative' }}>
-              <img 
-                src="https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png" 
-                alt="Wirral Estate Poolside in County Anthracite Porcelain" 
-                style={{ width: '100%', aspectRatio: '1.3', objectFit: 'cover', border: '1px solid var(--color-border-dark)' }}
-              />
+              <Link to={`/products/${spotlightProducts[spotlightIdx].slug}`}>
+                <img 
+                  src={spotlightProducts[spotlightIdx].image} 
+                  alt={spotlightProducts[spotlightIdx].title} 
+                  style={{ width: '100%', aspectRatio: '1.3', objectFit: 'cover', border: '1px solid var(--color-border-dark)' }}
+                />
+              </Link>
               <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', backgroundColor: 'rgba(17,17,17,0.85)', padding: '0.5rem 1rem', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>
                 Project Spotlight
               </div>
@@ -219,21 +257,21 @@ export default function Home({ addToCart }) {
             <div>
               <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.15em', display: 'block', marginBottom: '1rem' }}>Architectural Case Study</span>
               <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.6rem', color: 'var(--text-on-dark)', fontWeight: 400, marginBottom: '1.5rem', lineHeight: 1.15 }}>
-                The Wirral Poolside <br />& Terrace Residence
+                {spotlightProducts[spotlightIdx].title}
               </h2>
               <p style={{ color: 'var(--text-muted-on-dark)', fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '2rem' }}>
-                For this modern coastal project, the architects selected JMD's County Anthracite Porcelain paving slabs. Featuring straight-sawn calibrated edges and a premium textured, anti-slip surface, this vitrified porcelain delivers clean lines and sophisticated dark tones that interface seamlessly with the surrounding landscaping.
+                {spotlightProducts[spotlightIdx].text}
               </p>
               
               {/* Highlight callouts */}
               <div style={{ borderTop: '1px solid var(--color-border-dark)', paddingTop: '1.5rem', display: 'flex', gap: '3rem' }}>
                 <div>
                   <h4 style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--color-accent)', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Material Specification</h4>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-on-dark)' }}>County Anthracite Porcelain (20mm)</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-on-dark)' }}>{spotlightProducts[spotlightIdx].name}</p>
                 </div>
                 <div>
                   <h4 style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--color-accent)', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Core Attributes</h4>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-on-dark)' }}>R11 Slip rating | Vitrified</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-on-dark)' }}>{spotlightProducts[spotlightIdx].attributes}</p>
                 </div>
               </div>
             </div>
@@ -257,11 +295,13 @@ export default function Home({ addToCart }) {
 
           <div className="product-grid">
             {featuredProducts.map((prod) => (
-              <div key={prod.id} className="product-card">
+              <div key={prod.id} className={`product-card ${prod.category === 'Bricks' ? 'no-hover-swap' : ''}`}>
                 <Link to={`/products/${prod.slug}`}>
                   <div className="product-image-wrapper">
                     <img src={prod.images[0]} alt={prod.name} className="product-image-primary" />
-                    <img src={prod.images[1] || prod.images[0]} alt={prod.name} className="product-image-secondary" />
+                    {prod.category !== 'Bricks' && (
+                      <img src={prod.images[1] || prod.images[0]} alt={prod.name} className="product-image-secondary" />
+                    )}
                     <span className="badge badge-featured">Featured Selection</span>
                   </div>
                 </Link>
