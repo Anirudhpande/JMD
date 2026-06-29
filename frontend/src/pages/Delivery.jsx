@@ -149,19 +149,6 @@ export default function Delivery() {
 
         </div>
 
-        {/* Warning Banner */}
-        <div style={{ display: 'flex', gap: '2rem', border: '1px solid var(--color-border-light)', padding: '3rem', backgroundColor: '#FFFFFF' }} className="delivery-warning-panel">
-          <ShieldAlert size={48} style={{ flexShrink: 0, color: 'var(--color-danger)', marginTop: '4px' }} />
-          <div>
-            <h4 style={{ textTransform: 'uppercase', fontSize: '0.95rem', letterSpacing: '0.12em', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--color-danger)' }}>
-              Access Failures & Redelivery Surcharges
-            </h4>
-            <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-on-light)' }}>
-              Redelivery charges (flat rate £90+ VAT) will apply if the delivery lorry arrives at your site and cannot drop the pallets due to restricted access, low cables, soft gravel/grass ground, steep slopes, or because no adult is present to sign. If you have any questions or local road access constraints, please contact Roopesh immediately at <strong>07458148586</strong> prior to dispatch.
-            </p>
-          </div>
-        </div>
-
       </div>
 
       <style>{`
