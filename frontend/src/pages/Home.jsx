@@ -83,15 +83,27 @@ export default function Home({ addToCart }) {
     return () => clearInterval(timer);
   }, []);
 
-  // Featured Products Carousel — state-driven CSS transform (always works)
+  // Featured Products Carousel — ping-pong direction so it never jumps back
   const [activeProdIdx, setActiveProdIdx] = useState(0);
   const [prodPaused, setProdPaused] = useState(false);
+  const prodDirRef = React.useRef(1); // 1 = forward, -1 = backward
+
   useEffect(() => {
     if (!featuredProducts.length) return;
     const timer = setInterval(() => {
-      if (!prodPaused) {
-        setActiveProdIdx(prev => (prev + 1) % featuredProducts.length);
-      }
+      if (prodPaused) return;
+      setActiveProdIdx(prev => {
+        const next = prev + prodDirRef.current;
+        if (next >= featuredProducts.length - 1) {
+          prodDirRef.current = -1;
+          return featuredProducts.length - 1;
+        }
+        if (next <= 0) {
+          prodDirRef.current = 1;
+          return 0;
+        }
+        return next;
+      });
     }, 1500);
     return () => clearInterval(timer);
   }, [featuredProducts, prodPaused]);
