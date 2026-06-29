@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Truck, ShieldCheck, CheckSquare, MessageSquare, ArrowRight, Star } from 'lucide-react';
 import { apiFetch } from '../api.js';
@@ -83,44 +83,18 @@ export default function Home({ addToCart }) {
     return () => clearInterval(timer);
   }, []);
 
-  // Featured Products Auto-Scroll (1.5s per card)
-  const prodCarouselRef = useRef(null);
+  // Featured Products Carousel — state-driven CSS transform (always works)
+  const [activeProdIdx, setActiveProdIdx] = useState(0);
+  const [prodPaused, setProdPaused] = useState(false);
   useEffect(() => {
     if (!featuredProducts.length) return;
-    let paused = false;
-    const CARD_W = 310; // approximate card width + gap
-
-    const tick = setInterval(() => {
-      const el = prodCarouselRef.current;
-      if (!el || paused) return;
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      if (maxScroll <= 0) return;
-      if (el.scrollLeft >= maxScroll - 4) {
-        el.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        el.scrollBy({ left: CARD_W, behavior: 'smooth' });
+    const timer = setInterval(() => {
+      if (!prodPaused) {
+        setActiveProdIdx(prev => (prev + 1) % featuredProducts.length);
       }
     }, 1500);
-
-    const pause  = () => { paused = true; };
-    const resume = () => { paused = false; };
-    const el = prodCarouselRef.current;
-    if (el) {
-      el.addEventListener('mouseenter', pause);
-      el.addEventListener('mouseleave', resume);
-      el.addEventListener('touchstart', pause);
-      el.addEventListener('touchend', resume);
-    }
-    return () => {
-      clearInterval(tick);
-      if (el) {
-        el.removeEventListener('mouseenter', pause);
-        el.removeEventListener('mouseleave', resume);
-        el.removeEventListener('touchstart', pause);
-        el.removeEventListener('touchend', resume);
-      }
-    };
-  }, [featuredProducts]);
+    return () => clearInterval(timer);
+  }, [featuredProducts, prodPaused]);
 
   if (loading) {
     return (
@@ -292,45 +266,75 @@ export default function Home({ addToCart }) {
             </Link>
           </div>
 
+          {/* Carousel viewport — clips overflow, CSS transform slides the track */}
           <div
-            ref={prodCarouselRef}
-            className="home-prod-scroll"
+            style={{ overflow: 'hidden', position: 'relative' }}
+            onMouseEnter={() => setProdPaused(true)}
+            onMouseLeave={() => setProdPaused(false)}
           >
-            {featuredProducts.map((prod) => (
-              <div key={prod.id} className="product-card" style={{ flexShrink: 0, width: '280px', scrollSnapAlign: 'start' }}>
-                <Link to={`/products/${prod.slug}`}>
-                  <div className="product-image-wrapper">
-                    {/* Primary and Secondary (hover) images for luxury cross-fade */}
-                    <img src={prod.images[0]} alt={prod.name} className="product-image-primary" />
-                    <img src={prod.images[1] || prod.images[0]} alt={prod.name} className="product-image-secondary" />
-                    <span className="badge badge-featured">Featured Selection</span>
-                  </div>
-                </Link>
-                <div className="product-info">
-                  <span className="product-cat">{prod.category}</span>
+            <div
+              style={{
+                display: 'flex',
+                gap: '2rem',
+                transition: 'transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transform: `translateX(calc(-${activeProdIdx} * (280px + 2rem)))`,
+              }}
+            >
+              {featuredProducts.map((prod, idx) => (
+                <div key={prod.id} className="product-card" style={{ flexShrink: 0, width: '280px' }}>
                   <Link to={`/products/${prod.slug}`}>
-                    <h3 className="product-title" style={{ minHeight: '3.2rem' }}>{prod.name}</h3>
+                    <div className="product-image-wrapper">
+                      <img src={prod.images[0]} alt={prod.name} className="product-image-primary" />
+                      <img src={prod.images[1] || prod.images[0]} alt={prod.name} className="product-image-secondary" />
+                      <span className="badge badge-featured">Featured Selection</span>
+                    </div>
                   </Link>
-                  <div className="product-rating">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={13} fill={i < Math.floor(prod.stars) ? 'currentColor' : 'none'} style={{ strokeWidth: 1.5 }} />
-                    ))}
-                    <span style={{ color: 'var(--text-muted-on-light)', fontSize: '0.75rem', marginLeft: '0.25rem' }}>{prod.stars}</span>
+                  <div className="product-info">
+                    <span className="product-cat">{prod.category}</span>
+                    <Link to={`/products/${prod.slug}`}>
+                      <h3 className="product-title" style={{ minHeight: '3.2rem' }}>{prod.name}</h3>
+                    </Link>
+                    <div className="product-rating">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={13} fill={i < Math.floor(prod.stars) ? 'currentColor' : 'none'} style={{ strokeWidth: 1.5 }} />
+                      ))}
+                      <span style={{ color: 'var(--text-muted-on-light)', fontSize: '0.75rem', marginLeft: '0.25rem' }}>{prod.stars}</span>
+                    </div>
+                    <div className="product-price">
+                      £{prod.price.toFixed(2)} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
+                    </div>
+                    <button
+                      onClick={() => addToCart(prod, prod.size, 1, prod.price)}
+                      className="btn btn-primary"
+                      style={{ width: '100%', fontSize: '0.75rem', letterSpacing: '0.1em' }}
+                    >
+                      Add to Basket
+                    </button>
                   </div>
-                  <div className="product-price">
-                    £{prod.price.toFixed(2)} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
-                  </div>
-                  <button
-                    onClick={() => addToCart(prod, prod.size, 1, prod.price)}
-                    className="btn btn-primary"
-                    style={{ width: '100%', fontSize: '0.75rem', letterSpacing: '0.1em' }}
-                  >
-                    Add to Basket
-                  </button>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dot indicators */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.6rem', marginTop: '2.5rem' }}>
+            {featuredProducts.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveProdIdx(idx)}
+                style={{
+                  width: idx === activeProdIdx ? '24px' : '6px',
+                  height: '6px',
+                  backgroundColor: idx === activeProdIdx ? 'var(--color-accent)' : '#c8bfaf',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  padding: 0,
+                }}
+              />
             ))}
           </div>
+
         </div>
       </section>
 
@@ -473,17 +477,6 @@ export default function Home({ addToCart }) {
 
       {/* Responsive Grid Layout Overrides style */}
       <style>{`
-        /* Home featured products scroll strip */
-        .home-prod-scroll {
-          display: flex;
-          gap: 2rem;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-          padding-bottom: 1rem;
-        }
-        .home-prod-scroll::-webkit-scrollbar { display: none; }
         .category-card:hover .cat-img { transform: scale(1.05) !important; }
         .category-card:hover .cat-title-box { border-color: var(--color-accent) !important; color: var(--color-accent) !important; }
         @media (max-width: 768px) {
