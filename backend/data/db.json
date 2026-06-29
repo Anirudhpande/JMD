@@ -1,5 +1,262 @@
 {
-  "products": [],
+  "products": [
+    {
+      "id": "prod-12-var-1",
+      "name": "Kandla Grey Indian Sandstone Paving Slabs - Project Pack",
+      "slug": "kandla-grey-indian-sandstone-paving-slabs-project-pack-18-9m2",
+      "category": "Sandstone",
+      "description": "Premium Kandla Grey Indian Sandstone. Offers a beautiful traditional finish with hand-dressed edges and a natural riven surface. Calibrated to 22mm thickness for ease of installation.",
+      "price": 307,
+      "stock": 53,
+      "size": "Project Pack 60 Pieces (Mixed Sizes) - Covers 18.9m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/KG-Sandstone-300x300.png"
+      ],
+      "is_featured": true,
+      "stars": 4.8,
+      "variant_group_id": "kandla-grey-sandstone"
+    },
+    {
+      "id": "prod-12-var-2",
+      "name": "Kandla Grey Indian Sandstone Paving Slabs - 900x600mm",
+      "slug": "kandla-grey-indian-sandstone-paving-slabs-900x600x22mm",
+      "category": "Sandstone",
+      "description": "Large format single-sized Kandla Grey Indian Sandstone slabs. Features clean hand-cut riven textures and uniform cool grey tones for a premium modern landscape feel.",
+      "price": 292,
+      "stock": 68,
+      "size": "900x600x22mm (Single Size) - Covers 17.0m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/KG-Sandstone-300x300.png"
+      ],
+      "is_featured": true,
+      "stars": 4.8,
+      "variant_group_id": "kandla-grey-sandstone"
+    },
+    {
+      "id": "prod-23-var-1",
+      "name": "Raj Green Indian Sandstone Paving Slabs - Project Pack",
+      "slug": "raj-green-indian-sandstone-paving-slabs-project-pack-18-9m2",
+      "category": "Sandstone",
+      "description": "Authentic Raj Green Indian Sandstone. Blends classic green, warm brown, and natural grey shades to mimic traditional English Yorkstone layouts. Hand-dressed 22mm calibrated slabs.",
+      "price": 292,
+      "stock": 37,
+      "size": "Project Pack 60 Pieces (Mixed Sizes) - Covers 18.9m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/RG-Sandstone-300x300.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "variant_group_id": "raj-green-sandstone"
+    },
+    {
+      "id": "prod-23-var-2",
+      "name": "Raj Green Indian Sandstone Paving Slabs - 900x600mm",
+      "slug": "raj-green-indian-sandstone-paving-slabs-900x600x22mm",
+      "category": "Sandstone",
+      "description": "Sleek large-format 900x600mm Raj Green Sandstone flags. Natural riven textures with warm khaki and stone grey variation. Calibrated 22mm for perfect patio leveling.",
+      "price": 279,
+      "stock": 34,
+      "size": "900x600x22mm (Single Size) - Covers 17.0m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/RG-Sandstone-300x300.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "variant_group_id": "raj-green-sandstone"
+    },
+    {
+      "id": "prod-24-var-1",
+      "name": "Rippon Buff Indian Sandstone Paving Slabs - Project Pack",
+      "slug": "rippon-buff-indian-sandstone-paving-slabs-project-pack-18-9m2",
+      "category": "Sandstone",
+      "description": "Warm and inviting Rippon Buff Sandstone paving packs. Displaying a rich mix of cream, beige, golden buff, and pinkish vein patterns. Ideal for brightening darker garden layouts.",
+      "price": 292,
+      "stock": 25,
+      "size": "Project Pack 60 Pieces (Mixed Sizes) - Covers 18.9m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ss_ripponbuff_01-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "variant_group_id": "rippon-buff-sandstone"
+    },
+    {
+      "id": "prod-24-var-2",
+      "name": "Rippon Buff Indian Sandstone Paving Slabs - 900x600mm",
+      "slug": "rippon-buff-indian-sandstone-paving-slabs-900x600x22mm",
+      "category": "Sandstone",
+      "description": "Stunning large-format single size Rippon Buff paving flags. Calibrated 22mm thickness. Bright sand textures with distinct orange and gold swirl details.",
+      "price": 279,
+      "stock": 11,
+      "size": "900x600x22mm (Single Size) - Covers 18.9m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ss_ripponbuff_01-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "variant_group_id": "rippon-buff-sandstone"
+    },
+    {
+      "id": "prod-1-var-1",
+      "name": "Autumn Brown Indian Sandstone Paving Slabs - Project Pack",
+      "slug": "autumn-brown-indian-sandstone-paving-slabs-project-pack-18-9m2",
+      "category": "Sandstone",
+      "description": "Classic Autumn Brown natural stone flags. Riven cleft textures containing warm earthy browns, hazelnut, and dark grey tones. Fully calibrated 22mm slabs.",
+      "price": 292,
+      "stock": 1,
+      "size": "Project Pack 60 Pieces (Mixed Sizes) - Covers 17.0m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png"
+      ],
+      "is_featured": true,
+      "stars": 4.6,
+      "variant_group_id": "autumn-brown-sandstone"
+    },
+    {
+      "id": "prod-1-var-2",
+      "name": "Autumn Brown Indian Sandstone Paving Slabs - 900x600mm",
+      "slug": "autumn-brown-indian-sandstone-paving-slabs-900x600x22mm",
+      "category": "Sandstone",
+      "description": "Large 900x600mm format Autumn Brown sandstone tiles. Earthy tones provide a warm, cozy feeling for classic country garden patios.",
+      "price": 279,
+      "stock": 0,
+      "size": "900x600x22mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png"
+      ],
+      "is_featured": true,
+      "stars": 4.6,
+      "variant_group_id": "autumn-brown-sandstone"
+    },
+    {
+      "id": "prod-6-var-2",
+      "name": "County Anthracite Porcelain Paving Slabs",
+      "slug": "county-anthracite-porcelain-paving-slabs-900x600mm",
+      "category": "Porcelain",
+      "description": "Premium dark anthracite vitrified outdoor porcelain. Modern anti-slip fine textured surface, sawn clean edges. Extremely durable and stain-resistant.",
+      "price": 370,
+      "stock": 16,
+      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "variant_group_id": "county-anthracite-porcelain"
+    },
+    {
+      "id": "prod-9-var-1",
+      "name": "Hammer Stone Grey Porcelain Paving Slabs",
+      "slug": "hammer-stone-grey-porcelain-paving-slabs-900x600mm",
+      "category": "Porcelain",
+      "description": "Textured Hammer Stone Grey vitrified porcelain paving. Replicates natural split stones with zero maintenance and excellent wet weather traction.",
+      "price": 360,
+      "stock": 10,
+      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/HSG-Porc-Tiles-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "variant_group_id": "hammer-stone-grey-porcelain"
+    },
+    {
+      "id": "prod-18-var-1",
+      "name": "Mountain White Porcelain Paving Slabs",
+      "slug": "mountain-white-porcelain-paving-slabs-900x600mm",
+      "category": "Porcelain",
+      "description": "Ultra-modern off-white vitrified porcelain. Creates an extremely bright, spacious, and luxurious feel for high-end modern garden builds.",
+      "price": 349,
+      "stock": 2,
+      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/MW-Porc-Tiles-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.5,
+      "variant_group_id": "mountain-white-porcelain"
+    },
+    {
+      "id": "prod-7-var-1",
+      "name": "Earth Core Grey Porcelain Slabs",
+      "slug": "earth-core-grey-porcelain-slabs-900x600mm",
+      "category": "Porcelain",
+      "description": "Vitrified porcelain with a sleek concrete-grey mineral appearance. Perfect for minimal indoor-outdoor floor designs.",
+      "price": 360,
+      "stock": 3,
+      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ECG-Porc-Tiles-300x300.png"
+      ],
+      "is_featured": true,
+      "stars": 4.8,
+      "variant_group_id": "earth-core-grey-porcelain"
+    },
+    {
+      "id": "prod-21-var-1",
+      "name": "Quartz Light Grey Porcelain Slabs",
+      "slug": "quartz-light-grey-porcelain-slabs-900x600mm",
+      "category": "Porcelain",
+      "description": "Features a quartz-veined mineral aesthetic in a bright, modern grey tone. Frost proof, slip proof R11 vitrified construction.",
+      "price": 373,
+      "stock": 21,
+      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/QLG-Porc-Tiles-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "variant_group_id": "quartz-light-grey-porcelain"
+    },
+    {
+      "id": "prod-13-var-1",
+      "name": "Kandla Grey Porcelain Slabs",
+      "slug": "kandla-grey-porcelain-slabs-900x600mm",
+      "category": "Porcelain",
+      "description": "Replicates the famous cool grey natural sandstone look, but with the high performance and low maintenance of vitrified porcelain.",
+      "price": 373,
+      "stock": 34,
+      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/07/Kandla-Grey-Porcelain-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "variant_group_id": "kandla-grey-porcelain"
+    },
+    {
+      "id": "prod-22-var-1",
+      "name": "Quartz White Porcelain Paving",
+      "slug": "quartz-white-porcelain-paving-900x600mm",
+      "category": "Porcelain",
+      "description": "Pure white vitrified porcelain flags with light marble-like quartz veining. R11 slip rating. Creates clean lines and bright modern garden zones.",
+      "price": 373,
+      "stock": 35,
+      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/07/Quartz-White-Porcelain-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "variant_group_id": "quartz-white-porcelain"
+    },
+    {
+      "id": "prod-19-var-1",
+      "name": "Persia Beige Porcelain Paving Slabs",
+      "slug": "persia-beige-porcelain-paving-slabs-900x600mm",
+      "category": "Porcelain",
+      "description": "Sleek beige-toned porcelain slabs with highly detailed stone-vein finishes. High load capacity, frost resistant, and moss proof.",
+      "price": 373,
+      "stock": 3,
+      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2026/06/Persia-Beige05-300x200.jpg"
+      ],
+      "is_featured": true,
+      "stars": 4.8,
+      "variant_group_id": "persia-beige-porcelain"
+    }
+  ],
   "orders": [],
   "reviews": [],
   "users": [],

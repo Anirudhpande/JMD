@@ -134,10 +134,13 @@ export default function ProductDetail({ addToCart }) {
   // Helper: Coverage conversions based on size name
   const getPackCoverage = (sizeName) => {
     if (!sizeName) return 15.0;
+    const match = sizeName.match(/Covers\s+([\d.]+)/i);
+    if (match) {
+      return parseFloat(match[1]);
+    }
     const lower = sizeName.toLowerCase();
-    if (lower.includes('project pack') || lower.includes('mixed')) return 19.5; // square meters per pack
-    if (lower.includes('900x600')) return 16.2;
-    if (lower.includes('600x600')) return 14.4;
+    if (lower.includes('project pack') || lower.includes('mixed')) return 18.9;
+    if (lower.includes('900x600')) return 17.0;
     return 15.0; // fallback standard coverage
   };
 
@@ -323,7 +326,8 @@ export default function ProductDetail({ addToCart }) {
                     const isCurrent = v.id === product.id;
                     const isMixed = v.size.toLowerCase().includes('mixed') || v.size.toLowerCase().includes('project pack');
                     const labelTitle = isMixed ? 'Project Pack (Mixed Sizes)' : '900x600mm (Single Size)';
-                    const coverage = isMixed ? '19.5 m²' : '16.2 m²';
+                    const covMatch = v.size.match(/Covers\s+([\d.]+)/i);
+                    const coverage = covMatch ? `${covMatch[1]} m²` : (isMixed ? '18.9 m²' : '17.0 m²');
                     
                     return (
                       <Link 
