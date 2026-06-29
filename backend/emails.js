@@ -348,5 +348,155 @@ export const emails = {
     } catch (err) {
       console.error('Failed to send low stock warning:', err);
     }
+  },
+
+  // 5. Post-Purchase Review Request (7 days after order)
+  async sendReviewRequestEmail(order) {
+    const cd = order.customer_details || {};
+    const customerName = cd.name || 'Valued Customer';
+    const customerEmail = cd.email;
+    if (!customerEmail) return;
+
+    const siteUrl = process.env.SITE_URL || 'https://jmdglobalstones.co.uk';
+    const firstItem = (order.items || [])[0];
+    const productSlug = firstItem?.product_slug || '';
+    const productName = firstItem?.product_name || 'your recent purchase';
+    const reviewUrl = `${siteUrl}/products/${productSlug}#reviews`;
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head><meta charset="UTF-8"/></head>
+      <body style="margin:0;padding:0;background:#F5F0E8;font-family:Arial,Helvetica,sans-serif;">
+        <div style="max-width:600px;margin:2rem auto;background:#FFFFFF;border:1px solid #D9D2C5;">
+          <div style="background:#111111;padding:2rem 2.5rem;text-align:center;">
+            <h1 style="color:#C9A84C;font-size:1.6rem;margin:0;letter-spacing:0.05em;">JMD Global Stones</h1>
+            <p style="color:#888;font-size:0.75rem;margin:0.5rem 0 0;text-transform:uppercase;letter-spacing:0.15em;">Customer Review Request</p>
+          </div>
+          <div style="padding:2.5rem;">
+            <p style="font-size:1rem;color:#111;">Dear ${customerName},</p>
+            <p style="color:#444;line-height:1.7;">
+              We hope your <strong>${productName}</strong> has arrived safely and that you're delighted with it.
+              Your feedback means the world to us — and helps other customers make confident choices.
+            </p>
+            <div style="background:#F5F0E8;border:1px solid #D9D2C5;padding:1.5rem;margin:1.5rem 0;text-align:center;">
+              <p style="font-size:0.9rem;color:#555;margin:0 0 1rem;">Would you take 2 minutes to leave us a review?</p>
+              <a href="${reviewUrl}" style="display:inline-block;background:#111111;color:#C9A84C;padding:0.85rem 2.5rem;text-decoration:none;font-size:0.85rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">
+                ★ Leave a Review
+              </a>
+            </div>
+            <p style="color:#444;line-height:1.7;font-size:0.9rem;">
+              As a family-run business, every review genuinely helps us grow. 
+              Thank you for choosing JMD Global Stones.
+            </p>
+            <p style="color:#444;font-size:0.9rem;">Warm regards,<br/><strong>The JMD Team</strong></p>
+          </div>
+          <div style="background:#F5F0E8;padding:1rem 2.5rem;text-align:center;border-top:1px solid #D9D2C5;">
+            <p style="font-size:0.72rem;color:#888;margin:0;">
+              JMD Global Stones Ltd · Twelve Quays House, Egerton Wharf, CH41 1LD<br/>
+              You received this because you placed order #${order.id}. 
+              <a href="${siteUrl}/contact" style="color:#C9A84C;">Contact us</a> with any questions.
+            </p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const mailOptions = {
+      from: `"JMD Global Stones" <${process.env.SMTP_FROM || 'sales@jmdglobalstones.co.uk'}>`,
+      to: customerEmail,
+      subject: `How are you enjoying your ${productName}? ⭐ Leave a quick review`,
+      html: htmlContent
+    };
+
+    try {
+      await sendMail(mailOptions);
+      console.log(`Review request email sent to ${customerEmail} for order ${order.id}`);
+    } catch (err) {
+      console.error('Failed to send review request email:', err);
+    }
+  },
+
+  // 6. Abandoned Cart Reminder Email
+  async sendAbandonedCartEmail(cart) {
+    const { user_email, user_name, cart_items, cart_total } = cart;
+    if (!user_email) return;
+
+    const siteUrl = process.env.SITE_URL || 'https://jmdglobalstones.co.uk';
+    const itemsHtml = (cart_items || []).map(item => `
+      <tr>
+        <td style="padding:0.75rem 0;border-bottom:1px solid #E8E2D8;font-size:0.85rem;color:#111;">${item.product_name}</td>
+        <td style="padding:0.75rem 0;border-bottom:1px solid #E8E2D8;font-size:0.85rem;color:#555;text-align:center;">${item.quantity}x</td>
+        <td style="padding:0.75rem 0;border-bottom:1px solid #E8E2D8;font-size:0.85rem;color:#111;text-align:right;">£${(item.price * item.quantity).toFixed(2)}</td>
+      </tr>
+    `).join('');
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head><meta charset="UTF-8"/></head>
+      <body style="margin:0;padding:0;background:#F5F0E8;font-family:Arial,Helvetica,sans-serif;">
+        <div style="max-width:600px;margin:2rem auto;background:#FFFFFF;border:1px solid #D9D2C5;">
+          <div style="background:#111111;padding:2rem 2.5rem;text-align:center;">
+            <h1 style="color:#C9A84C;font-size:1.6rem;margin:0;letter-spacing:0.05em;">JMD Global Stones</h1>
+            <p style="color:#888;font-size:0.75rem;margin:0.5rem 0 0;text-transform:uppercase;letter-spacing:0.15em;">You left something behind</p>
+          </div>
+          <div style="padding:2.5rem;">
+            <p style="font-size:1rem;color:#111;">Hi ${user_name || 'there'},</p>
+            <p style="color:#444;line-height:1.7;">
+              You left some premium stone in your basket. It's still waiting for you — 
+              but popular products sell out fast. Complete your order while stock lasts.
+            </p>
+            <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;">
+              <thead>
+                <tr>
+                  <th style="text-align:left;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#888;padding-bottom:0.5rem;border-bottom:2px solid #D9D2C5;">Product</th>
+                  <th style="text-align:center;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#888;padding-bottom:0.5rem;border-bottom:2px solid #D9D2C5;">Qty</th>
+                  <th style="text-align:right;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#888;padding-bottom:0.5rem;border-bottom:2px solid #D9D2C5;">Price</th>
+                </tr>
+              </thead>
+              <tbody>${itemsHtml}</tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2" style="padding-top:0.75rem;font-weight:700;font-size:0.85rem;">Basket Total (ex. VAT)</td>
+                  <td style="padding-top:0.75rem;font-weight:700;font-size:0.95rem;color:#111;text-align:right;">£${Number(cart_total || 0).toFixed(2)}</td>
+                </tr>
+              </tfoot>
+            </table>
+            <div style="text-align:center;margin:2rem 0;">
+              <a href="${siteUrl}/cart" style="display:inline-block;background:#111111;color:#C9A84C;padding:0.9rem 2.5rem;text-decoration:none;font-size:0.85rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">
+                Complete My Order →
+              </a>
+            </div>
+            <p style="font-size:0.85rem;color:#777;line-height:1.6;">
+              Any questions? Reply to this email or WhatsApp us on <strong>07450148506</strong> — 
+              our yard team is available Mon–Sat 8am–5pm.
+            </p>
+          </div>
+          <div style="background:#F5F0E8;padding:1rem 2.5rem;text-align:center;border-top:1px solid #D9D2C5;">
+            <p style="font-size:0.72rem;color:#888;margin:0;">
+              JMD Global Stones Ltd · Wirral HQ & Southampton Yard<br/>
+              <a href="${siteUrl}/contact" style="color:#C9A84C;">Unsubscribe from cart reminders</a>
+            </p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const mailOptions = {
+      from: `"JMD Global Stones" <${process.env.SMTP_FROM || 'sales@jmdglobalstones.co.uk'}>`,
+      to: user_email,
+      subject: `You left some stone behind 🪨 — complete your order`,
+      html: htmlContent
+    };
+
+    try {
+      await sendMail(mailOptions);
+      console.log(`Abandoned cart email sent to ${user_email}`);
+    } catch (err) {
+      console.error('Failed to send abandoned cart email:', err);
+    }
   }
 };

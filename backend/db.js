@@ -202,9 +202,15 @@ async function initializePostgresSchema(client) {
       payment_method TEXT,
       payment_status TEXT,
       status TEXT,
+      review_email_sent BOOLEAN DEFAULT false,
       created_at TIMESTAMPTZ DEFAULT NOW()
     );
   `);
+
+  // Add review_email_sent column if it doesn't exist (migration for existing tables)
+  try {
+    await client.query(`ALTER TABLE orders ADD COLUMN IF NOT EXISTS review_email_sent BOOLEAN DEFAULT false`);
+  } catch (e) { /* column may already exist */ }
 
   await client.query(`
     CREATE TABLE IF NOT EXISTS reviews (
@@ -242,6 +248,19 @@ async function initializePostgresSchema(client) {
       user_email TEXT,
       meta JSONB,
       created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+  `);
+
+  await client.query(`
+    CREATE TABLE IF NOT EXISTS abandoned_carts (
+      id TEXT PRIMARY KEY,
+      user_id TEXT,
+      user_email TEXT NOT NULL,
+      user_name TEXT,
+      cart_items JSONB NOT NULL,
+      cart_total NUMERIC,
+      email_sent BOOLEAN DEFAULT false,
+      last_updated TIMESTAMPTZ DEFAULT NOW()
     );
   `);
 
@@ -1087,5 +1106,119 @@ export const db = {
     }
     const store = readLocalDb();
     return (store.activity_logs || []).slice(0, limit);
+  },
+
+  // ── REVIEW EMAIL FUNCTIONS ──────────────────────────────────────────────────
+
+  async getOrdersForReviewEmail() {
+    // Orders placed 7 days ago that are paid/dispatched/delivered and haven't had a review email sent
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const sixDaysAgo = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString();
+    if (pool) {
+      const res = await pool.query(
+        `SELECT * FROM orders 
+         WHERE created_at BETWEEN $1 AND $2
+         AND review_email_sent = false
+         AND payment_status IN ('paid', 'completed')
+         AND status IN ('dispatched', 'delivered', 'processing')`,
+        [sevenDaysAgo, sixDaysAgo]
+      );
+      return res.rows.map(r => ({
+        ...r,
+        customer_details: typeof r.customer_details === 'string' ? JSON.parse(r.customer_details) : (r.customer_details || {}),
+        items: typeof r.items === 'string' ? JSON.parse(r.items) : (r.items || [])
+      }));
+    }
+    const store = readLocalDb();
+    const cutoffStart = new Date(sevenDaysAgo).getTime();
+    const cutoffEnd = new Date(sixDaysAgo).getTime();
+    return (store.orders || []).filter(o => {
+      const t = new Date(o.created_at).getTime();
+      return t >= cutoffStart && t <= cutoffEnd && !o.review_email_sent && ['paid','completed'].includes(o.payment_status);
+    });
+  },
+
+  async markReviewEmailSent(orderId) {
+    if (pool) {
+      await pool.query('UPDATE orders SET review_email_sent = true WHERE id = $1', [orderId]);
+      return;
+    }
+    const store = readLocalDb();
+    const idx = (store.orders || []).findIndex(o => o.id === orderId);
+    if (idx > -1) { store.orders[idx].review_email_sent = true; writeLocalDb(store); }
+  },
+
+  // ── ABANDONED CART FUNCTIONS ────────────────────────────────────────────────
+
+  async saveAbandonedCart({ user_id, user_email, user_name, cart_items, cart_total }) {
+    if (!user_email) return;
+    const id = `cart-${user_email.replace(/[^a-z0-9]/gi, '-')}`;
+    const last_updated = new Date().toISOString();
+    if (pool) {
+      await pool.query(
+        `INSERT INTO abandoned_carts (id, user_id, user_email, user_name, cart_items, cart_total, email_sent, last_updated)
+         VALUES ($1, $2, $3, $4, $5, $6, false, $7)
+         ON CONFLICT (id) DO UPDATE SET
+           cart_items = $5, cart_total = $6, email_sent = false, last_updated = $7`,
+        [id, user_id || null, user_email, user_name || null, JSON.stringify(cart_items), cart_total || 0, last_updated]
+      );
+      return;
+    }
+    const store = readLocalDb();
+    if (!store.abandoned_carts) store.abandoned_carts = [];
+    const existingIdx = store.abandoned_carts.findIndex(c => c.id === id);
+    const entry = { id, user_id, user_email, user_name, cart_items, cart_total, email_sent: false, last_updated };
+    if (existingIdx > -1) store.abandoned_carts[existingIdx] = entry;
+    else store.abandoned_carts.push(entry);
+    writeLocalDb(store);
+  },
+
+  async deleteAbandonedCart(userEmail) {
+    if (!userEmail) return;
+    const id = `cart-${userEmail.replace(/[^a-z0-9]/gi, '-')}`;
+    if (pool) {
+      await pool.query('DELETE FROM abandoned_carts WHERE id = $1', [id]);
+      return;
+    }
+    const store = readLocalDb();
+    if (store.abandoned_carts) {
+      store.abandoned_carts = store.abandoned_carts.filter(c => c.id !== id);
+      writeLocalDb(store);
+    }
+  },
+
+  async getAbandonedCarts() {
+    // Carts last updated more than 2 hours ago, email not yet sent
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    if (pool) {
+      const res = await pool.query(
+        `SELECT * FROM abandoned_carts 
+         WHERE last_updated BETWEEN $1 AND $2 
+         AND email_sent = false`,
+        [oneDayAgo, twoHoursAgo]
+      );
+      return res.rows.map(r => ({
+        ...r,
+        cart_items: typeof r.cart_items === 'string' ? JSON.parse(r.cart_items) : (r.cart_items || [])
+      }));
+    }
+    const store = readLocalDb();
+    const cutoff = new Date(twoHoursAgo).getTime();
+    const dayAgo = new Date(oneDayAgo).getTime();
+    return (store.abandoned_carts || []).filter(c => {
+      const t = new Date(c.last_updated).getTime();
+      return t >= dayAgo && t <= cutoff && !c.email_sent;
+    });
+  },
+
+  async markAbandonedCartEmailSent(cartId) {
+    if (pool) {
+      await pool.query('UPDATE abandoned_carts SET email_sent = true WHERE id = $1', [cartId]);
+      return;
+    }
+    const store = readLocalDb();
+    const idx = (store.abandoned_carts || []).findIndex(c => c.id === cartId);
+    if (idx > -1) { store.abandoned_carts[idx].email_sent = true; writeLocalDb(store); }
   }
 };

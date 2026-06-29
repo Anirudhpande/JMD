@@ -515,7 +515,69 @@ app.get('/robots.txt', (req, res) => {
   res.send(`User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml`);
 });
 
+// ABANDONED CART SAVE ENDPOINT
+app.post('/api/save-cart', async (req, res) => {
+  try {
+    const { user_id, user_email, user_name, cart_items, cart_total } = req.body;
+    if (!user_email || !cart_items || cart_items.length === 0) {
+      return res.json({ success: false, message: 'No cart to save' });
+    }
+    await db.saveAbandonedCart({ user_id, user_email, user_name, cart_items, cart_total });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 // Start Express Server
 app.listen(PORT, () => {
   console.log(`JMD Global Stones API Server running on port ${PORT}`);
+
+  // ── CRON: Review Request Emails (runs every 6 hours) ────────────────────────
+  const runReviewEmailCron = async () => {
+    try {
+      const orders = await db.getOrdersForReviewEmail();
+      for (const order of orders) {
+        await emails.sendReviewRequestEmail(order);
+        await db.markReviewEmailSent(order.id);
+        await db.logActivity({
+          event_type: 'review_email_sent',
+          description: `Review request email sent for order #${order.id}`,
+          user_email: (order.customer_details || {}).email
+        }).catch(() => {});
+      }
+      if (orders.length > 0) {
+        console.log(`[Cron] Review emails sent for ${orders.length} order(s)`);
+      }
+    } catch (err) {
+      console.error('[Cron] Review email error:', err.message);
+    }
+  };
+  // Run once on startup, then every 6 hours
+  runReviewEmailCron();
+  setInterval(runReviewEmailCron, 6 * 60 * 60 * 1000);
+
+  // ── CRON: Abandoned Cart Emails (runs every 30 minutes) ─────────────────────
+  const runAbandonedCartCron = async () => {
+    try {
+      const carts = await db.getAbandonedCarts();
+      for (const cart of carts) {
+        await emails.sendAbandonedCartEmail(cart);
+        await db.markAbandonedCartEmailSent(cart.id);
+        await db.logActivity({
+          event_type: 'abandoned_cart_email',
+          description: `Abandoned cart reminder sent to ${cart.user_email}`,
+          user_email: cart.user_email,
+          user_name: cart.user_name
+        }).catch(() => {});
+      }
+      if (carts.length > 0) {
+        console.log(`[Cron] Abandoned cart emails sent to ${carts.length} customer(s)`);
+      }
+    } catch (err) {
+      console.error('[Cron] Abandoned cart email error:', err.message);
+    }
+  };
+  // Run every 30 minutes
+  setInterval(runAbandonedCartCron, 30 * 60 * 1000);
 });

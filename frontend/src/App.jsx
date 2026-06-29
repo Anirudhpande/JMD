@@ -48,7 +48,26 @@ function AppContent() {
 
   useEffect(() => {
     localStorage.setItem('jmd_cart', JSON.stringify(cart));
-  }, [cart]);
+
+    // Save cart to backend for abandoned cart tracking (only for logged-in users with items)
+    if (user && user.email && cart.length > 0) {
+      const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      const timer = setTimeout(() => {
+        apiFetch('/api/save-cart', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: user.id,
+            user_email: user.email,
+            user_name: user.name,
+            cart_items: cart,
+            cart_total: cartTotal
+          })
+        }).catch(() => {});
+      }, 3000); // debounce 3s to avoid hammering on rapid adds
+      return () => clearTimeout(timer);
+    }
+  }, [cart, user]);
 
   useEffect(() => {
     if (user) {
@@ -186,6 +205,18 @@ function AppContent() {
 
   const clearCart = () => {
     setCart([]);
+    // Remove abandoned cart record so we don't send a reminder after order is placed
+    if (user && user.email) {
+      apiFetch('/api/save-cart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_email: user.email,
+          cart_items: [],   // empty cart — server ignores empty carts
+          cart_total: 0
+        })
+      }).catch(() => {});
+    }
   };
 
   const handleLogin = (userData) => {
