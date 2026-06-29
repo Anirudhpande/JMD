@@ -31,50 +31,42 @@ export default function ProductDetail({ addToCart }) {
 
   const carouselRef = React.useRef(null);
 
+  // Auto-slide similar products: advance one card every 2 seconds
   useEffect(() => {
-    const el = carouselRef.current;
-    if (!el || relatedProducts.length === 0) return;
+    if (!relatedProducts.length) return;
+    let paused = false;
+    const CARD_W = 182; // px — must match card width + gap below
 
-    let intervalId;
-    let direction = 1; // 1 = right, -1 = left
-
-    const autoScroll = () => {
+    const tick = setInterval(() => {
+      const el = carouselRef.current;
+      if (!el || paused) return;
       const maxScroll = el.scrollWidth - el.clientWidth;
       if (maxScroll <= 0) return;
-
-      let nextScroll = el.scrollLeft + (1 * direction);
-
-      if (nextScroll >= maxScroll) {
-        direction = -1;
-        nextScroll = maxScroll;
-      } else if (nextScroll <= 0) {
-        direction = 1;
-        nextScroll = 0;
+      if (el.scrollLeft >= maxScroll - 4) {
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        el.scrollBy({ left: CARD_W, behavior: 'smooth' });
       }
+    }, 2000);
 
-      el.scrollLeft = nextScroll;
-    };
+    const pause  = () => { paused = true; };
+    const resume = () => { paused = false; };
 
-    intervalId = setInterval(autoScroll, 40); // slow, smooth drift
-
-    const pauseScroll = () => clearInterval(intervalId);
-    const resumeScroll = () => {
-      clearInterval(intervalId);
-      intervalId = setInterval(autoScroll, 40);
-    };
-
-    el.addEventListener('mouseenter', pauseScroll);
-    el.addEventListener('mouseleave', resumeScroll);
-    el.addEventListener('touchstart', pauseScroll);
-    el.addEventListener('touchend', resumeScroll);
+    const el = carouselRef.current;
+    if (el) {
+      el.addEventListener('mouseenter', pause);
+      el.addEventListener('mouseleave', resume);
+      el.addEventListener('touchstart', pause);
+      el.addEventListener('touchend',   resume);
+    }
 
     return () => {
-      clearInterval(intervalId);
+      clearInterval(tick);
       if (el) {
-        el.removeEventListener('mouseenter', pauseScroll);
-        el.removeEventListener('mouseleave', resumeScroll);
-        el.removeEventListener('touchstart', pauseScroll);
-        el.removeEventListener('touchend', resumeScroll);
+        el.removeEventListener('mouseenter', pause);
+        el.removeEventListener('mouseleave', resume);
+        el.removeEventListener('touchstart', pause);
+        el.removeEventListener('touchend',   resume);
       }
     };
   }, [relatedProducts]);
@@ -307,38 +299,31 @@ export default function ProductDetail({ addToCart }) {
               </div>
             )}
 
-            {/* Similar Products — CSS Marquee (always scrolls) */}
+            {/* Similar Products — 2-second auto-slide carousel */}
             {relatedProducts.length > 0 && (
-              <div style={{ marginTop: '2rem' }}>
-                <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, color: 'var(--text-muted-on-light)', marginBottom: '0.85rem' }}>
+              <div style={{ marginTop: '2rem', borderTop: '1px solid var(--color-border-light)', paddingTop: '1.5rem' }}>
+                <p style={{ fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, color: 'var(--text-muted-on-light)', marginBottom: '1rem', margin: '0 0 1rem' }}>
                   View Similar Products
                 </p>
-                {/* Outer mask: clips overflow and fades edges */}
-                <div className="similar-marquee-outer">
-                  {/* Track duplicated for seamless loop */}
-                  <div className="similar-marquee-track">
-                    {[...relatedProducts, ...relatedProducts].map((prod, i) => (
-                      <Link
-                        key={i}
-                        to={`/products/${prod.slug}`}
-                        className="similar-product-card"
-                        style={{ textDecoration: 'none', color: 'inherit' }}
-                      >
-                        <div style={{ width: '100%', height: '95px', overflow: 'hidden' }}>
-                          <img
-                            src={prod.images[0]}
-                            alt={prod.name}
-                            className="similar-card-img"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.35s ease' }}
-                          />
-                        </div>
-                        <div style={{ padding: '0.6rem 0.7rem 0.7rem' }}>
-                          <p style={{ fontSize: '0.68rem', fontWeight: 600, lineHeight: 1.3, color: 'var(--text-on-light)', margin: '0 0 0.3rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{prod.name.split(' – ')[0]}</p>
-                          <p style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-accent)', margin: 0 }}>£{prod.price.toFixed(2)}</p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
+                <div
+                  ref={carouselRef}
+                  className="sim-scroll"
+                >
+                  {relatedProducts.map((prod) => (
+                    <Link
+                      key={prod.id}
+                      to={`/products/${prod.slug}`}
+                      className="sim-card"
+                    >
+                      <div className="sim-card-img-wrap">
+                        <img src={prod.images[0]} alt={prod.name} className="sim-card-img" />
+                      </div>
+                      <div className="sim-card-body">
+                        <p className="sim-card-name">{prod.name}</p>
+                        <p className="sim-card-price">£{prod.price.toFixed(2)}</p>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
               </div>
             )}
@@ -682,45 +667,67 @@ export default function ProductDetail({ addToCart }) {
       </div>
       
       <style>{`
-        /* Marquee outer container */
-        .similar-marquee-outer {
-          overflow: hidden;
-          position: relative;
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-        }
-        /* Scrolling track */
-        .similar-marquee-track {
+        /* ---- Similar Products Carousel ---- */
+        .sim-scroll {
           display: flex;
-          gap: 0.75rem;
-          width: max-content;
-          animation: similarMarquee 22s linear infinite;
+          gap: 10px;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
-        .similar-marquee-track:hover {
-          animation-play-state: paused;
-        }
-        /* Each card in the track */
-        .similar-product-card {
-          width: 148px;
+        .sim-scroll::-webkit-scrollbar { display: none; }
+
+        .sim-card {
+          width: 172px;
           flex-shrink: 0;
-          border: 1px solid var(--color-border-light);
+          scroll-snap-align: start;
+          text-decoration: none;
+          color: inherit;
           background: #fff;
+          border: 1px solid #e0d9ce;
           display: flex;
           flex-direction: column;
-          transition: box-shadow 0.2s ease, transform 0.2s ease;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .similar-product-card:hover {
-          box-shadow: 0 6px 20px rgba(0,0,0,0.10);
-          transform: translateY(-2px);
+        .sim-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.09);
         }
-        .similar-product-card:hover .similar-card-img {
-          transform: scale(1.06);
+        .sim-card-img-wrap {
+          width: 100%;
+          height: 115px;
+          overflow: hidden;
         }
-        /* Keyframe: scroll exactly 50% (the duplicate set) */
-        @keyframes similarMarquee {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+        .sim-card-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.35s ease;
         }
+        .sim-card:hover .sim-card-img { transform: scale(1.05); }
+        .sim-card-body {
+          padding: 0.6rem 0.75rem 0.8rem;
+        }
+        .sim-card-name {
+          font-size: 0.72rem;
+          font-weight: 600;
+          line-height: 1.35;
+          color: #2a2218;
+          margin: 0 0 0.35rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .sim-card-price {
+          font-size: 0.82rem;
+          font-weight: 700;
+          color: #8B6914;
+          margin: 0;
+        }
+        /* ---- responsive ---- */
         @media (max-width: 768px) {
           .detail-layout { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
           .specs-profile-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; }
