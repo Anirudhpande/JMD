@@ -29,6 +29,56 @@ export default function ProductDetail({ addToCart }) {
     patterns: false
   });
 
+  const carouselRef = React.useRef(null);
+
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el || relatedProducts.length === 0) return;
+
+    let intervalId;
+    let direction = 1; // 1 = right, -1 = left
+
+    const autoScroll = () => {
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 0) return;
+
+      let nextScroll = el.scrollLeft + (1 * direction);
+
+      if (nextScroll >= maxScroll) {
+        direction = -1;
+        nextScroll = maxScroll;
+      } else if (nextScroll <= 0) {
+        direction = 1;
+        nextScroll = 0;
+      }
+
+      el.scrollLeft = nextScroll;
+    };
+
+    intervalId = setInterval(autoScroll, 40); // slow, smooth drift
+
+    const pauseScroll = () => clearInterval(intervalId);
+    const resumeScroll = () => {
+      clearInterval(intervalId);
+      intervalId = setInterval(autoScroll, 40);
+    };
+
+    el.addEventListener('mouseenter', pauseScroll);
+    el.addEventListener('mouseleave', resumeScroll);
+    el.addEventListener('touchstart', pauseScroll);
+    el.addEventListener('touchend', resumeScroll);
+
+    return () => {
+      clearInterval(intervalId);
+      if (el) {
+        el.removeEventListener('mouseenter', pauseScroll);
+        el.removeEventListener('mouseleave', resumeScroll);
+        el.removeEventListener('touchstart', pauseScroll);
+        el.removeEventListener('touchend', resumeScroll);
+      }
+    };
+  }, [relatedProducts]);
+
   useEffect(() => {
     setLoading(true);
     apiFetch(`/api/products/${slug}`)
@@ -290,14 +340,16 @@ export default function ProductDetail({ addToCart }) {
                 <h3 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '0.75rem', color: 'var(--text-on-light)' }}>
                   View Similar Products
                 </h3>
-                <div style={{ 
-                  display: 'flex', 
-                  gap: '1.25rem', 
-                  overflowX: 'auto', 
-                  paddingBottom: '1rem',
-                  scrollbarWidth: 'thin',
-                  scrollSnapType: 'x mandatory'
-                }} className="similar-products-scroll">
+                <div 
+                  ref={carouselRef}
+                  style={{ 
+                    display: 'flex', 
+                    gap: '1.25rem', 
+                    overflowX: 'auto', 
+                    paddingBottom: '1rem',
+                    scrollbarWidth: 'thin',
+                    scrollSnapType: 'x mandatory'
+                  }} className="similar-products-scroll">
                   {relatedProducts.map((prod) => (
                     <Link 
                       key={prod.id} 
