@@ -386,7 +386,7 @@ export default function ProductDetail({ addToCart }) {
                 <Layers size={15} style={{ color: 'var(--color-accent)' }} /> Patio Coverage Calculator
               </h4>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-muted-on-light)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
-                Enter your total patio area in square meters. We'll convert it to required packs, based on this pack's coverage of <strong>{packCoverage} $m^2$</strong>.
+                Enter your total patio area in square meters. We'll convert it to required packs, based on this pack's coverage of <strong>{packCoverage} m²</strong>.
               </p>
 
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }} className="calc-inputs">
