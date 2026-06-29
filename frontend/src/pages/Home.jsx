@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Truck, ShieldCheck, CheckSquare, MessageSquare, ArrowRight, Star } from 'lucide-react';
 import { apiFetch } from '../api.js';
@@ -82,6 +82,45 @@ export default function Home({ addToCart }) {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  // Featured Products Auto-Scroll (1.5s per card)
+  const prodCarouselRef = useRef(null);
+  useEffect(() => {
+    if (!featuredProducts.length) return;
+    let paused = false;
+    const CARD_W = 310; // approximate card width + gap
+
+    const tick = setInterval(() => {
+      const el = prodCarouselRef.current;
+      if (!el || paused) return;
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 0) return;
+      if (el.scrollLeft >= maxScroll - 4) {
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        el.scrollBy({ left: CARD_W, behavior: 'smooth' });
+      }
+    }, 1500);
+
+    const pause  = () => { paused = true; };
+    const resume = () => { paused = false; };
+    const el = prodCarouselRef.current;
+    if (el) {
+      el.addEventListener('mouseenter', pause);
+      el.addEventListener('mouseleave', resume);
+      el.addEventListener('touchstart', pause);
+      el.addEventListener('touchend', resume);
+    }
+    return () => {
+      clearInterval(tick);
+      if (el) {
+        el.removeEventListener('mouseenter', pause);
+        el.removeEventListener('mouseleave', resume);
+        el.removeEventListener('touchstart', pause);
+        el.removeEventListener('touchend', resume);
+      }
+    };
+  }, [featuredProducts]);
 
   if (loading) {
     return (
@@ -180,9 +219,9 @@ export default function Home({ addToCart }) {
             <h2 style={{ fontSize: '2.8rem', marginTop: '0.75rem', fontFamily: 'var(--font-heading)', fontWeight: 400 }}>Shop by Category</h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '2rem 1.5rem', paddingBottom: '2rem' }} className="categories-grid-container">
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '2.5rem', flexWrap: 'wrap', paddingBottom: '2rem' }}>
             {categories.map((cat, idx) => (
-              <Link to={`/products?category=${cat.slug}`} key={idx} style={{ display: 'block', position: 'relative', transition: 'var(--transition-smooth)' }} className="category-card">
+              <Link to={`/products?category=${cat.slug}`} key={idx} style={{ display: 'block', position: 'relative', transition: 'var(--transition-smooth)', width: '260px' }} className="category-card">
                 <div style={{ width: '100%', aspectRatio: '0.85', overflow: 'hidden', backgroundColor: '#EBE4D9', border: '1px solid var(--color-border-light)' }}>
                   <img src={cat.image} alt={cat.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'var(--transition-smooth)' }} className="cat-img" />
                 </div>
@@ -253,9 +292,12 @@ export default function Home({ addToCart }) {
             </Link>
           </div>
 
-          <div className="product-grid">
+          <div
+            ref={prodCarouselRef}
+            className="home-prod-scroll"
+          >
             {featuredProducts.map((prod) => (
-              <div key={prod.id} className="product-card">
+              <div key={prod.id} className="product-card" style={{ flexShrink: 0, width: '280px', scrollSnapAlign: 'start' }}>
                 <Link to={`/products/${prod.slug}`}>
                   <div className="product-image-wrapper">
                     {/* Primary and Secondary (hover) images for luxury cross-fade */}
@@ -278,9 +320,9 @@ export default function Home({ addToCart }) {
                   <div className="product-price">
                     £{prod.price.toFixed(2)} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => addToCart(prod, prod.size, 1, prod.price)}
-                    className="btn btn-primary" 
+                    className="btn btn-primary"
                     style={{ width: '100%', fontSize: '0.75rem', letterSpacing: '0.1em' }}
                   >
                     Add to Basket
@@ -431,22 +473,28 @@ export default function Home({ addToCart }) {
 
       {/* Responsive Grid Layout Overrides style */}
       <style>{`
+        /* Home featured products scroll strip */
+        .home-prod-scroll {
+          display: flex;
+          gap: 2rem;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          padding-bottom: 1rem;
+        }
+        .home-prod-scroll::-webkit-scrollbar { display: none; }
         .category-card:hover .cat-img { transform: scale(1.05) !important; }
         .category-card:hover .cat-title-box { border-color: var(--color-accent) !important; color: var(--color-accent) !important; }
-        @media (max-width: 1024px) {
-          .categories-grid-container { grid-template-columns: repeat(3, 1fr) !important; gap: 3rem 1.5rem !important; }
-        }
         @media (max-width: 768px) {
           .hero-layout, .spotlight-layout { grid-template-columns: 1fr !important; gap: 3rem !important; }
           .trust-layout { grid-template-columns: repeat(2, 1fr) !important; gap: 2rem !important; }
           .trust-card-item { border-right: none !important; border-bottom: 1px solid var(--color-border-light); padding-bottom: 1.5rem !important; }
           .trust-card-item:nth-child(even) { border-right: none !important; }
           .trust-card-item:last-child { border-bottom: none !important; padding-bottom: 0 !important; }
-          .categories-grid-container { grid-template-columns: repeat(2, 1fr) !important; gap: 2.5rem 1.5rem !important; }
           .gallery-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
-          .categories-grid-container { grid-template-columns: 1fr !important; gap: 3rem 0 !important; }
           .trust-layout { grid-template-columns: 1fr !important; }
         }
       `}</style>
