@@ -307,54 +307,38 @@ export default function ProductDetail({ addToCart }) {
               </div>
             )}
 
-            {/* Similar Products — compact strip below main image */}
+            {/* Similar Products — CSS Marquee (always scrolls) */}
             {relatedProducts.length > 0 && (
               <div style={{ marginTop: '2rem' }}>
-                <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, color: 'var(--text-muted-on-light)', marginBottom: '1rem' }}>
+                <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, color: 'var(--text-muted-on-light)', marginBottom: '0.85rem' }}>
                   View Similar Products
                 </p>
-                <div
-                  ref={carouselRef}
-                  className="similar-products-scroll"
-                  style={{
-                    display: 'flex',
-                    gap: '0.75rem',
-                    overflowX: 'auto',
-                    paddingBottom: '0.5rem',
-                  }}
-                >
-                  {relatedProducts.map((prod) => (
-                    <Link
-                      key={prod.id}
-                      to={`/products/${prod.slug}`}
-                      className="similar-product-card"
-                      style={{
-                        width: '150px',
-                        flexShrink: 0,
-                        textDecoration: 'none',
-                        color: 'inherit',
-                        border: '1px solid var(--color-border-light)',
-                        backgroundColor: '#fff',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        transition: 'box-shadow 0.2s ease, transform 0.2s ease',
-                      }}
-                    >
-                      <div style={{ width: '100%', height: '110px', overflow: 'hidden' }}>
-                        <img
-                          src={prod.images[0]}
-                          alt={prod.name}
-                          className="similar-card-img"
-                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.35s ease' }}
-                        />
-                      </div>
-                      <div style={{ padding: '0.65rem 0.75rem 0.75rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                        <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 600, letterSpacing: '0.05em' }}>{prod.category}</span>
-                        <p style={{ fontSize: '0.75rem', fontWeight: 600, lineHeight: 1.35, color: 'var(--text-on-light)', margin: 0 }}>{prod.name}</p>
-                        <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-on-light)', margin: '0.3rem 0 0' }}>£{prod.price.toFixed(2)}</p>
-                      </div>
-                    </Link>
-                  ))}
+                {/* Outer mask: clips overflow and fades edges */}
+                <div className="similar-marquee-outer">
+                  {/* Track duplicated for seamless loop */}
+                  <div className="similar-marquee-track">
+                    {[...relatedProducts, ...relatedProducts].map((prod, i) => (
+                      <Link
+                        key={i}
+                        to={`/products/${prod.slug}`}
+                        className="similar-product-card"
+                        style={{ textDecoration: 'none', color: 'inherit' }}
+                      >
+                        <div style={{ width: '100%', height: '95px', overflow: 'hidden' }}>
+                          <img
+                            src={prod.images[0]}
+                            alt={prod.name}
+                            className="similar-card-img"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.35s ease' }}
+                          />
+                        </div>
+                        <div style={{ padding: '0.6rem 0.7rem 0.7rem' }}>
+                          <p style={{ fontSize: '0.68rem', fontWeight: 600, lineHeight: 1.3, color: 'var(--text-on-light)', margin: '0 0 0.3rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{prod.name.split(' – ')[0]}</p>
+                          <p style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-accent)', margin: 0 }}>£{prod.price.toFixed(2)}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -594,7 +578,6 @@ export default function ProductDetail({ addToCart }) {
                   <div style={{ paddingBottom: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted-on-light)', lineHeight: 1.6 }}>
                     <p style={{ marginBottom: '0.5rem' }}>• <strong>Timeline:</strong> Deliveries are executed in 3-5 business days.</p>
                     <p style={{ marginBottom: '0.5rem' }}>• <strong>Access Required:</strong> Kerbside delivery via an 18-28 tonne HGV tail-lift lorry.</p>
-                    <p style={{ marginBottom: '0.75rem' }}>• <strong>Rates:</strong> Flat rate of £49 per order. Direct import rates apply.</p>
                     <Link to="/delivery" style={{ color: 'var(--color-accent)', fontWeight: 500, textDecoration: 'underline' }}>Read our complete Delivery Guide</Link>
                   </div>
                 )}
@@ -699,19 +682,44 @@ export default function ProductDetail({ addToCart }) {
       </div>
       
       <style>{`
-        .similar-products-scroll::-webkit-scrollbar {
-          display: none;
+        /* Marquee outer container */
+        .similar-marquee-outer {
+          overflow: hidden;
+          position: relative;
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
         }
-        .similar-products-scroll {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        /* Scrolling track */
+        .similar-marquee-track {
+          display: flex;
+          gap: 0.75rem;
+          width: max-content;
+          animation: similarMarquee 22s linear infinite;
+        }
+        .similar-marquee-track:hover {
+          animation-play-state: paused;
+        }
+        /* Each card in the track */
+        .similar-product-card {
+          width: 148px;
+          flex-shrink: 0;
+          border: 1px solid var(--color-border-light);
+          background: #fff;
+          display: flex;
+          flex-direction: column;
+          transition: box-shadow 0.2s ease, transform 0.2s ease;
         }
         .similar-product-card:hover {
-          box-shadow: 0 8px 32px rgba(0,0,0,0.10);
-          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+          transform: translateY(-2px);
         }
         .similar-product-card:hover .similar-card-img {
-          transform: scale(1.04);
+          transform: scale(1.06);
+        }
+        /* Keyframe: scroll exactly 50% (the duplicate set) */
+        @keyframes similarMarquee {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
         @media (max-width: 768px) {
           .detail-layout { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
