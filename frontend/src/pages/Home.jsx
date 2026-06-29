@@ -6,7 +6,8 @@ import useSEO from '../hooks/useSEO.js';
 
 const categories = [
   { name: 'Sandstone', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png', slug: 'sandstone' },
-  { name: 'Porcelain', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png', slug: 'porcelain' }
+  { name: 'Porcelain', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png', slug: 'porcelain' },
+  { name: 'Bricks', image: '/images/bricks_category.png', slug: 'bricks' }
 ];
 
 const reviews = [
