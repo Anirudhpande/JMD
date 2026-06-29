@@ -26,30 +26,6 @@ const materialLayingInfo = {
       "Sealing: Premium porcelain paving is vitrified and completely non-porous. It does not require any sealing or protective coatings.",
       "Cleaning: Easy to clean. Simply pressure-wash or use a mild detergent. Algae and dirt cannot penetrate the surface, so standard washing easily keeps it pristine."
     ]
-  },
-  limestone: {
-    title: "Natural Limestone Laying Advice",
-    laying: [
-      "Slurry Bonding: Prime the underside of limestone slabs with SBR slurry primer to secure bonding and prevent moisture ingress.",
-      "Full Bed Mortar: Lay on a solid, level mortar bed (4:1 sharp sand to cement). Dot-and-dab laying is strictly prohibited as limestone is prone to moisture patches.",
-      "Jointing: Use a flexible jointing compound or standard sand/cement mortar to seal joints."
-    ],
-    maintenance: [
-      "Sealing: Limestone is sensitive to acid. It must be sealed with a breathable, water-based impregnating sealer to safeguard its rich color tones.",
-      "Cleaning: Never use acid-based patio cleaners or high-pressure washers too close to the surface, as this will etch limestone. Wash using a pH-neutral cleaner."
-    ]
-  },
-  slate: {
-    title: "Brazilian & Indian Slate Laying Advice",
-    laying: [
-      "Back Priming: Apply SBR bonding slurry to the back of the slate flags to prevent delamination.",
-      "Solid Sand/Cement Bed: Lay on a solid, continuous mortar bed. Slate splits along natural cleavage planes, so it requires strong, uniform bed support.",
-      "Cutting: Slate cuts cleanly using a diamond blade on a standard angle grinder. Sawn edges should be sanded down slightly to remove sharp corners."
-    ],
-    maintenance: [
-      "Sealing: Slate looks stunning when sealed. An impregnating or wet-look slate sealer will bring out the deep black/grey organic tones and guard against water staining.",
-      "Cleaning: Wipe down with standard soapy water. Slate resists acids better than limestone, but neutral cleaners are still recommended for longevity."
-    ]
   }
 };
 
@@ -85,7 +61,7 @@ export default function Care() {
 
   useSEO({
     title: 'Stone Laying Advice, Care & Maintenance Guide',
-    description: 'Expert laying advice and maintenance guides for Indian Sandstone, Porcelain, Limestone and Slate paving. Learn correct priming, mortar mix, and cleaning techniques.',
+    description: 'Expert laying advice and maintenance guides for Indian Sandstone and vitrified Porcelain paving. Learn correct priming, mortar mix, and cleaning techniques.',
     canonical: 'https://jmdglobalstones.co.uk/care'
   });
 

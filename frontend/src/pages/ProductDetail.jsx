@@ -227,33 +227,6 @@ export default function ProductDetail({ addToCart }) {
         compressive: '350 MPa',
         thickness: '20mm Vitrified Sawn'
       };
-      case 'Limestone': return {
-        origin: 'Kota, India',
-        classification: 'Sedimentary Limestone',
-        finish: 'Natural Flat & Calibrated',
-        slip: 'R10 / R11 (Good Wet Grip)',
-        absorption: '1.8% (Low)',
-        compressive: '135 MPa',
-        thickness: '22mm Calibrated'
-      };
-      case 'Slate': return {
-        origin: 'Minas Gerais, Brazil',
-        classification: 'Metamorphic Slate',
-        finish: 'Lightly Cleft Natural Split',
-        slip: 'R11 (Excellent Wet Grip)',
-        absorption: '0.25% (Extremely Low)',
-        compressive: '180 MPa',
-        thickness: '22mm Sawn & Cleft'
-      };
-      case 'Bricks': return {
-        origin: 'Flanders, Belgium',
-        classification: 'Fired Clay Paver',
-        finish: 'Wirecut Textured',
-        slip: 'R12 (Maximum Grip)',
-        absorption: '8.0% (Medium)',
-        compressive: '60 MPa',
-        thickness: '50mm / 65mm Solid Paver'
-      };
       default: return {
         origin: 'Global Imports',
         classification: 'Natural Stone',
@@ -667,7 +640,7 @@ export default function ProductDetail({ addToCart }) {
                 </button>
                 {openAccordions.patterns && (
                   <div style={{ paddingBottom: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted-on-light)', lineHeight: 1.6 }}>
-                    {product.category === 'Sandstone' || product.category === 'Limestone' ? (
+                    {product.category === 'Sandstone' ? (
                       <>
                         <p style={{ marginBottom: '0.75rem' }}><strong>Modular Multi-Size Pattern (Project Packs):</strong></p>
                         <p style={{ marginBottom: '0.5rem' }}>Standard project packs contain 4 stone dimensions: 900x600mm, 600x600mm, 600x290mm, and 290x290mm.</p>
@@ -677,7 +650,7 @@ export default function ProductDetail({ addToCart }) {
                     ) : (
                       <>
                         <p style={{ marginBottom: '0.75rem' }}><strong>Linear / Stretcher Bond Pattern (Single Sizes):</strong></p>
-                        <p style={{ marginBottom: '0.5rem' }}>For single size flags (e.g. 900x600mm Brazilian slate or porcelain), lay in a staggered brick bond pattern.</p>
+                        <p style={{ marginBottom: '0.5rem' }}>For single size flags (e.g. 900x600mm porcelain), lay in a staggered brick bond pattern.</p>
                         <p style={{ marginBottom: '0.5rem' }}>• Stagger flags by 1/3 (offset of 300mm) or 1/2 (offset of 450mm).</p>
                         <p>• Avoid laying stack-bond (grid-aligned) unless executing ultra-modern vertical tiling layouts.</p>
                       </>

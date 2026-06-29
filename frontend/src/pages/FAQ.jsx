@@ -74,7 +74,7 @@ const faqs = [
       },
       {
         q: 'Do I need to seal my sandstone?',
-        a: 'We strongly recommend sealing natural sandstone and limestone with a suitable impregnating sealer before and after laying. Sealing protects against staining, efflorescence, and moisture penetration. Porcelain does not require sealing.'
+        a: 'We strongly recommend sealing natural sandstone with a suitable impregnating sealer before and after laying. Sealing protects against staining, efflorescence, and moisture penetration. Porcelain does not require sealing.'
       }
     ]
   },

@@ -22,8 +22,8 @@ export default function Products() {
   const [quickViewActiveImage, setQuickViewActiveImage] = useState(0);
 
   useSEO({
-    title: 'All Paving Products | Indian Sandstone, Porcelain, Limestone & More',
-    description: 'Browse our full range of premium paving — Indian Sandstone, Porcelain, Limestone, Slate and Bricks. Filter by category, price and stock. Fast UK delivery.',
+    title: 'All Paving Products | Indian Sandstone & Vitrified Porcelain',
+    description: 'Browse our full range of premium paving — calibrated Indian Sandstone and vitrified Porcelain slabs. Filter by category, price and stock. Fast UK delivery.',
     canonical: 'https://jmdglobalstones.co.uk/products'
   });
 
@@ -43,8 +43,7 @@ export default function Products() {
   }, [searchParams]);
 
   useEffect(() => {
-    document.title = "Buy Natural Stone Paving & Porcelain Slabs | JMD Global Stones";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Explore our extensive catalog of natural sandstone, slate, porcelain, limestone, and brick paving slabs. Calibrated flags with fast UK delivery.");
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Explore our extensive catalog of natural sandstone and vitrified porcelain paving slabs. Calibrated flags with fast UK delivery.");
     
     apiFetch('/api/products')
       .then(res => {
@@ -172,9 +171,6 @@ export default function Products() {
     switch (category) {
       case 'Sandstone': return 'Rajasthan • R11 Slip • Calibrated';
       case 'Porcelain': return 'Vitrified • Frost Proof • R11';
-      case 'Limestone': return 'Kota • R10 Slip • Calibrated';
-      case 'Slate': return 'Brazilian • R11 Slip • Cleft';
-      case 'Bricks': return 'Fired Clay • Slip R12 • Frost Proof';
       default: return 'Premium Calibrated Paving';
     }
   };
@@ -492,11 +488,11 @@ export default function Products() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '1.25rem', border: '1px solid var(--color-border-light)', backgroundColor: '#EBE4D9', fontSize: '0.8rem', marginBottom: '2rem' }}>
                 <div>
                   <span style={{ color: 'var(--text-muted-on-light)' }}>Stone origin:</span>
-                  <p style={{ fontWeight: 600 }}>{quickViewProduct.category === 'Porcelain' ? 'Italy / Spain' : quickViewProduct.category === 'Slate' ? 'Brazil' : 'Rajasthan, India'}</p>
+                  <p style={{ fontWeight: 600 }}>{quickViewProduct.category === 'Porcelain' ? 'Italy / Spain' : 'Rajasthan, India'}</p>
                 </div>
                 <div>
                   <span style={{ color: 'var(--text-muted-on-light)' }}>Slip resistance:</span>
-                  <p style={{ fontWeight: 600 }}>{quickViewProduct.category === 'Bricks' ? 'R12 (Maximum)' : 'R11 (High-Grip)'}</p>
+                  <p style={{ fontWeight: 600 }}>R11 (High-Grip)</p>
                 </div>
                 <div>
                   <span style={{ color: 'var(--text-muted-on-light)' }}>Frost resistance:</span>

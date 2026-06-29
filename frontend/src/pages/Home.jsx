@@ -6,10 +6,7 @@ import useSEO from '../hooks/useSEO.js';
 
 const categories = [
   { name: 'Sandstone', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png', slug: 'sandstone' },
-  { name: 'Porcelain', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png', slug: 'porcelain' },
-  { name: 'Limestone', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ls_Blacklimestone_02-300x340.jpg', slug: 'limestone' },
-  { name: 'Slate', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/BB-Slate-300x300.png', slug: 'slate' },
-  { name: 'Bricks', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/HR-Bricks-1-300x300.png', slug: 'bricks' }
+  { name: 'Porcelain', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png', slug: 'porcelain' }
 ];
 
 const reviews = [
@@ -26,7 +23,7 @@ const reviews = [
   {
     name: "James K. from Chester",
     rating: 5,
-    comment: "Very pleased with the black limestone. Be sure to seal it to retain that rich dark color. Great customer service from Roopesh."
+    comment: "Very pleased with the County Anthracite porcelain. Be sure to prime it correctly before laying. Great customer service from Roopesh."
   }
 ];
 
@@ -37,7 +34,7 @@ export default function Home({ addToCart }) {
   const [settings, setSettings] = useState({
     home_hero_headline: "Enduring Stone.",
     home_hero_subheadline: "Architectural Form.",
-    home_hero_text: "We source raw architectural stone slabs directly from quarry beds, supplying calibrated Sandstone, Slate, Limestone, and Vitrified Porcelain flags. Crafted to weather gracefully for generations.",
+    home_hero_text: "We source premium paving slabs directly from quarry beds, supplying calibrated Indian Sandstone and Vitrified Porcelain flags. Crafted to weather gracefully for generations.",
     trust_bar: [
       "£49 Flat Rate UK Delivery",
       "Direct Imported Best Quality",
@@ -207,8 +204,8 @@ export default function Home({ addToCart }) {
             {/* Left Image Column */}
             <div style={{ position: 'relative' }}>
               <img 
-                src="https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/BB-Slate-300x300.png" 
-                alt="Wirral Estate Poolside in Brazilian Black Slate" 
+                src="https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png" 
+                alt="Wirral Estate Poolside in County Anthracite Porcelain" 
                 style={{ width: '100%', aspectRatio: '1.3', objectFit: 'cover', border: '1px solid var(--color-border-dark)' }}
               />
               <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', backgroundColor: 'rgba(17,17,17,0.85)', padding: '0.5rem 1rem', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>
@@ -223,18 +220,18 @@ export default function Home({ addToCart }) {
                 The Wirral Poolside <br />& Terrace Residence
               </h2>
               <p style={{ color: 'var(--text-muted-on-dark)', fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '2rem' }}>
-                For this modern coastal project, the architects selected JMD's Brazilian Black Slate paving slabs. Featuring straight-sawn calibrated edges and a natural cleft, anti-slip surface, this metamorphic stone delivers clean lines and sophisticated dark tones that interface seamlessly with the surrounding landscaping.
+                For this modern coastal project, the architects selected JMD's County Anthracite Porcelain paving slabs. Featuring straight-sawn calibrated edges and a premium textured, anti-slip surface, this vitrified porcelain delivers clean lines and sophisticated dark tones that interface seamlessly with the surrounding landscaping.
               </p>
               
               {/* Highlight callouts */}
               <div style={{ borderTop: '1px solid var(--color-border-dark)', paddingTop: '1.5rem', display: 'flex', gap: '3rem' }}>
                 <div>
                   <h4 style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--color-accent)', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Material Specification</h4>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-on-dark)' }}>Brazilian Black Slate (22mm)</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-on-dark)' }}>County Anthracite Porcelain (20mm)</p>
                 </div>
                 <div>
                   <h4 style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--color-accent)', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Core Attributes</h4>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-on-dark)' }}>R11 Slip rating | Non-porous</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-on-dark)' }}>R11 Slip rating | Vitrified</p>
                 </div>
               </div>
             </div>
@@ -300,7 +297,7 @@ export default function Home({ addToCart }) {
         <div className="container" style={{ maxWidth: '900px' }}>
           <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.15em', display: 'block', marginBottom: '2rem' }}>Material Heritage</span>
           <p style={{ fontFamily: 'var(--font-heading)', fontSize: '2.4rem', lineHeight: 1.6, fontStyle: 'italic', fontWeight: 300, color: 'var(--text-on-dark)' }}>
-            “Stone does not belong to the yard; it belongs to the landscape. We source slate, limestone, and sandstone that possess a raw, enduring geology—crafted by nature to weather gracefully for generations.”
+            “Stone does not belong to the yard; it belongs to the landscape. We source natural sandstone and vitrified porcelain that possess a raw, enduring geology—crafted by nature to weather gracefully for generations.”
           </p>
           <div style={{ width: '60px', height: '1px', backgroundColor: 'var(--color-accent)', margin: '2.5rem auto 1.5rem auto' }}></div>
           <p style={{ fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>JMD Global Stones</p>
