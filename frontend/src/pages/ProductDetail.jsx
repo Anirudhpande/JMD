@@ -307,6 +307,58 @@ export default function ProductDetail({ addToCart }) {
               </div>
             )}
 
+            {/* Similar Products — compact strip below main image */}
+            {relatedProducts.length > 0 && (
+              <div style={{ marginTop: '2rem' }}>
+                <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 700, color: 'var(--text-muted-on-light)', marginBottom: '1rem' }}>
+                  View Similar Products
+                </p>
+                <div
+                  ref={carouselRef}
+                  className="similar-products-scroll"
+                  style={{
+                    display: 'flex',
+                    gap: '0.75rem',
+                    overflowX: 'auto',
+                    paddingBottom: '0.5rem',
+                  }}
+                >
+                  {relatedProducts.map((prod) => (
+                    <Link
+                      key={prod.id}
+                      to={`/products/${prod.slug}`}
+                      className="similar-product-card"
+                      style={{
+                        width: '150px',
+                        flexShrink: 0,
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        border: '1px solid var(--color-border-light)',
+                        backgroundColor: '#fff',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        transition: 'box-shadow 0.2s ease, transform 0.2s ease',
+                      }}
+                    >
+                      <div style={{ width: '100%', height: '110px', overflow: 'hidden' }}>
+                        <img
+                          src={prod.images[0]}
+                          alt={prod.name}
+                          className="similar-card-img"
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.35s ease' }}
+                        />
+                      </div>
+                      <div style={{ padding: '0.65rem 0.75rem 0.75rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                        <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 600, letterSpacing: '0.05em' }}>{prod.category}</span>
+                        <p style={{ fontSize: '0.75rem', fontWeight: 600, lineHeight: 1.35, color: 'var(--text-on-light)', margin: 0 }}>{prod.name}</p>
+                        <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-on-light)', margin: '0.3rem 0 0' }}>£{prod.price.toFixed(2)}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
           </div>
 
           {/* Details Column */}
@@ -643,66 +695,6 @@ export default function ProductDetail({ addToCart }) {
             </div>
           </div>
         </section>
-
-        {/* Similar Products — Full Width Section */}
-        {relatedProducts.length > 0 && (
-          <section style={{ borderTop: '1px solid var(--color-border-light)', paddingTop: '4rem', marginBottom: '2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem' }}>
-              <div>
-                <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.15em' }}>You May Also Like</span>
-                <h2 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', fontWeight: 400, marginTop: '0.4rem', color: 'var(--text-on-light)' }}>View Similar Products</h2>
-              </div>
-            </div>
-            <div
-              ref={carouselRef}
-              className="similar-products-scroll"
-              style={{
-                display: 'flex',
-                gap: '1.5rem',
-                overflowX: 'auto',
-                paddingBottom: '1rem',
-                scrollSnapType: 'x mandatory',
-              }}
-            >
-              {relatedProducts.map((prod) => (
-                <Link
-                  key={prod.id}
-                  to={`/products/${prod.slug}`}
-                  className="similar-product-card"
-                  style={{
-                    width: 'calc(25% - 1.15rem)',
-                    minWidth: '220px',
-                    flexShrink: 0,
-                    textDecoration: 'none',
-                    color: 'inherit',
-                    border: '1px solid var(--color-border-light)',
-                    backgroundColor: '#FFFFFF',
-                    scrollSnapAlign: 'start',
-                    transition: 'box-shadow 0.2s ease, transform 0.2s ease',
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <div style={{ width: '100%', aspectRatio: '1.2', overflow: 'hidden' }}>
-                    <img
-                      src={prod.images[0]}
-                      alt={prod.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
-                      className="similar-card-img"
-                    />
-                  </div>
-                  <div style={{ padding: '1.25rem 1.25rem 1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                    <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 600, letterSpacing: '0.08em' }}>{prod.category}</span>
-                    <h4 style={{ fontSize: '0.9rem', fontWeight: 600, lineHeight: 1.4, color: 'var(--text-on-light)', margin: 0 }}>{prod.name}</h4>
-                    <div style={{ marginTop: 'auto', paddingTop: '0.75rem', fontWeight: 700, fontSize: '1rem', color: 'var(--text-on-light)' }}>
-                      £{prod.price.toFixed(2)} <span style={{ fontSize: '0.7rem', fontWeight: 400, color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
 
       </div>
       
