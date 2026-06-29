@@ -33,10 +33,7 @@ export default function Products() {
     if (urlCategory) {
       const categoryMap = {
         'sandstone': 'Sandstone',
-        'porcelain': 'Porcelain',
-        'limestone': 'Limestone',
-        'slate': 'Slate',
-        'bricks': 'Bricks'
+        'porcelain': 'Porcelain'
       };
       const catName = categoryMap[urlCategory.toLowerCase()];
       if (catName) {
@@ -230,7 +227,7 @@ export default function Products() {
             <div style={{ marginBottom: '2.5rem' }}>
               <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', fontWeight: 600 }}>Category</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                {['Sandstone', 'Porcelain', 'Limestone', 'Slate', 'Bricks'].map((cat) => (
+                {['Sandstone', 'Porcelain'].map((cat) => (
                   <button 
                     key={cat} 
                     onClick={() => toggleCategory(cat)}
@@ -249,7 +246,7 @@ export default function Products() {
             <div style={{ marginBottom: '2.5rem' }}>
               <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem', fontWeight: 600 }}>Material Type</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                {['Natural Stone', 'Porcelain', 'Bricks'].map((type) => (
+                {['Natural Stone', 'Porcelain'].map((type) => (
                   <button 
                     key={type} 
                     onClick={() => toggleType(type)}
