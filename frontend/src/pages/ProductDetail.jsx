@@ -317,18 +317,18 @@ export default function ProductDetail({ addToCart }) {
                   ref={carouselRef}
                   style={{ 
                     display: 'flex', 
-                    gap: '1.25rem', 
+                    gap: '1.5rem', 
                     overflowX: 'auto', 
-                    paddingBottom: '1rem',
-                    scrollbarWidth: 'thin',
-                    scrollSnapType: 'x mandatory'
+                    paddingBottom: '1.5rem',
+                    scrollSnapType: 'x mandatory',
+                    WebkitOverflowScrolling: 'touch'
                   }} className="similar-products-scroll">
                   {relatedProducts.map((prod) => (
                     <Link 
                       key={prod.id} 
                       to={`/products/${prod.slug}`} 
                       style={{ 
-                        width: '200px', 
+                        width: '280px', 
                         flexShrink: 0, 
                         textDecoration: 'none', 
                         color: 'inherit',
@@ -339,30 +339,27 @@ export default function ProductDetail({ addToCart }) {
                       }}
                       className="nav-hover-gold similar-product-card"
                     >
-                      <div style={{ height: '140px', overflow: 'hidden' }}>
+                      <div style={{ width: '100%', aspectRatio: '1.4', overflow: 'hidden', borderBottom: '1px solid var(--color-border-light)' }}>
                         <img 
                           src={prod.images[0]} 
                           alt={prod.name} 
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                         />
                       </div>
-                      <div style={{ padding: '1rem' }}>
-                        <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 600 }}>{prod.category}</span>
+                      <div style={{ padding: '1.25rem' }}>
+                        <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 600, letterSpacing: '0.05em' }}>{prod.category}</span>
                         <h4 style={{ 
                           fontSize: '0.85rem', 
-                          margin: '0.35rem 0', 
-                          fontWeight: 500,
-                          lineHeight: 1.3,
-                          height: '2.6rem',
-                          overflow: 'hidden',
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical'
+                          margin: '0.4rem 0 0.8rem 0', 
+                          fontWeight: 600,
+                          lineHeight: 1.4,
+                          minHeight: '2.5rem',
+                          color: 'var(--text-on-light)'
                         }} title={prod.name}>
-                          {prod.name.split(' - ')[0]}
+                          {prod.name}
                         </h4>
-                        <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-on-light)' }}>
-                          £{prod.price.toFixed(2)} <span style={{ fontSize: '0.65rem', fontWeight: 400, color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
+                        <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-on-light)' }}>
+                          £{prod.price.toFixed(2)} <span style={{ fontSize: '0.7rem', fontWeight: 400, color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
                         </div>
                       </div>
                     </Link>
@@ -710,6 +707,13 @@ export default function ProductDetail({ addToCart }) {
       </div>
       
       <style>{`
+        .similar-products-scroll::-webkit-scrollbar {
+          display: none;
+        }
+        .similar-products-scroll {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
         @media (max-width: 768px) {
           .detail-layout { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
           .specs-profile-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; }
