@@ -359,6 +359,79 @@ export default function Home({ addToCart }) {
         </div>
       </section>
 
+      {/* Before & After Gallery Section */}
+      <section style={{ backgroundColor: 'var(--bg-dark)', padding: '6rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-accent)', marginBottom: '1rem' }}>
+              <span style={{ width: '2rem', height: '1px', backgroundColor: 'var(--color-accent)', display: 'inline-block' }} />
+              <span style={{ textTransform: 'uppercase', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.2em' }}>Installations</span>
+              <span style={{ width: '2rem', height: '1px', backgroundColor: 'var(--color-accent)', display: 'inline-block' }} />
+            </div>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.8rem', fontWeight: 400, color: 'var(--text-on-dark)', lineHeight: 1.2, marginBottom: '1rem' }}>
+              Real Transformations
+            </h2>
+            <p style={{ color: 'var(--text-muted-on-dark)', fontSize: '0.95rem', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>
+              See the difference premium stone makes. Customer installations across the UK.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }} className="gallery-grid">
+
+            {/* Main before/after card */}
+            <div style={{ position: 'relative', overflow: 'hidden', gridRow: 'span 1' }}>
+              <img
+                src="/gallery-before-after.png"
+                alt="Garden patio transformation — before and after Indian Sandstone installation"
+                loading="lazy"
+                decoding="async"
+                style={{ width: '100%', height: '480px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+              />
+              <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: 'rgba(0,0,0,0.7)', color: '#fff', padding: '0.4rem 1rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
+                Before → After
+              </div>
+              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem' }}>
+                <div style={{ backgroundColor: 'rgba(10,10,10,0.8)', padding: '1rem 1.25rem' }}>
+                  <p style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.15rem' }}>Sandstone Patio — Wirral</p>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.73rem' }}>Raj Green Indian Sandstone, Mixed Size Patio Pack</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Porcelain card */}
+            <div style={{ position: 'relative', overflow: 'hidden' }}>
+              <img
+                src="/gallery-porcelain.png"
+                alt="Luxury anthracite porcelain paving installation — modern British garden"
+                loading="lazy"
+                decoding="async"
+                style={{ width: '100%', height: '480px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+              />
+              <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: 'var(--color-accent)', color: '#000', padding: '0.4rem 1rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                Porcelain
+              </div>
+              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem' }}>
+                <div style={{ backgroundColor: 'rgba(10,10,10,0.8)', padding: '1rem 1.25rem' }}>
+                  <p style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.15rem' }}>County Anthracite — Southampton</p>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.73rem' }}>Large Format Porcelain, 900×600mm</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+            <Link to="/products" className="btn" style={{ color: 'var(--text-on-dark)', borderColor: 'var(--color-border-dark)', padding: '0.85rem 2.5rem', fontSize: '0.8rem', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              Shop All Products <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Responsive Grid Layout Overrides style */}
       <style>{`
         .category-card:hover .cat-img { transform: scale(1.05) !important; }
@@ -373,6 +446,7 @@ export default function Home({ addToCart }) {
           .trust-card-item:nth-child(even) { border-right: none !important; }
           .trust-card-item:last-child { border-bottom: none !important; padding-bottom: 0 !important; }
           .categories-grid-container { grid-template-columns: repeat(2, 1fr) !important; gap: 2.5rem 1.5rem !important; }
+          .gallery-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
           .categories-grid-container { grid-template-columns: 1fr !important; gap: 3rem 0 !important; }

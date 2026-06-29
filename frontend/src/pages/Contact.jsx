@@ -167,26 +167,50 @@ export default function Contact() {
             </div>
 
             {/* Google Map Mock Embed */}
-            <div style={{ flexGrow: 1, minHeight: '320px', border: '1px solid var(--color-border-light)', position: 'relative', overflow: 'hidden', backgroundColor: '#EBE4D9' }}>
-              
-              {/* Premium Grid Mock Map */}
-              <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2.5rem', textAlign: 'center' }}>
-                <MapPin size={30} style={{ color: 'var(--color-accent)', marginBottom: '1.25rem', animation: 'bounce 2.5s infinite' }} />
-                <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', marginBottom: '0.75rem', fontWeight: 400 }}>Wirral & Southampton stockyards</h4>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted-on-light)', maxWidth: '280px', lineHeight: 1.5 }}>
-                  Interactive coordinate references and loading bay guidelines mapped for trade collection.
-                </p>
-                <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.65rem' }}>
-                  <span style={{ fontSize: '0.75rem', padding: '0.4rem 0.8rem', border: '1px solid var(--color-border-light)', color: 'var(--text-on-light)' }}>53.3965° N, 3.0125° W</span>
-                  <span style={{ fontSize: '0.75rem', padding: '0.4rem 0.8rem', border: '1px solid var(--color-border-light)', color: 'var(--text-on-light)' }}>50.9038° N, 1.4828° W</span>
+            <div style={{ flexGrow: 1, border: '1px solid var(--color-border-light)', overflow: 'hidden', position: 'relative' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', height: '360px' }}>
+                
+                {/* Wirral HQ Map */}
+                <div style={{ position: 'relative', overflow: 'hidden' }}>
+                  <div style={{ position: 'absolute', top: '10px', left: '10px', zIndex: 2, backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '0.35rem 0.85rem', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
+                    Wirral HQ
+                  </div>
+                  <iframe
+                    title="JMD Global Stones Wirral HQ"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2380.0!2d-3.0125!3d53.3965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487b20a2b4c9cc73%3A0x0!2sTwelve+Quays+House%2C+Egerton+Wharf%2C+Birkenhead%2C+CH41+1LD!5e0!3m2!1sen!2suk!4v1700000000000"
+                    width="100%"
+                    height="360"
+                    style={{ border: 0, display: 'block', filter: 'grayscale(20%)' }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
                 </div>
+
+                {/* Southampton Map */}
+                <div style={{ position: 'relative', overflow: 'hidden', borderLeft: '1px solid var(--color-border-light)' }}>
+                  <div style={{ position: 'absolute', top: '10px', left: '10px', zIndex: 2, backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '0.35rem 0.85rem', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
+                    Southampton Yard
+                  </div>
+                  <iframe
+                    title="JMD Global Stones Southampton Yard"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2520.0!2d-1.4828!3d50.9038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487469a4d8be04a3%3A0x0!2sEling+Wharf%2C+Southampton%2C+SO40+4TE!5e0!3m2!1sen!2suk!4v1700000000001"
+                    width="100%"
+                    height="360"
+                    style={{ border: 0, display: 'block', filter: 'grayscale(20%)' }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+
               </div>
 
-              {/* Float Overlay */}
-              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '0.6rem 1.25rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                Yard collection: Mon-Fri 8am - 4:30pm
+              {/* Bottom bar */}
+              <div style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-muted-on-dark)', padding: '0.6rem 1.25rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Yard collection: Mon–Fri 8am–4:30pm</span>
+                <span>53.3965° N — 50.9038° N</span>
               </div>
-
             </div>
 
           </div>

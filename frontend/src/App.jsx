@@ -13,6 +13,7 @@ import ProductDetail from './pages/ProductDetail.jsx';
 import Delivery from './pages/Delivery.jsx';
 import Care from './pages/Care.jsx';
 import Contact from './pages/Contact.jsx';
+import FAQ from './pages/FAQ.jsx';
 import Auth from './pages/Auth.jsx';
 import Account from './pages/Account.jsx';
 import Admin from './pages/Admin.jsx';
@@ -238,6 +239,7 @@ function AppContent() {
             <Link to="/products" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-on-light)' }} className="nav-hover-gold">Products</Link>
             <Link to="/delivery" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-on-light)' }} className="nav-hover-gold">Delivery</Link>
             <Link to="/care" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-on-light)' }} className="nav-hover-gold">Care Guide</Link>
+            <Link to="/faq" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-on-light)' }} className="nav-hover-gold">FAQ</Link>
             <Link to="/contact" style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-on-light)' }} className="nav-hover-gold">Contact</Link>
           </nav>
 
@@ -309,6 +311,7 @@ function AppContent() {
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/care" element={<Care />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/cart" element={<Checkout cart={cart} removeFromCart={removeFromCart} updateCartQuantity={updateCartQuantity} clearCart={clearCart} shippingZones={shippingZones} />} />
           <Route path="/invoice/:orderId" element={<Invoice />} />
           <Route path="/login" element={<Auth user={user} onLogin={handleLogin} />} />
@@ -360,6 +363,7 @@ function AppContent() {
                 <li><Link to="/products" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">Paving Slabs</Link></li>
                 <li><Link to="/delivery" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">Delivery Guide</Link></li>
                 <li><Link to="/care" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">Care & Laying</Link></li>
+                <li><Link to="/faq" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">FAQs</Link></li>
               </ul>
             </div>
 

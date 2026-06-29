@@ -298,8 +298,8 @@ export default function Products() {
                       <div key={prod.id} className="product-card asymmetric-highlight">
                         <Link to={`/products/${prod.slug}`} style={{ height: '100%' }}>
                           <div className="product-image-wrapper">
-                            <img src={prod.images[0]} alt={prod.name} className="product-image-primary" />
-                            <img src={prod.images[1] || prod.images[0]} alt={prod.name} className="product-image-secondary" />
+                            <img src={prod.images[0]} alt={prod.name} className="product-image-primary" loading="lazy" decoding="async" />
+                            <img src={prod.images[1] || prod.images[0]} alt={`${prod.name} alternate view`} className="product-image-secondary" loading="lazy" decoding="async" />
                             {!inStock && <span className="badge badge-out-of-stock" style={{ backgroundColor: 'var(--color-danger)' }}>Out of Stock</span>}
                             {inStock && <span className="badge badge-featured">Spotlight Paving</span>}
                           </div>
@@ -345,8 +345,8 @@ export default function Products() {
                     <div key={prod.id} className="product-card">
                       <Link to={`/products/${prod.slug}`}>
                         <div className="product-image-wrapper">
-                          <img src={prod.images[0]} alt={prod.name} className="product-image-primary" />
-                          <img src={prod.images[1] || prod.images[0]} alt={prod.name} className="product-image-secondary" />
+                          <img src={prod.images[0]} alt={prod.name} className="product-image-primary" loading="lazy" decoding="async" />
+                          <img src={prod.images[1] || prod.images[0]} alt={`${prod.name} alternate view`} className="product-image-secondary" loading="lazy" decoding="async" />
                           {!inStock && <span className="badge badge-out-of-stock" style={{ backgroundColor: 'var(--color-danger)' }}>Out of Stock</span>}
                           {prod.is_featured && inStock && <span className="badge badge-featured">Featured selection</span>}
                         </div>
