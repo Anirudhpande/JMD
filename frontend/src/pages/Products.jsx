@@ -92,47 +92,57 @@ export default function Products() {
       });
     }
 
-    // Helper to group by variant_group_id
-    const getGroupedProducts = (productList) => {
-      const groups = {};
-      const ungrouped = [];
+    // Custom sort configuration for sequential layout
+    const categoryOrder = { 'Sandstone': 1, 'Porcelain': 2 };
 
-      productList.forEach(item => {
-        if (item.variant_group_id) {
-          if (!groups[item.variant_group_id]) {
-            groups[item.variant_group_id] = [];
-          }
-          groups[item.variant_group_id].push(item);
-        } else {
-          ungrouped.push(item);
-        }
-      });
-
-      const groupedList = Object.keys(groups).map(groupId => {
-        const variants = groups[groupId];
-        const sorted = [...variants].sort((a, b) => a.price - b.price);
-        const cheapest = sorted[0];
-        
-        let baseName = cheapest.name
-          .split(' - ')[0]
-          .split(' — ')[0];
-        
-        return {
-          ...cheapest,
-          name: baseName,
-          isGrouped: true,
-          price: cheapest.price
-        };
-      });
-
-      return [...groupedList, ...ungrouped];
+    const sandstoneMaterialOrder = {
+      'raj green': 1,
+      'kandla grey': 2,
+      'rippon buff': 3,
+      'autumn brown': 4
     };
 
-    result = getGroupedProducts(result);
+    const porcelainMaterialOrder = {
+      'county anthracite': 1,
+      'hammer stone grey': 2,
+      'mountain white': 3,
+      'earth core grey': 4,
+      'quartz light grey': 5,
+      'kandla grey': 6,
+      'quartz white': 7,
+      'persia beige': 8
+    };
+
+    const getSequenceValue = (p) => {
+      const catVal = categoryOrder[p.category] || 99;
+      const nameLower = p.name.toLowerCase();
+      let matVal = 99;
+
+      if (p.category === 'Sandstone') {
+        for (const [key, val] of Object.entries(sandstoneMaterialOrder)) {
+          if (nameLower.includes(key)) { matVal = val; break; }
+        }
+      } else if (p.category === 'Porcelain') {
+        for (const [key, val] of Object.entries(porcelainMaterialOrder)) {
+          if (nameLower.includes(key)) { matVal = val; break; }
+        }
+      }
+
+      const sizeLower = p.size.toLowerCase();
+      let sizeVal = 3;
+      if (sizeLower.includes('project pack') || sizeLower.includes('mixed') || sizeLower.includes('18.9m2')) {
+        sizeVal = 1;
+      } else if (sizeLower.includes('900x600')) {
+        sizeVal = 2;
+      }
+
+      // Combine into a sort key index
+      return catVal * 1000 + matVal * 10 + sizeVal;
+    };
 
     // Sorting
     if (sortBy === 'popularity') {
-      result.sort((a, b) => b.stars - a.stars);
+      result.sort((a, b) => getSequenceValue(a) - getSequenceValue(b));
     } else if (sortBy === 'price-asc') {
       result.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price-desc') {
@@ -363,7 +373,7 @@ export default function Products() {
                           </div>
 
                           <div className="product-price" style={{ fontSize: '1.6rem', marginBottom: '1.5rem', marginTop: 0 }}>
-                            {prod.isGrouped ? `From £${prod.price.toFixed(2)}` : `£${prod.price.toFixed(2)}`} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
+                            £{prod.price.toFixed(2)} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
                           </div>
                           
                           <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -406,7 +416,7 @@ export default function Products() {
                         </div>
 
                         <div className="product-price" style={{ marginBottom: '1.25rem' }}>
-                          {prod.isGrouped ? `From £${prod.price.toFixed(2)}` : `£${prod.price.toFixed(2)}`} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
+                          £{prod.price.toFixed(2)} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
                         </div>
                         
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
