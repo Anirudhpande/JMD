@@ -219,12 +219,21 @@ export default function ProductDetail({ addToCart }) {
         compressive: '350 MPa',
         thickness: '20mm Vitrified Sawn'
       };
+      case 'Bricks': return {
+        origin: 'Pakistan / India',
+        classification: 'Handmade Clay Facing Brick',
+        finish: 'Standard / Handmade',
+        slip: 'N/A (Walling Product)',
+        absorption: '< 12% (EN 771-1)',
+        compressive: '≥ 15 MPa (Class M15)',
+        thickness: '68mm (Tolerances: T2, R2)'
+      };
       default: return {
         origin: 'Global Imports',
         classification: 'Natural Stone',
         finish: 'Calibrated Paving Slabs',
         slip: 'R11 (Safe Outdoor Grip)',
-        absorption: '<2.0%',
+        absorption: '< 2.0%',
         compressive: '100 MPa',
         thickness: '22mm Standard'
       };
