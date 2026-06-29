@@ -20,7 +20,7 @@ const blogPosts = [
     date: "May 15, 2026",
     author: "Roopesh Pande",
     category: "Buying Guides",
-    image: "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/County-Grey.png"
+    image: "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png"
   },
   {
     title: "The Ultimate Guide to Sealing Natural Stone Slabs",
@@ -29,7 +29,7 @@ const blogPosts = [
     date: "April 02, 2026",
     author: "Yard Operations",
     category: "Care & Maintenance",
-    image: "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Kandla-Grey.png"
+    image: "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/KG-Sandstone-300x300.png"
   },
   {
     title: "5 Modern Garden Designs Using Grey Anthracite Porcelain",
