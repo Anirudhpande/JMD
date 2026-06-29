@@ -155,14 +155,19 @@ export default function Contact() {
             </div>
 
             {/* General Contact Info Bar */}
-            <div style={{ display: 'flex', justifyContent: 'space-around', padding: '1.5rem', border: '1px solid var(--color-border-light)', fontSize: '0.85rem', backgroundColor: 'transparent' }} className="info-bar">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-on-light)' }}>
-                <Phone size={16} style={{ color: 'var(--color-accent)' }} />
-                <span>07450148506</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '2rem', border: '1px solid var(--color-border-light)', fontSize: '0.85rem', backgroundColor: 'transparent' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-around' }} className="info-bar">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-on-light)' }}>
+                  <Phone size={16} style={{ color: 'var(--color-accent)' }} />
+                  <span>07450148506</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-on-light)' }}>
+                  <Mail size={16} style={{ color: 'var(--color-accent)' }} />
+                  <span>sales@jmdglobalstones.co.uk</span>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-on-light)' }}>
-                <Mail size={16} style={{ color: 'var(--color-accent)' }} />
-                <span>sales@jmdglobalstones.co.uk</span>
+              <div style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-muted-on-light)', borderTop: '1px solid var(--color-border-light)', paddingTop: '1rem', marginTop: '0.5rem' }}>
+                <strong>Registered Office Address:</strong> 70 Grange Road East, Wirral, United Kingdom, CH41 5FE
               </div>
             </div>
 

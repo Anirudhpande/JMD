@@ -384,8 +384,9 @@ function AppContent() {
               <p style={{ fontSize: '0.85rem', lineHeight: 1.7, color: 'var(--text-muted-on-dark)', marginBottom: '1.75rem' }}>
                 Premium UK supplier of authentic Indian Sandstone, slate, limestone, and porcelain slabs. Sourced directly from our quarries, delivered nationwide.
               </p>
-              <p style={{ fontSize: '0.7rem', color: '#5E5A52' }}>
-                Company No: 12807959 | VAT: GB 358688337
+              <p style={{ fontSize: '0.7rem', color: '#5E5A52', lineHeight: 1.5 }}>
+                Company No: 12807959 | VAT: GB 358688337<br />
+                Reg. Office: 70 Grange Road East, Wirral, UK, CH41 5FE
               </p>
             </div>
 
