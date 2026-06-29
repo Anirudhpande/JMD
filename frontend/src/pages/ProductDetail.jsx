@@ -595,70 +595,85 @@ export default function ProductDetail({ addToCart }) {
                   <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-on-light)' }}><Layers size={15} style={{ color: 'var(--color-accent)' }} /> Laying Patterns Guide</span>
                   {openAccordions.patterns ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
                 </button>
-                {openAccordions.patterns && (
-                  <div style={{ paddingBottom: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted-on-light)', lineHeight: 1.7 }}>
+                {openAccordions.patterns && (() => {
+                  const isProjectPack = product.name.toLowerCase().includes('project pack');
+                  const isPorcelain   = product.category === 'Porcelain';
+                  // Sandstone single size = sandstone but NOT a project pack
 
-                    {/* Project Pack breakdown */}
-                    <div style={{ marginBottom: '1.25rem' }}>
-                      <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        Project Pack — Multi-Size Modular Layout
-                      </p>
-                      <p style={{ marginBottom: '0.75rem' }}>
-                        Each Project Pack contains four complementary stone sizes, carefully proportioned to create a natural, random-pattern layout across your patio or pathway. One pack covers approximately <strong>18.9 m²</strong>.
-                      </p>
-                      <div style={{ background: '#f7f4ef', border: '1px solid #e0d9ce', padding: '0.85rem 1rem', marginBottom: '0.75rem' }}>
-                        <p style={{ fontWeight: 600, color: 'var(--text-on-light)', marginBottom: '0.5rem', fontSize: '0.78rem' }}>Pack Composition per Pack:</p>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem 1.5rem' }}>
-                          {[['16 pieces', '900 × 600 mm'], ['16 pieces', '600 × 600 mm'], ['16 pieces', '600 × 290 mm'], ['12 pieces', '290 × 290 mm']].map(([qty, size]) => (
-                            <div key={size} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.2rem 0', borderBottom: '1px solid #e0d9ce' }}>
-                              <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>{qty}</span>
-                              <span style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>{size}</span>
+                  return (
+                    <div style={{ paddingBottom: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted-on-light)', lineHeight: 1.7 }}>
+
+                      {/* ── Project Pack ── */}
+                      {isProjectPack && (
+                        <div>
+                          <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Project Pack — Multi-Size Modular Layout
+                          </p>
+                          <p style={{ marginBottom: '0.75rem' }}>
+                            Each Project Pack contains four complementary stone sizes, carefully proportioned to produce a natural, random-pattern layout across your patio or pathway. One pack covers approximately <strong>18.9 m²</strong>.
+                          </p>
+                          <div style={{ background: '#f7f4ef', border: '1px solid #e0d9ce', padding: '0.85rem 1rem', marginBottom: '0.75rem' }}>
+                            <p style={{ fontWeight: 600, color: 'var(--text-on-light)', marginBottom: '0.5rem', fontSize: '0.78rem' }}>Pack Composition:</p>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem 1.5rem' }}>
+                              {[['16 pieces', '900 × 600 mm'], ['16 pieces', '600 × 600 mm'], ['16 pieces', '600 × 290 mm'], ['12 pieces', '290 × 290 mm']].map(([qty, size]) => (
+                                <div key={size} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.2rem 0', borderBottom: '1px solid #e0d9ce' }}>
+                                  <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>{qty}</span>
+                                  <span style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>{size}</span>
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          </div>
+                          <p style={{ marginBottom: '0.4rem' }}>• Always lay flags from multiple packs simultaneously to blend natural colour and shade variations evenly across the surface.</p>
+                          <p>• Stagger joints by a minimum of 100 mm in all directions — avoid forming continuous straight lines or cross joints.</p>
                         </div>
-                      </div>
-                      <p style={{ marginBottom: '0.4rem' }}>• Always lay flags from multiple packs simultaneously to blend natural colour and shade variations evenly across the surface.</p>
-                      <p>• Stagger joints by a minimum of 100 mm in all directions — avoid forming continuous straight lines or cross joints.</p>
-                    </div>
+                      )}
 
-                    <div style={{ borderTop: '1px solid #e0d9ce', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
-                      <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        Single Size Pack — Uniform Format (22 mm Calibrated)
-                      </p>
-                      <p style={{ marginBottom: '0.75rem' }}>
-                        Single size packs supply one consistent flag dimension, ideal for a clean, contemporary stretcher-bond or stack-bond layout. Each pack covers approximately <strong>17.0 m²</strong>.
-                      </p>
-                      <div style={{ background: '#f7f4ef', border: '1px solid #e0d9ce', padding: '0.85rem 1rem', marginBottom: '0.75rem' }}>
-                        <p style={{ fontWeight: 600, color: 'var(--text-on-light)', marginBottom: '0.5rem', fontSize: '0.78rem' }}>Pack Composition:</p>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.2rem 0', borderBottom: '1px solid #e0d9ce' }}>
-                          <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>30 pieces</span>
-                          <span style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>900 × 600 mm</span>
+                      {/* ── Sandstone Single Size (22 mm) ── */}
+                      {!isProjectPack && !isPorcelain && (
+                        <div>
+                          <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Single Size Pack — Stretcher Bond Layout (22 mm Calibrated)
+                          </p>
+                          <p style={{ marginBottom: '0.75rem' }}>
+                            This single size pack supplies one consistent flag dimension, ideal for a clean, contemporary stretcher-bond layout. Each pack covers approximately <strong>17.0 m²</strong>.
+                          </p>
+                          <div style={{ background: '#f7f4ef', border: '1px solid #e0d9ce', padding: '0.85rem 1rem', marginBottom: '0.75rem' }}>
+                            <p style={{ fontWeight: 600, color: 'var(--text-on-light)', marginBottom: '0.5rem', fontSize: '0.78rem' }}>Pack Composition:</p>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.2rem 0', borderBottom: '1px solid #e0d9ce' }}>
+                              <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>30 pieces</span>
+                              <span style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>900 × 600 mm</span>
+                            </div>
+                          </div>
+                          <p style={{ marginBottom: '0.4rem' }}>• Lay in a staggered brick-bond pattern, offsetting each row by one-third (300 mm) or one-half (450 mm) of the flag length.</p>
+                          <p>• Avoid a full stack-bond (grid) layout unless intentionally creating a formal, symmetrical design.</p>
                         </div>
-                      </div>
-                      <p style={{ marginBottom: '0.4rem' }}>• Lay in a staggered brick-bond pattern, offsetting each row by one-third (300 mm) or one-half (450 mm) of the flag length.</p>
-                      <p>• Avoid a full stack-bond (grid) layout unless intentionally creating a formal, symmetrical design.</p>
-                    </div>
+                      )}
 
-                    <div style={{ borderTop: '1px solid #e0d9ce', paddingTop: '1.25rem' }}>
-                      <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        Single Size Pack — Uniform Format (20 mm Porcelain)
-                      </p>
-                      <p style={{ marginBottom: '0.75rem' }}>
-                        Porcelain single size packs contain larger-format flags for wide, open-plan installations. Each pack covers approximately <strong>21.3 m²</strong>.
-                      </p>
-                      <div style={{ background: '#f7f4ef', border: '1px solid #e0d9ce', padding: '0.85rem 1rem', marginBottom: '0.75rem' }}>
-                        <p style={{ fontWeight: 600, color: 'var(--text-on-light)', marginBottom: '0.5rem', fontSize: '0.78rem' }}>Pack Composition:</p>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.2rem 0', borderBottom: '1px solid #e0d9ce' }}>
-                          <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>38 pieces</span>
-                          <span style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>900 × 600 mm</span>
+                      {/* ── Porcelain Single Size (20 mm) ── */}
+                      {isPorcelain && (
+                        <div>
+                          <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Single Size Pack — Stretcher Bond Layout (20 mm Porcelain)
+                          </p>
+                          <p style={{ marginBottom: '0.75rem' }}>
+                            Porcelain single size packs supply large-format flags perfect for wide, open-plan patios and contemporary garden designs. Each pack covers approximately <strong>21.3 m²</strong>.
+                          </p>
+                          <div style={{ background: '#f7f4ef', border: '1px solid #e0d9ce', padding: '0.85rem 1rem', marginBottom: '0.75rem' }}>
+                            <p style={{ fontWeight: 600, color: 'var(--text-on-light)', marginBottom: '0.5rem', fontSize: '0.78rem' }}>Pack Composition:</p>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.2rem 0', borderBottom: '1px solid #e0d9ce' }}>
+                              <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>38 pieces</span>
+                              <span style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>900 × 600 mm</span>
+                            </div>
+                          </div>
+                          <p style={{ marginBottom: '0.4rem' }}>• Use a 3 mm joint width with a suitable porcelain tile adhesive rated for external use.</p>
+                          <p style={{ marginBottom: '0.4rem' }}>• Lay in a staggered brick-bond pattern, offsetting each row by one-third (300 mm) for a modern linear finish.</p>
+                          <p>• Porcelain flags are non-porous and require no sealing — simply clean with water and a pH-neutral cleaner.</p>
                         </div>
-                      </div>
-                      <p style={{ marginBottom: '0.4rem' }}>• Use a 3 mm joint width with a suitable porcelain tile adhesive rated for external use.</p>
-                      <p>• Porcelain flags are non-porous and require no sealing — simply clean with water and a pH-neutral cleaner.</p>
-                    </div>
+                      )}
 
-                  </div>
-                )}
+                    </div>
+                  );
+                })()}
               </div>
 
             </div>
