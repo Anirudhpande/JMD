@@ -300,44 +300,81 @@ export default function ProductDetail({ addToCart }) {
             </div>
 
             {/* Price Display */}
-            <div style={{ borderBottom: '1px solid var(--color-border-light)', paddingBottom: '2.0rem', marginBottom: '2.0rem' }}>
-              <div style={{ fontSize: '2.4rem', fontWeight: 400, color: 'var(--color-accent)', fontFamily: 'var(--font-heading)' }}>
+            <div style={{ paddingBottom: '1.5rem' }}>
+              <div style={{ fontSize: '2.5rem', fontWeight: 400, color: 'var(--color-accent)', fontFamily: 'var(--font-heading)' }}>
                 £{product.price.toFixed(2)}
                 <span style={{ fontSize: '0.85rem', fontWeight: 400, color: 'var(--text-muted-on-light)', marginLeft: '0.75rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>ex. VAT / pack</span>
               </div>
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted-on-light)', marginTop: '0.5rem' }}>Size: {product.size}</p>
             </div>
 
             {/* Product Description */}
-            <p style={{ color: 'var(--text-muted-on-light)', fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '2.5rem' }}>
+            <p style={{ color: 'var(--text-muted-on-light)', fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '2rem' }}>
               {product.description}
             </p>
 
-            {/* Also Available In / Variant Selector */}
-            {otherSizes.length > 0 && (
-              <div style={{ marginBottom: '2.5rem' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem', color: 'var(--text-on-light)' }}>
-                  Also Available In:
+            {/* Size & Format Selector */}
+            {groupVariants.length > 0 && (
+              <div style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '2rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '1rem', color: 'var(--text-on-light)' }}>
+                  Select Paving Format / Size:
                 </label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                  {otherSizes.map((v) => (
-                    <Link 
-                      key={v.id}
-                      to={`/products/${v.slug}`}
-                      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem', border: '1px solid var(--color-border-light)', cursor: 'pointer', textAlign: 'left', transition: 'var(--transition-smooth)' }}
-                      className="nav-hover-gold"
-                    >
-                      <div>
-                        <div style={{ fontWeight: 500, fontSize: '0.95rem', color: 'var(--text-on-light)' }}>{v.size}</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted-on-light)', marginTop: '0.25rem' }}>
-                          Stock status: {v.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                  {groupVariants.map((v) => {
+                    const isCurrent = v.id === product.id;
+                    const isMixed = v.size.toLowerCase().includes('mixed') || v.size.toLowerCase().includes('project pack');
+                    const labelTitle = isMixed ? 'Project Pack (Mixed Sizes)' : '900x600mm (Single Size)';
+                    const coverage = isMixed ? '19.5 m²' : '16.2 m²';
+                    
+                    return (
+                      <Link 
+                        key={v.id}
+                        to={`/products/${v.slug}`}
+                        style={{ 
+                          display: 'flex', 
+                          justifyContent: 'space-between', 
+                          alignItems: 'center', 
+                          padding: '1.25rem', 
+                          border: isCurrent ? '2px solid var(--color-accent)' : '1px solid var(--color-border-light)', 
+                          backgroundColor: isCurrent ? '#FFFFFF' : 'transparent',
+                          cursor: 'pointer', 
+                          textAlign: 'left',
+                          textDecoration: 'none',
+                          color: 'inherit',
+                          transition: 'all 0.25s ease'
+                        }}
+                        className="variant-option-card"
+                      >
+                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                          <div style={{ 
+                            width: '18px', 
+                            height: '18px', 
+                            borderRadius: '50%', 
+                            border: '1px solid var(--color-accent)', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            flexShrink: 0
+                          }}>
+                            {isCurrent && <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--color-accent)' }} />}
+                          </div>
+                          <div>
+                            <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-on-light)' }}>{labelTitle}</div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted-on-light)', marginTop: '0.15rem' }}>
+                              {v.size} • Approx. {coverage} coverage
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div style={{ fontWeight: 500, fontSize: '1.1rem', color: 'var(--color-accent)' }}>
-                        £{v.price.toFixed(2)} <span style={{ fontSize: '0.7rem', color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
-                      </div>
-                    </Link>
-                  ))}
+                        <div style={{ textAlign: 'right' }}>
+                          <div style={{ fontWeight: 600, fontSize: '1.15rem', color: 'var(--color-accent)' }}>
+                            £{v.price.toFixed(2)}
+                          </div>
+                          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted-on-light)', textTransform: 'uppercase' }}>
+                            ex. VAT / pack
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             )}

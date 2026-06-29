@@ -92,6 +92,44 @@ export default function Products() {
       });
     }
 
+    // Helper to group by variant_group_id
+    const getGroupedProducts = (productList) => {
+      const groups = {};
+      const ungrouped = [];
+
+      productList.forEach(item => {
+        if (item.variant_group_id) {
+          if (!groups[item.variant_group_id]) {
+            groups[item.variant_group_id] = [];
+          }
+          groups[item.variant_group_id].push(item);
+        } else {
+          ungrouped.push(item);
+        }
+      });
+
+      const groupedList = Object.keys(groups).map(groupId => {
+        const variants = groups[groupId];
+        const sorted = [...variants].sort((a, b) => a.price - b.price);
+        const cheapest = sorted[0];
+        
+        let baseName = cheapest.name
+          .split(' - ')[0]
+          .split(' — ')[0];
+        
+        return {
+          ...cheapest,
+          name: baseName,
+          isGrouped: true,
+          price: cheapest.price
+        };
+      });
+
+      return [...groupedList, ...ungrouped];
+    };
+
+    result = getGroupedProducts(result);
+
     // Sorting
     if (sortBy === 'popularity') {
       result.sort((a, b) => b.stars - a.stars);
@@ -325,7 +363,7 @@ export default function Products() {
                           </div>
 
                           <div className="product-price" style={{ fontSize: '1.6rem', marginBottom: '1.5rem', marginTop: 0 }}>
-                            £{prod.price.toFixed(2)} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
+                            {prod.isGrouped ? `From £${prod.price.toFixed(2)}` : `£${prod.price.toFixed(2)}`} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
                           </div>
                           
                           <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -368,7 +406,7 @@ export default function Products() {
                         </div>
 
                         <div className="product-price" style={{ marginBottom: '1.25rem' }}>
-                          £{prod.price.toFixed(2)} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
+                          {prod.isGrouped ? `From £${prod.price.toFixed(2)}` : `£${prod.price.toFixed(2)}`} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
                         </div>
                         
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
