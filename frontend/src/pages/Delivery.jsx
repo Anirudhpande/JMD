@@ -1,11 +1,13 @@
 import React from 'react';
 import { ShieldAlert, AlertCircle, Compass, Truck, Milestone, FileSignature } from 'lucide-react';
+import useSEO from '../hooks/useSEO.js';
 
 export default function Delivery() {
-  React.useEffect(() => {
-    document.title = "Delivery Guidelines & HGV Access | JMD Global Stones";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Review JMD Global Stones UK delivery timeline, kerbside drop rules, and HGV clearance requirements. Flat rate shipping is £49.");
-  }, []);
+  useSEO({
+    title: 'Delivery Information | UK-Wide Stone Paving Delivery',
+    description: 'JMD Global Stones offers UK-wide kerbside paving delivery. Learn about our HGV access requirements, delivery timelines, and flat-rate shipping costs.',
+    canonical: 'https://jmdglobalstones.co.uk/delivery'
+  });
 
   return (
     <div style={{ backgroundColor: 'var(--bg-light)', padding: '8rem 0', minHeight: '100vh' }}>

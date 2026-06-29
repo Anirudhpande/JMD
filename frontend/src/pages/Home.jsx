@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Truck, ShieldCheck, CheckSquare, MessageSquare, ArrowRight, Star } from 'lucide-react';
 import { apiFetch } from '../api.js';
+import useSEO from '../hooks/useSEO.js';
 
 const categories = [
   { name: 'Sandstone', image: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png', slug: 'sandstone' },
@@ -45,8 +46,13 @@ export default function Home({ addToCart }) {
     ]
   });
 
+  useSEO({
+    title: 'Buy Paving Slabs UK | Indian Sandstone, Porcelain & Natural Stone',
+    description: 'Shop premium Indian Sandstone, Porcelain, Limestone, Slate and Natural Stone Paving. UK-wide delivery. Trade & retail prices. Family-run importer. Free samples available.',
+    canonical: 'https://jmdglobalstones.co.uk/'
+  });
+
   useEffect(() => {
-    document.title = "Paving Slabs UK | Sandstone & Porcelain | JMD Global Stones";
     document.querySelector('meta[name="description"]')?.setAttribute("content", "Buy premium sandstone and porcelain paving slabs in the UK. Raj Green, Kandla Grey and porcelain patio slabs with direct-import pricing and UK delivery.");
     
     Promise.all([

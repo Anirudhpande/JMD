@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, MessageSquare, Send } from 'lucide-react';
+import useSEO from '../hooks/useSEO.js';
 
 export default function Contact() {
-  React.useEffect(() => {
-    document.title = "Contact JMD Global Stones | Wirral & Southampton Yards";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Get in touch with JMD Global Stones. Call or WhatsApp 07450148506, email sales@jmdglobalstones.co.uk, or visit our Wirral HQ and Southampton yard locations.");
-  }, []);
+  useSEO({
+    title: 'Contact Us | JMD Global Stones Wirral & Southampton',
+    description: 'Get in touch with JMD Global Stones. Call or WhatsApp 07450148506, email sales@jmdglobalstones.co.uk, or visit our Wirral HQ and Southampton yard.',
+    canonical: 'https://jmdglobalstones.co.uk/contact'
+  });
 
   const [formData, setFormData] = useState({
     name: '',

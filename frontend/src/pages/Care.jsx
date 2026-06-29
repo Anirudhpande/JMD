@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, Hammer, Info, Droplets, CheckCircle } from 'lucide-react';
+import useSEO from '../hooks/useSEO.js';
 
 const materialLayingInfo = {
   sandstone: {
@@ -82,10 +83,11 @@ const installationSteps = [
 export default function Care() {
   const [activeTab, setActiveTab] = useState('sandstone');
 
-  React.useEffect(() => {
-    document.title = "Laying Advice, Care & Maintenance | JMD Global Stones";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Learn standard patio laying guidelines and SBR priming practices. Detailed Care & Maintenance tabs for sandstone, slate, limestone, and porcelain.");
-  }, []);
+  useSEO({
+    title: 'Stone Laying Advice, Care & Maintenance Guide',
+    description: 'Expert laying advice and maintenance guides for Indian Sandstone, Porcelain, Limestone and Slate paving. Learn correct priming, mortar mix, and cleaning techniques.',
+    canonical: 'https://jmdglobalstones.co.uk/care'
+  });
 
   return (
     <div style={{ backgroundColor: 'var(--bg-light)', padding: '8rem 0', minHeight: '100vh' }}>

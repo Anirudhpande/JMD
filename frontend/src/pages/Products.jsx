@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Star, SlidersHorizontal, Check, X, ShieldCheck, Truck, ShoppingBag, Eye } from 'lucide-react';
 import { apiFetch } from '../api.js';
+import useSEO from '../hooks/useSEO.js';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -19,6 +20,12 @@ export default function Products() {
   // Quick View State
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [quickViewActiveImage, setQuickViewActiveImage] = useState(0);
+
+  useSEO({
+    title: 'All Paving Products | Indian Sandstone, Porcelain, Limestone & More',
+    description: 'Browse our full range of premium paving — Indian Sandstone, Porcelain, Limestone, Slate and Bricks. Filter by category, price and stock. Fast UK delivery.',
+    canonical: 'https://jmdglobalstones.co.uk/products'
+  });
 
   // Load category from URL query parameters if present
   useEffect(() => {

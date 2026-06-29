@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Star, Truck, AlertTriangle, ChevronDown, ChevronUp, CheckCircle, Package, Layers, Info } from 'lucide-react';
 import { apiFetch } from '../api.js';
+import useSEO from '../hooks/useSEO.js';
 
 export default function ProductDetail({ addToCart }) {
   const { slug } = useParams();
@@ -68,12 +69,37 @@ export default function ProductDetail({ addToCart }) {
       });
   }, [slug]);
 
-  useEffect(() => {
-    if (product) {
-      document.title = `${product.name} | JMD Global Stones`;
-      document.querySelector('meta[name="description"]')?.setAttribute("content", product.description);
-    }
-  }, [product]);
+  useSEO({
+    title: product ? `${product.name} | Buy ${product.category} Paving Slabs UK` : 'Product | JMD Global Stones',
+    description: product
+      ? `Buy ${product.name} paving slabs from JMD Global Stones. ${product.description ? product.description.slice(0, 120) + '...' : ''} UK-wide delivery available.`
+      : 'Premium natural stone paving slabs with UK-wide delivery.',
+    image: product?.images?.[0] || undefined,
+    canonical: product ? `https://jmdglobalstones.co.uk/products/${product.slug}` : undefined,
+    jsonLd: product ? {
+      '@context': 'https://schema.org/',
+      '@type': 'Product',
+      name: product.name,
+      image: product.images || [],
+      description: product.description || '',
+      brand: { '@type': 'Brand', name: 'JMD Global Stones' },
+      offers: {
+        '@type': 'Offer',
+        url: `https://jmdglobalstones.co.uk/products/${product.slug}`,
+        priceCurrency: 'GBP',
+        price: product.price,
+        availability: (product.stock || 0) > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        seller: { '@type': 'Organization', name: 'JMD Global Stones' }
+      },
+      aggregateRating: product.stars ? {
+        '@type': 'AggregateRating',
+        ratingValue: product.stars,
+        bestRating: 5,
+        worstRating: 1,
+        ratingCount: product.review_count || 12
+      } : undefined
+    } : undefined
+  });
 
   if (loading) {
     return (
