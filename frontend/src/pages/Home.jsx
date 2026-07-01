@@ -1,87 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Truck, ShieldCheck, CheckSquare, MessageSquare, ArrowRight, Star, ChevronRight, Zap, Package } from 'lucide-react';
+import { Truck, ShieldCheck, Star, ArrowRight, ArrowLeft, ChevronRight, Package, Zap, Award } from 'lucide-react';
 import { apiFetch } from '../api.js';
 import useSEO from '../hooks/useSEO.js';
 
-const reviews = [
-  {
-    name: "David L. from Wirral",
-    rating: 5,
-    comment: "Outstanding quality sandstone. Delivered exactly when requested, and the color variations are stunning. Highly recommend JMD!"
-  },
-  {
-    name: "Sarah M. from Southampton",
-    rating: 5,
-    comment: "Extremely premium look! The porcelain paving has a beautiful anti-slip texture and looks perfect on our modern patio."
-  },
-  {
-    name: "James K. from Chester",
-    rating: 5,
-    comment: "Very pleased with the County Anthracite porcelain. Be sure to prime it correctly before laying. Great customer service from Roopesh."
-  }
+const CATEGORY_TABS = [
+  { label: 'All',       slug: null,        img: '/images/raj-green-sandstone.png' },
+  { label: 'Sandstone', slug: 'sandstone', img: '/images/raj-green-sandstone.png' },
+  { label: 'Porcelain', slug: 'porcelain', img: '/images/county-anthracite.png'   },
+  { label: 'Bricks',    slug: 'bricks',    img: '/images/half-round-bricks.png'   },
 ];
 
-const CATEGORY_TABS = ['All', 'Sandstone', 'Porcelain', 'Bricks'];
+// Hero slides — one per featured product concept
+const HERO_SLIDES = [
+  {
+    tag:      'Best Seller',
+    headline: 'Raj Green Indian\nSandstone',
+    sub:      'Natural riven surface. 22mm calibrated thickness. Timeless garden character.',
+    price:    '£278.00',
+    img:      '/images/raj-green-sandstone.png',
+    slug:     'raj-green-indian-sandstone-paving-slabs-project-pack-18-9m2',
+    accent:   '#3D5A47',
+    bg:       'linear-gradient(135deg, #EAE6DC 0%, #D9D3C3 100%)',
+  },
+  {
+    tag:      'Premium Porcelain',
+    headline: 'County Anthracite\nPorcelain',
+    sub:      'Vitrified R11 slip-rated. 900×600mm large format. Zero maintenance.',
+    price:    '£292.00',
+    img:      '/images/county-anthracite.png',
+    slug:     'county-anthracite-porcelain-paving-slabs-900x600mm',
+    accent:   '#4A5568',
+    bg:       'linear-gradient(135deg, #E8EDF2 0%, #D0D8E2 100%)',
+  },
+  {
+    tag:      'Warm Tones',
+    headline: 'Rippon Buff\nSandstone',
+    sub:      'Warm buff and honey tones. Natural Indian sandstone. Riven surface finish.',
+    price:    '£279.00',
+    img:      '/images/rippon-buff-sandstone.png',
+    slug:     'rippon-buff-indian-sandstone-paving-slabs-project-pack-18-9m2',
+    accent:   '#8B6914',
+    bg:       'linear-gradient(135deg, #F5EDD8 0%, #E8D9B8 100%)',
+  },
+];
+
+const reviews = [
+  { name: 'David L. — Wirral',       rating: 5, comment: 'Outstanding quality sandstone. Delivered exactly when requested.' },
+  { name: 'Sarah M. — Southampton',  rating: 5, comment: 'Extremely premium look! The porcelain is perfect on our patio.' },
+  { name: 'James K. — Chester',      rating: 5, comment: 'Great customer service from Roopesh. Consistent thickness.' },
+];
 
 export default function Home({ addToCart }) {
-  const [allProducts, setAllProducts] = useState([]);
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [activeReviewIdx, setActiveReviewIdx] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [settings, setSettings] = useState({
-    home_hero_headline: "Enduring Stone.",
-    home_hero_subheadline: "Architectural Form.",
-    home_hero_text: "Direct quarry importers supplying calibrated Indian Sandstone and Vitrified Porcelain flags — crafted to weather gracefully for generations.",
-    trust_bar: [
-      "£49 Flat Rate UK Delivery",
-      "Direct Imported Best Quality",
-      "Ready for Fast Dispatch",
-      "Yard Managers on Call"
-    ]
-  });
+  const [allProducts, setAllProducts]       = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [heroIdx, setHeroIdx]               = useState(0);
+  const [reviewIdx, setReviewIdx]           = useState(0);
+  const [loading, setLoading]               = useState(true);
+  const heroTimer = useRef(null);
 
   useSEO({
-    title: 'Buy Paving Slabs UK | Indian Sandstone, Porcelain & Natural Stone',
-    description: 'Shop premium Indian Sandstone, Porcelain and Natural Stone Paving. UK-wide delivery. Trade & retail prices. Family-run importer.',
-    canonical: 'https://jmdglobalstones.co.uk/'
+    title:       'Buy Paving Slabs UK | Indian Sandstone, Porcelain & Natural Stone | JMD Global Stones',
+    description: 'Shop premium Indian Sandstone, Porcelain and Natural Stone Paving direct from importers. UK-wide delivery. Trade & retail prices.',
+    canonical:   'https://jmdglobalstones.co.uk/',
   });
 
   useEffect(() => {
     Promise.all([
-      apiFetch('/api/products').then(res => { if (!res.ok) throw new Error(); return res.json(); }),
-      apiFetch('/api/site-settings').then(res => { if (!res.ok) throw new Error(); return res.json(); })
-    ])
-      .then(([productsData, settingsData]) => {
-        setAllProducts(productsData);
-        if (settingsData && Object.keys(settingsData).length > 0) {
-          setSettings(prev => ({ ...prev, ...settingsData }));
-        }
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      apiFetch('/api/products').then(r => r.json()),
+    ]).then(([products]) => {
+      setAllProducts(products);
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
-  // Review Auto-Rotate
+  // Hero auto-slide
   useEffect(() => {
-    const t = setInterval(() => setActiveReviewIdx(p => (p + 1) % reviews.length), 5000);
+    heroTimer.current = setInterval(() => setHeroIdx(p => (p + 1) % HERO_SLIDES.length), 5000);
+    return () => clearInterval(heroTimer.current);
+  }, []);
+
+  const goHero = (dir) => {
+    clearInterval(heroTimer.current);
+    setHeroIdx(p => (p + dir + HERO_SLIDES.length) % HERO_SLIDES.length);
+    heroTimer.current = setInterval(() => setHeroIdx(p => (p + 1) % HERO_SLIDES.length), 5000);
+  };
+
+  // Review auto-rotate
+  useEffect(() => {
+    const t = setInterval(() => setReviewIdx(p => (p + 1) % reviews.length), 4500);
     return () => clearInterval(t);
   }, []);
 
-  const filteredProducts = activeCategory === 'All'
-    ? allProducts
-    : allProducts.filter(p => p.category === activeCategory);
+  const filteredProducts = activeCategory
+    ? allProducts.filter(p => p.category === activeCategory)
+    : allProducts;
 
-  const featuredProducts = allProducts.filter(p => p.is_featured).slice(0, 4);
+  const slide = HERO_SLIDES[heroIdx];
 
   if (loading) {
     return (
-      <div style={{ padding: '12rem 0', textAlign: 'center', backgroundColor: 'var(--bg-light)', minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-on-light)', marginBottom: '1.5rem' }}>
-          JMD GLOBAL STONES
-        </div>
-        <div style={{ fontSize: '0.85rem', letterSpacing: '0.05em', color: 'var(--text-muted-on-light)' }}>
-          Loading premium architectural materials...
+      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-light)' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1rem' }}>JMD Global Stones</div>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted-on-light)', letterSpacing: '0.05em' }}>Loading premium materials…</div>
         </div>
       </div>
     );
@@ -90,210 +112,282 @@ export default function Home({ addToCart }) {
   return (
     <div style={{ backgroundColor: 'var(--bg-light)' }}>
 
-      {/* ── HERO BANNER ─────────────────────────────────────── */}
-      <section style={{
-        backgroundColor: 'var(--bg-dark)',
-        color: 'var(--text-on-dark)',
-        padding: '6rem 0 5rem',
-        borderBottom: '1px solid var(--color-border-dark)',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        {/* subtle background texture lines */}
-        <div style={{
-          position: 'absolute', inset: 0, opacity: 0.04,
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 39px, #C9A96E 39px, #C9A96E 40px)',
-          pointerEvents: 'none'
-        }} />
+      {/* ════════════════════════════════════════════════════════
+          HERO BANNER — Large product image, left text, right img
+      ═══════════════════════════════════════════════════════ */}
+      <section style={{ background: slide.bg, transition: 'background 0.8s ease', overflow: 'hidden', position: 'relative' }}>
 
-        <div className="container hero-layout" style={{ display: 'grid', gap: '4rem', alignItems: 'center' }}>
-          {/* Left */}
-          <div>
-            <span style={{ textTransform: 'uppercase', letterSpacing: '0.15em', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-accent)', display: 'block', marginBottom: '1.25rem' }}>
-              Direct Quarry Importers · UK Stockists
-            </span>
-            <h1 style={{ fontSize: '4.5rem', color: 'var(--text-on-dark)', lineHeight: 1.0, fontFamily: 'var(--font-heading)', fontWeight: 400, marginBottom: '1.5rem' }} className="clip-reveal delay-1">
-              {settings.home_hero_headline}<br />
-              <span style={{ color: 'var(--color-accent)' }}>{settings.home_hero_subheadline}</span>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '500px', alignItems: 'center', gap: '2rem', padding: '4rem 2.5rem' }} className="container hero-grid">
+
+          {/* LEFT — text */}
+          <div style={{ zIndex: 2 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', backgroundColor: 'rgba(0,0,0,0.08)', padding: '0.3rem 0.85rem', marginBottom: '1.5rem' }}>
+              <Zap size={11} style={{ color: slide.accent }} />
+              <span style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: slide.accent }}>{slide.tag}</span>
+            </div>
+
+            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3.6rem', lineHeight: 1.05, fontWeight: 400, color: '#111', marginBottom: '1.25rem', whiteSpace: 'pre-line' }}>
+              {slide.headline}
             </h1>
-            <p style={{ color: 'var(--text-muted-on-dark)', fontSize: '1rem', marginBottom: '2.5rem', maxWidth: '480px', lineHeight: 1.7 }}>
-              {settings.home_hero_text}
+
+            <p style={{ fontSize: '0.92rem', color: '#444', lineHeight: 1.65, marginBottom: '2rem', maxWidth: '400px' }}>
+              {slide.sub}
             </p>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <a href="#shop-section" className="btn btn-accent" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                Shop Products <ArrowRight size={15} />
-              </a>
-              <Link to="/delivery" className="btn" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--text-on-dark)' }}>
-                Delivery Rates
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+              <div>
+                <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#666', marginBottom: '0.15rem' }}>From</div>
+                <div style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', fontWeight: 400, color: '#111' }}>{slide.price}</div>
+                <div style={{ fontSize: '0.65rem', color: '#888' }}>ex. VAT / pack</div>
+              </div>
+              <div style={{ display: 'flex', gap: '0.1rem', color: '#C9A96E' }}>
+                {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" style={{ strokeWidth: 1 }} />)}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <Link
+                to={`/products/${slide.slug}`}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111', color: '#fff', padding: '0.9rem 2rem', fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'background 0.3s' }}
+                onMouseEnter={e => e.currentTarget.style.backgroundColor = '#C9A96E'}
+                onMouseLeave={e => e.currentTarget.style.backgroundColor = '#111'}
+              >
+                Shop Now <ArrowRight size={14} />
+              </Link>
+              <Link
+                to="/products"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', border: '1px solid #ccc', color: '#333', padding: '0.9rem 1.75rem', fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', backgroundColor: 'rgba(255,255,255,0.5)' }}
+              >
+                All Products
               </Link>
             </div>
-
-            {/* Quick stats row */}
-            <div style={{ display: 'flex', gap: '2.5rem', marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--color-border-dark)' }}>
-              {[
-                { num: '16+', label: 'Stone Varieties' },
-                { num: '2', label: 'UK Yards' },
-                { num: '3–5', label: 'Day Dispatch' }
-              ].map(s => (
-                <div key={s.num}>
-                  <div style={{ fontSize: '1.6rem', fontFamily: 'var(--font-heading)', color: 'var(--color-accent)', fontWeight: 400 }}>{s.num}</div>
-                  <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted-on-dark)' }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
-          {/* Right — hero image with floating badge */}
-          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }} className="fade-in-up delay-2">
+          {/* RIGHT — big product image */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', minHeight: '400px' }}>
             <img
-              src="/images/stone_patio_layout.png"
-              alt="Luxury Sandstone installed patio garden terrace"
-              style={{ width: '100%', height: '380px', objectFit: 'cover', border: '1px solid var(--color-border-dark)' }}
+              key={heroIdx}
+              src={slide.img}
+              alt={slide.headline}
+              style={{ maxWidth: '100%', maxHeight: '420px', objectFit: 'contain', filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.18))', animation: 'heroFadeIn 0.6s ease forwards' }}
             />
-            <div style={{ position: 'absolute', bottom: '-18px', right: '-10px', backgroundColor: 'var(--bg-dark)', padding: '1.1rem 1.5rem', border: '1px solid var(--color-accent)' }}>
-              <p style={{ fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-accent)', marginBottom: '0.2rem' }}>Architectural Finish</p>
-              <p style={{ fontWeight: 400, fontSize: '1.1rem', fontFamily: 'var(--font-heading)', color: 'var(--text-on-dark)' }}>Calibrated Indian Sandstone</p>
+          </div>
+        </div>
+
+        {/* Slide controls */}
+        <button onClick={() => goHero(-1)} style={{ position: 'absolute', left: '1.5rem', top: '50%', transform: 'translateY(-50%)', backgroundColor: 'rgba(255,255,255,0.7)', border: '1px solid rgba(0,0,0,0.1)', width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 5 }}>
+          <ArrowLeft size={16} />
+        </button>
+        <button onClick={() => goHero(1)} style={{ position: 'absolute', right: '1.5rem', top: '50%', transform: 'translateY(-50%)', backgroundColor: 'rgba(255,255,255,0.7)', border: '1px solid rgba(0,0,0,0.1)', width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 5 }}>
+          <ArrowRight size={16} />
+        </button>
+
+        {/* Dot indicators */}
+        <div style={{ position: 'absolute', bottom: '1.25rem', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '0.5rem' }}>
+          {HERO_SLIDES.map((_, i) => (
+            <button key={i} onClick={() => { clearInterval(heroTimer.current); setHeroIdx(i); }} style={{ width: i === heroIdx ? '24px' : '8px', height: '8px', backgroundColor: i === heroIdx ? '#111' : 'rgba(0,0,0,0.2)', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }} />
+          ))}
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════
+          TRUST BAR
+      ═══════════════════════════════════════════════════════ */}
+      <section style={{ backgroundColor: '#fff', borderTop: '1px solid #E5E0D8', borderBottom: '1px solid #E5E0D8', padding: '1.5rem 0' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          {[
+            { icon: <Truck size={18} />,      label: 'UK Nationwide Delivery',   sub: 'Flat rate per pack'     },
+            { icon: <ShieldCheck size={18} />, label: '100% Genuine Stone',       sub: 'Direct quarry import'   },
+            { icon: <Zap size={18} />,         label: '3–5 Day Dispatch',         sub: 'From UK yard stock'     },
+            { icon: <Award size={18} />,       label: 'Expert Yard Support',      sub: 'Call or WhatsApp us'    },
+          ].map(t => (
+            <div key={t.label} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ color: '#C9A96E' }}>{t.icon}</div>
+              <div>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#111', lineHeight: 1.2 }}>{t.label}</div>
+                <div style={{ fontSize: '0.68rem', color: '#888' }}>{t.sub}</div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* ── TRUST BAR ───────────────────────────────────────── */}
-      <section style={{ borderBottom: '1px solid var(--color-border-light)', padding: '2.25rem 0', backgroundColor: 'var(--bg-light)' }}>
-        <div className="container trust-layout" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0', textAlign: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }} className="trust-card-item border-r">
-            <Truck size={20} style={{ color: 'var(--color-accent)' }} />
-            <h4 style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>Flat Rate Delivery</h4>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted-on-light)' }}>{settings.trust_bar?.[0]}</p>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }} className="trust-card-item border-r">
-            <ShieldCheck size={20} style={{ color: 'var(--color-accent)' }} />
-            <h4 style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>100% Genuine Stone</h4>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted-on-light)' }}>{settings.trust_bar?.[1]}</p>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }} className="trust-card-item border-r">
-            <Zap size={20} style={{ color: 'var(--color-accent)' }} />
-            <h4 style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>UK Yard Stock</h4>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted-on-light)' }}>{settings.trust_bar?.[2]}</p>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }} className="trust-card-item">
-            <MessageSquare size={20} style={{ color: 'var(--color-accent)' }} />
-            <h4 style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>Expert Guidance</h4>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted-on-light)' }}>{settings.trust_bar?.[3]}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── MAIN PRODUCT SHOP ───────────────────────────────── */}
-      <section id="shop-section" style={{ backgroundColor: 'var(--bg-light)', padding: '6rem 0' }}>
+      {/* ════════════════════════════════════════════════════════
+          BROWSE BY CATEGORY — pill cards with images
+      ═══════════════════════════════════════════════════════ */}
+      <section style={{ backgroundColor: 'var(--bg-light)', padding: '4rem 0 2rem' }}>
         <div className="container">
-
-          {/* Section header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
             <div>
-              <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.15em' }}>Browse the Collection</span>
-              <h2 style={{ fontSize: '2.6rem', marginTop: '0.5rem', fontFamily: 'var(--font-heading)', fontWeight: 400 }}>Our Products</h2>
+              <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Collections</span>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.9rem', fontWeight: 400, marginTop: '0.25rem', color: '#111' }}>Browse by Category</h2>
             </div>
-            <Link to="/products" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600, color: 'var(--color-accent)', borderBottom: '1px solid var(--color-accent)', paddingBottom: '0.2rem', fontSize: '0.8rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              View All <ArrowRight size={13} />
+          </div>
+
+          <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '0.5rem' }} className="cat-scroll">
+            {CATEGORY_TABS.map(cat => {
+              const isActive = activeCategory === cat.slug;
+              return (
+                <button
+                  key={cat.label}
+                  onClick={() => setActiveCategory(cat.slug)}
+                  style={{
+                    flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.65rem',
+                    padding: '1rem 1.5rem', cursor: 'pointer',
+                    backgroundColor: isActive ? '#111' : '#fff',
+                    border: isActive ? '1px solid #111' : '1px solid #E0D9CE',
+                    transition: 'all 0.25s', minWidth: '110px'
+                  }}
+                >
+                  <div style={{ width: '56px', height: '56px', overflow: 'hidden', backgroundColor: isActive ? '#333' : '#F5F0E8' }}>
+                    <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: isActive ? '#C9A96E' : '#333' }}>{cat.label}</span>
+                  {cat.slug && (
+                    <span style={{ fontSize: '0.6rem', color: isActive ? '#aaa' : '#999' }}>
+                      {allProducts.filter(p => p.category === cat.label).length} items
+                    </span>
+                  )}
+                  {!cat.slug && (
+                    <span style={{ fontSize: '0.6rem', color: isActive ? '#aaa' : '#999' }}>{allProducts.length} items</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════
+          PROMO BANNER — feature a sandstone collection
+      ═══════════════════════════════════════════════════════ */}
+      <section style={{ padding: '2rem 0' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', overflow: 'hidden', backgroundColor: '#1A1A1A', minHeight: '240px' }} className="promo-grid">
+            {/* Left text */}
+            <div style={{ padding: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <span style={{ fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#C9A96E', fontWeight: 700, marginBottom: '0.75rem', display: 'block' }}>Quarry Direct Offer</span>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.2rem', color: '#F5F0E8', fontWeight: 400, lineHeight: 1.15, marginBottom: '1rem' }}>
+                Authentic Indian<br />Sandstone Collection
+              </h2>
+              <p style={{ fontSize: '0.85rem', color: '#888', lineHeight: 1.6, marginBottom: '1.75rem', maxWidth: '360px' }}>
+                Sourced directly from our quarry partners in Rajasthan. Calibrated thickness. Riven surface. Ready from UK yard stock.
+              </p>
+              <Link
+                to="/products?category=sandstone"
+                style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#C9A96E', color: '#111', padding: '0.8rem 1.75rem', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'background 0.3s' }}
+                onMouseEnter={e => e.currentTarget.style.backgroundColor = '#B8965B'}
+                onMouseLeave={e => e.currentTarget.style.backgroundColor = '#C9A96E'}
+              >
+                Explore Sandstone <ArrowRight size={13} />
+              </Link>
+            </div>
+            {/* Right image */}
+            <div style={{ position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#111' }}>
+              <img
+                src="/images/autumn-brown-sandstone.png"
+                alt="Indian Sandstone collection"
+                style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '1rem', filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════
+          PRODUCT GRID — "Explore our Products"
+      ═══════════════════════════════════════════════════════ */}
+      <section style={{ backgroundColor: 'var(--bg-light)', padding: '3rem 0 6rem' }}>
+        <div className="container">
+          {/* Header */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem' }}>
+            <div>
+              <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Our Products</span>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.9rem', fontWeight: 400, marginTop: '0.25rem', color: '#111' }}>Explore Our Collection</h2>
+            </div>
+            <Link to="/products" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#C9A96E', borderBottom: '1px solid #C9A96E', paddingBottom: '0.15rem' }}>
+              View All <ArrowRight size={12} />
             </Link>
           </div>
 
-          {/* Category Filter Tabs */}
-          <div style={{ display: 'flex', gap: '0', marginBottom: '3rem', borderBottom: '1px solid var(--color-border-light)' }}>
-            {CATEGORY_TABS.map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActiveCategory(tab)}
-                style={{
-                  padding: '0.85rem 1.75rem',
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  cursor: 'pointer',
-                  backgroundColor: 'transparent',
-                  color: activeCategory === tab ? 'var(--text-on-light)' : 'var(--text-muted-on-light)',
-                  borderBottom: activeCategory === tab ? '2px solid var(--color-accent)' : '2px solid transparent',
-                  marginBottom: '-1px',
-                  transition: 'all 0.25s ease'
-                }}
-              >
-                {tab}
-                {tab !== 'All' && (
-                  <span style={{ marginLeft: '0.5rem', fontSize: '0.65rem', color: 'var(--text-muted-on-light)' }}>
-                    ({allProducts.filter(p => p.category === tab).length})
-                  </span>
-                )}
-                {tab === 'All' && (
-                  <span style={{ marginLeft: '0.5rem', fontSize: '0.65rem', color: 'var(--text-muted-on-light)' }}>
-                    ({allProducts.length})
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Product Grid */}
+          {/* Grid */}
           {filteredProducts.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '6rem 2rem', color: 'var(--text-muted-on-light)' }}>
-              <Package size={40} style={{ opacity: 0.3, marginBottom: '1rem' }} />
-              <p>No products in this category yet.</p>
+            <div style={{ textAlign: 'center', padding: '5rem', color: '#aaa' }}>
+              <Package size={36} style={{ opacity: 0.3, marginBottom: '1rem' }} />
+              <p style={{ fontSize: '0.9rem' }}>No products in this category yet.</p>
             </div>
           ) : (
-            <div className="product-grid">
-              {filteredProducts.map((prod) => (
-                <div key={prod.id} className={`product-card ${prod.category === 'Bricks' ? 'no-hover-swap' : ''}`}>
-                  <Link to={`/products/${prod.slug}`}>
-                    <div className="product-image-wrapper">
-                      <img src={prod.images[0]} alt={prod.name} className="product-image-primary" />
-                      {prod.category !== 'Bricks' && (
-                        <img src={prod.images[1] || prod.images[0]} alt={prod.name} className="product-image-secondary" />
-                      )}
-                      {prod.is_featured && (
-                        <span className="badge badge-featured">Best Seller</span>
-                      )}
-                      {(prod.stock || 0) > 0 && (
-                        <span style={{
-                          position: 'absolute', bottom: '0.75rem', left: '0.75rem',
-                          backgroundColor: 'rgba(17,17,17,0.85)', color: '#5F9E75',
-                          fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase',
-                          letterSpacing: '0.08em', padding: '0.3rem 0.6rem'
-                        }}>
-                          In Stock
-                        </span>
-                      )}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }} className="ecom-grid">
+              {filteredProducts.map(prod => (
+                <div
+                  key={prod.id}
+                  style={{ backgroundColor: '#fff', border: '1px solid #EDE7DC', display: 'flex', flexDirection: 'column', transition: 'all 0.3s', position: 'relative' }}
+                  className="ecom-card"
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#C9A96E'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#EDE7DC'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                >
+                  {/* Badge */}
+                  {prod.is_featured && (
+                    <div style={{ position: 'absolute', top: '0.6rem', left: '0.6rem', backgroundColor: '#111', color: '#C9A96E', fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', padding: '0.25rem 0.6rem', zIndex: 2 }}>
+                      Best Seller
                     </div>
+                  )}
+                  {(prod.stock || 0) > 0 && (
+                    <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', backgroundColor: '#5F9E75', color: '#fff', fontSize: '0.55rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.25rem 0.5rem', zIndex: 2 }}>
+                      In Stock
+                    </div>
+                  )}
+
+                  {/* Image */}
+                  <Link to={`/products/${prod.slug}`} style={{ display: 'block', overflow: 'hidden', backgroundColor: '#F8F5EF', flexShrink: 0 }}>
+                    <img
+                      src={prod.images[0]}
+                      alt={prod.name}
+                      style={{ width: '100%', aspectRatio: '1', objectFit: 'contain', padding: '1rem', transition: 'transform 0.5s ease' }}
+                      onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.06)'}
+                      onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                    />
                   </Link>
-                  <div className="product-info">
-                    <span className="product-cat">{prod.category}</span>
+
+                  {/* Info */}
+                  <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', flexGrow: 1 }}>
+                    <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#C9A96E', fontWeight: 700 }}>{prod.category}</span>
                     <Link to={`/products/${prod.slug}`}>
-                      <h3 className="product-title" style={{ minHeight: '3.2rem' }}>{prod.name}</h3>
+                      <h3 style={{ fontSize: '0.88rem', fontWeight: 600, color: '#111', lineHeight: 1.35, minHeight: '2.5rem' }}>{prod.name}</h3>
                     </Link>
-                    <div className="product-rating">
+
+                    {/* Stars */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={12} fill={i < Math.floor(prod.stars) ? 'currentColor' : 'none'} style={{ strokeWidth: 1.5 }} />
+                        <Star key={i} size={11} fill={i < Math.floor(prod.stars) ? '#C9A96E' : 'none'} stroke={i < Math.floor(prod.stars) ? '#C9A96E' : '#ccc'} style={{ strokeWidth: 1.5 }} />
                       ))}
-                      <span style={{ color: 'var(--text-muted-on-light)', fontSize: '0.72rem', marginLeft: '0.25rem' }}>{prod.stars}</span>
+                      <span style={{ fontSize: '0.62rem', color: '#999', marginLeft: '0.2rem' }}>{prod.stars}</span>
                     </div>
-                    <div className="product-price">
-                      £{prod.price.toFixed(2)} <span style={{ color: 'var(--text-muted-on-light)' }}>ex. VAT</span>
+
+                    {/* Price */}
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
+                      <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)' }}>£{prod.price.toFixed(2)}</span>
+                      <span style={{ fontSize: '0.62rem', color: '#999' }}>ex. VAT</span>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '0.5rem' }}>
+
+                    {/* Actions */}
+                    <div style={{ marginTop: 'auto', paddingTop: '0.75rem', display: 'flex', gap: '0.5rem' }}>
                       <button
                         onClick={() => addToCart(prod, prod.size, 1, prod.price)}
-                        className="btn btn-primary"
-                        style={{ fontSize: '0.7rem', letterSpacing: '0.08em' }}
+                        style={{ flexGrow: 1, backgroundColor: '#111', color: '#fff', padding: '0.7rem 0', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer', border: '1px solid #111', transition: 'all 0.25s' }}
+                        onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#C9A96E'; e.currentTarget.style.borderColor = '#C9A96E'; e.currentTarget.style.color = '#111'; }}
+                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#111'; e.currentTarget.style.borderColor = '#111'; e.currentTarget.style.color = '#fff'; }}
                       >
                         Add to Basket
                       </button>
                       <Link
                         to={`/products/${prod.slug}`}
-                        className="btn"
-                        style={{ border: '1px solid var(--color-border-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 0.75rem' }}
+                        style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D9D2C5', color: '#555', transition: 'all 0.25s', flexShrink: 0 }}
                         title="View Details"
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = '#C9A96E'; e.currentTarget.style.color = '#C9A96E'; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = '#D9D2C5'; e.currentTarget.style.color = '#555'; }}
                       >
-                        <ChevronRight size={14} />
+                        <ChevronRight size={15} />
                       </Link>
                     </div>
                   </div>
@@ -302,162 +396,82 @@ export default function Home({ addToCart }) {
             </div>
           )}
 
-          {/* Show more CTA */}
+          {/* View All CTA */}
           {filteredProducts.length > 0 && (
-            <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-              <Link to={`/products${activeCategory !== 'All' ? `?category=${activeCategory.toLowerCase()}` : ''}`} className="btn btn-primary" style={{ padding: '1rem 3rem', fontSize: '0.8rem', letterSpacing: '0.1em' }}>
-                See Full Catalogue <ArrowRight size={14} style={{ display: 'inline', marginLeft: '0.4rem' }} />
+            <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
+              <Link
+                to={`/products${activeCategory ? `?category=${activeCategory.toLowerCase()}` : ''}`}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', border: '1px solid #111', color: '#111', padding: '0.9rem 2.75rem', fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s' }}
+                onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#111'; e.currentTarget.style.color = '#fff'; }}
+                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#111'; }}
+              >
+                View All Products <ArrowRight size={14} />
               </Link>
             </div>
           )}
         </div>
       </section>
 
-      {/* ── WHY JMD — Three value pillars ───────────────────── */}
-      <section style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '7rem 0', borderTop: '1px solid var(--color-border-dark)', borderBottom: '1px solid var(--color-border-dark)' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-            <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.15em' }}>Why Choose Us</span>
-            <h2 style={{ fontSize: '2.6rem', marginTop: '0.5rem', fontFamily: 'var(--font-heading)', fontWeight: 400, color: 'var(--text-on-dark)' }}>Direct from Quarry to You</h2>
+      {/* ════════════════════════════════════════════════════════
+          CUSTOMER REVIEWS — light bg strip
+      ═══════════════════════════════════════════════════════ */}
+      <section style={{ backgroundColor: '#fff', borderTop: '1px solid #E5E0D8', borderBottom: '1px solid #E5E0D8', padding: '5rem 0' }}>
+        <div className="container" style={{ maxWidth: '720px', textAlign: 'center' }}>
+          <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Client Testimonials</span>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 400, marginTop: '0.4rem', marginBottom: '3rem', color: '#111' }}>What Our Clients Say</h2>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.2rem', color: '#C9A96E', marginBottom: '1.25rem' }}>
+            {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" style={{ strokeWidth: 1 }} />)}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem' }} className="pillars-grid">
-            {[
-              {
-                num: '01',
-                title: 'Source Direct',
-                text: 'We own our sourcing chain — directly importing from quarries across India. No middlemen, no markups, just authentic stone at fair trade prices.'
-              },
-              {
-                num: '02',
-                title: 'Calibrated Quality',
-                text: 'Every paving slab is calibrated and QC-checked before leaving our Wirral and Southampton yards. Consistent thickness means easier, faster installation.'
-              },
-              {
-                num: '03',
-                title: 'Expert Support',
-                text: 'Our yard managers are reachable by phone and WhatsApp. We guide you on laying patterns, coverage calculations and proper sealing aftercare.'
-              }
-            ].map(p => (
-              <div key={p.num} style={{ borderTop: '1px solid var(--color-border-dark)', paddingTop: '2rem' }}>
-                <div style={{ fontSize: '0.65rem', letterSpacing: '0.2em', color: 'var(--color-accent)', fontWeight: 700, marginBottom: '1rem' }}>{p.num}</div>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', color: 'var(--text-on-dark)', fontWeight: 400, marginBottom: '1rem' }}>{p.title}</h3>
-                <p style={{ color: 'var(--text-muted-on-dark)', fontSize: '0.9rem', lineHeight: 1.7 }}>{p.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── GALLERY STRIP ───────────────────────────────────── */}
-      <section style={{ backgroundColor: 'var(--bg-dark)', padding: '0 0 6rem' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }} className="gallery-grid">
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
-              <img
-                src="/gallery-before-after.png"
-                alt="Garden patio transformation — Indian Sandstone"
-                loading="lazy"
-                style={{ width: '100%', height: '420px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
-                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
-                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-              />
-              <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: 'rgba(0,0,0,0.75)', color: '#fff', padding: '0.4rem 1rem', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>Before → After</div>
-              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem' }}>
-                <div style={{ backgroundColor: 'rgba(10,10,10,0.82)', padding: '0.9rem 1.1rem' }}>
-                  <p style={{ color: '#fff', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.15rem' }}>Sandstone Patio — Wirral</p>
-                  <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.7rem' }}>Raj Green Indian Sandstone, Mixed Size Patio Pack</p>
-                </div>
-              </div>
-            </div>
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
-              <img
-                src="/gallery-porcelain.png"
-                alt="Luxury anthracite porcelain paving — modern garden"
-                loading="lazy"
-                style={{ width: '100%', height: '420px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
-                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
-                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-              />
-              <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: 'var(--color-accent)', color: '#000', padding: '0.4rem 1rem', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Porcelain</div>
-              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem' }}>
-                <div style={{ backgroundColor: 'rgba(10,10,10,0.82)', padding: '0.9rem 1.1rem' }}>
-                  <p style={{ color: '#fff', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.15rem' }}>County Anthracite — Southampton</p>
-                  <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.7rem' }}>Large Format Porcelain, 900×600mm</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CUSTOMER REVIEWS ────────────────────────────────── */}
-      <section style={{ backgroundColor: 'var(--bg-light)', padding: '7rem 0', borderTop: '1px solid var(--color-border-light)' }}>
-        <div className="container" style={{ maxWidth: '760px', textAlign: 'center' }}>
-          <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.15em' }}>Client Testimonials</span>
-          <h2 style={{ fontSize: '2.4rem', marginTop: '0.5rem', marginBottom: '3.5rem', fontFamily: 'var(--font-heading)', fontWeight: 400 }}>What Our Clients Say</h2>
-
-          <div style={{ minHeight: '160px' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.2rem', color: 'var(--color-accent)', marginBottom: '1.5rem' }}>
-              {[...Array(reviews[activeReviewIdx].rating)].map((_, i) => (
-                <Star key={i} size={15} fill="currentColor" style={{ strokeWidth: 1 }} />
-              ))}
-            </div>
-            <p style={{ fontSize: '1.6rem', fontStyle: 'italic', fontFamily: 'var(--font-heading)', color: 'var(--text-on-light)', marginBottom: '1.75rem', lineHeight: 1.6, fontWeight: 300 }}>
-              "{reviews[activeReviewIdx].comment}"
-            </p>
-            <h4 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--color-accent)', fontWeight: 600 }}>
-              {reviews[activeReviewIdx].name}
-            </h4>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.6rem', marginTop: '2.5rem' }}>
-            {reviews.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveReviewIdx(idx)}
-                style={{ width: '6px', height: '6px', backgroundColor: idx === activeReviewIdx ? 'var(--color-accent)' : 'var(--color-border-light)', cursor: 'pointer', transition: 'all 0.3s', border: 'none' }}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── NEWSLETTER ──────────────────────────────────────── */}
-      <section style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '6rem 0', textAlign: 'center', borderTop: '1px solid var(--color-border-dark)' }}>
-        <div className="container" style={{ maxWidth: '560px' }}>
-          <h2 style={{ color: 'var(--text-on-dark)', fontSize: '2.4rem', fontFamily: 'var(--font-heading)', marginBottom: '1rem', fontWeight: 400 }}>Join the Trade Registry</h2>
-          <p style={{ color: 'var(--text-muted-on-dark)', fontSize: '0.95rem', marginBottom: '2.25rem', lineHeight: 1.6 }}>
-            Receive quarry updates, container arrival notifications and commercial stock lists.
+          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontStyle: 'italic', fontWeight: 300, color: '#222', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+            "{reviews[reviewIdx].comment}"
           </p>
-          <form onSubmit={(e) => { e.preventDefault(); alert('Thank you for subscribing!'); }} style={{ display: 'flex', border: '1px solid var(--color-border-dark)' }}>
-            <input
-              type="email"
-              required
-              placeholder="Your email address"
-              style={{ flexGrow: 1, padding: '1.1rem 1.25rem', backgroundColor: '#1A1A1A', color: '#FFFFFF', borderRight: '1px solid var(--color-border-dark)' }}
-            />
-            <button type="submit" className="btn btn-accent" style={{ whiteSpace: 'nowrap', border: 'none', padding: '0 2rem' }}>Subscribe</button>
+          <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>{reviews[reviewIdx].name}</span>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '2rem' }}>
+            {reviews.map((_, i) => (
+              <button key={i} onClick={() => setReviewIdx(i)} style={{ width: i === reviewIdx ? '22px' : '7px', height: '7px', backgroundColor: i === reviewIdx ? '#111' : '#D9D2C5', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════
+          NEWSLETTER
+      ═══════════════════════════════════════════════════════ */}
+      <section style={{ backgroundColor: '#111', color: '#F5F0E8', padding: '5rem 0', textAlign: 'center', borderTop: '1px solid #2C2C2C' }}>
+        <div className="container" style={{ maxWidth: '520px' }}>
+          <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#C9A96E', fontWeight: 700 }}>Trade Registry</span>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 400, margin: '0.5rem 0 0.9rem', color: '#F5F0E8' }}>Get Stock Updates</h2>
+          <p style={{ fontSize: '0.85rem', color: '#888', marginBottom: '2rem', lineHeight: 1.6 }}>Container arrivals, new varieties and commercial pricing direct to your inbox.</p>
+          <form onSubmit={e => { e.preventDefault(); alert('Thank you for subscribing!'); }} style={{ display: 'flex', border: '1px solid #333' }}>
+            <input type="email" required placeholder="Your email address" style={{ flexGrow: 1, padding: '1rem 1.25rem', backgroundColor: '#1A1A1A', color: '#fff', borderRight: '1px solid #333', fontSize: '0.85rem' }} />
+            <button type="submit" style={{ whiteSpace: 'nowrap', border: 'none', padding: '0 1.75rem', backgroundColor: '#C9A96E', color: '#111', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer' }}>Subscribe</button>
           </form>
         </div>
       </section>
 
-      {/* ── RESPONSIVE STYLES ───────────────────────────────── */}
+      {/* ════════════════════════════════════════════════════════
+          RESPONSIVE CSS
+      ═══════════════════════════════════════════════════════ */}
       <style>{`
-        .hero-layout { grid-template-columns: 1.1fr 0.9fr; }
-        .category-card:hover .cat-img { transform: scale(1.05) !important; }
-        .category-card:hover .cat-title-box { border-color: var(--color-accent) !important; color: var(--color-accent) !important; }
-        @media (max-width: 900px) {
-          .hero-layout { grid-template-columns: 1fr !important; }
-          .pillars-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
-          .gallery-grid { grid-template-columns: 1fr !important; }
+        @keyframes heroFadeIn {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-        @media (max-width: 768px) {
-          .trust-layout { grid-template-columns: repeat(2, 1fr) !important; gap: 2rem !important; }
-          .trust-card-item { border-right: none !important; border-bottom: 1px solid var(--color-border-light); padding-bottom: 1.5rem !important; }
-          .trust-card-item:last-child { border-bottom: none !important; }
+        .hero-grid { grid-template-columns: 1fr 1fr; }
+        .promo-grid { grid-template-columns: 1.1fr 0.9fr; }
+        .ecom-grid  { grid-template-columns: repeat(4, 1fr); }
+        .cat-scroll::-webkit-scrollbar { display: none; }
+        .cat-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (max-width: 1100px) {
+          .ecom-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+        @media (max-width: 860px) {
+          .hero-grid  { grid-template-columns: 1fr !important; min-height: auto !important; }
+          .promo-grid { grid-template-columns: 1fr !important; }
+          .ecom-grid  { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 480px) {
-          .trust-layout { grid-template-columns: 1fr !important; }
+          .ecom-grid  { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
