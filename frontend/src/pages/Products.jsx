@@ -3,6 +3,72 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Star, SlidersHorizontal, Check, X, ShieldCheck, Truck, ShoppingBag, Eye } from 'lucide-react';
 import { apiFetch } from '../api.js';
 import useSEO from '../hooks/useSEO.js';
+function ProductCardImage({ images, name, category, inStock, badgeText }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const intervalRef = React.useRef(null);
+
+  const startCycling = () => {
+    if (!images || images.length <= 1) return;
+    intervalRef.current = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 1000);
+  };
+
+  const stopCycling = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setCurrentImageIndex(0);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  return (
+    <div 
+      className="product-image-wrapper" 
+      onMouseEnter={startCycling}
+      onMouseLeave={stopCycling}
+      style={{ position: 'relative', overflow: 'hidden' }}
+    >
+      {images && images.map((imgUrl, idx) => (
+        <img
+          key={idx}
+          src={imgUrl}
+          alt={`${name} - View ${idx + 1}`}
+          className="product-image-cycle-item"
+          style={{
+            position: idx === 0 ? 'relative' : 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: idx === currentImageIndex ? 1 : 0,
+            zIndex: idx === currentImageIndex ? 1 : 0,
+            transition: 'opacity 0.4s ease-in-out'
+          }}
+          loading="lazy"
+          decoding="async"
+        />
+      ))}
+      {!inStock && (
+        <span className="badge badge-out-of-stock" style={{ backgroundColor: 'var(--color-danger)', zIndex: 10 }}>
+          Out of Stock
+        </span>
+      )}
+      {badgeText && inStock && (
+        <span className="badge badge-featured" style={{ zIndex: 10 }}>
+          {badgeText}
+        </span>
+      )}
+    </div>
+  );
+}
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -323,16 +389,15 @@ export default function Products() {
                   
                   if (isHighlighted) {
                     return (
-                      <div key={prod.id} className={`product-card ${prod.category === 'Bricks' ? 'no-hover-swap' : ''} asymmetric-highlight`}>
+                      <div key={prod.id} className="product-card asymmetric-highlight">
                         <Link to={`/products/${prod.slug}`} style={{ height: '100%' }}>
-                          <div className="product-image-wrapper">
-                            <img src={prod.images[0]} alt={prod.name} className="product-image-primary" loading="lazy" decoding="async" />
-                            {prod.category !== 'Bricks' && (
-                              <img src={prod.images[1] || prod.images[0]} alt={`${prod.name} alternate view`} className="product-image-secondary" loading="lazy" decoding="async" />
-                            )}
-                            {!inStock && <span className="badge badge-out-of-stock" style={{ backgroundColor: 'var(--color-danger)' }}>Out of Stock</span>}
-                            {inStock && <span className="badge badge-featured">Spotlight Paving</span>}
-                          </div>
+                          <ProductCardImage
+                            images={prod.images}
+                            name={prod.name}
+                            category={prod.category}
+                            inStock={inStock}
+                            badgeText="Spotlight Paving"
+                          />
                         </Link>
                         <div className="product-info" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                           <span className="product-cat">{prod.category} Collection</span>
@@ -372,16 +437,15 @@ export default function Products() {
                   }
 
                   return (
-                    <div key={prod.id} className={`product-card ${prod.category === 'Bricks' ? 'no-hover-swap' : ''}`}>
+                    <div key={prod.id} className="product-card">
                       <Link to={`/products/${prod.slug}`}>
-                        <div className="product-image-wrapper">
-                          <img src={prod.images[0]} alt={prod.name} className="product-image-primary" loading="lazy" decoding="async" />
-                          {prod.category !== 'Bricks' && (
-                            <img src={prod.images[1] || prod.images[0]} alt={`${prod.name} alternate view`} className="product-image-secondary" loading="lazy" decoding="async" />
-                          )}
-                          {!inStock && <span className="badge badge-out-of-stock" style={{ backgroundColor: 'var(--color-danger)' }}>Out of Stock</span>}
-                          {prod.is_featured && inStock && <span className="badge badge-featured">Featured selection</span>}
-                        </div>
+                        <ProductCardImage
+                          images={prod.images}
+                          name={prod.name}
+                          category={prod.category}
+                          inStock={inStock}
+                          badgeText={prod.is_featured ? 'Featured selection' : null}
+                        />
                       </Link>
                       <div className="product-info">
                         <span className="product-cat">{prod.category}</span>
@@ -513,6 +577,15 @@ export default function Products() {
       )}
 
       <style>{`
+        .product-image-cycle-item {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: opacity 0.4s ease-in-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .product-card:hover .product-image-cycle-item {
+          transform: scale(1.03);
+        }
         @media (max-width: 1024px) {
           .catalog-layout { grid-template-columns: 1fr !important; }
           .catalog-layout aside { width: 100% !important; }
