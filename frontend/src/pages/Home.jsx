@@ -262,29 +262,29 @@ export default function Home({ addToCart }) {
                   key={cat.label}
                   onClick={() => setActiveCategory(cat.slug)}
                   style={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem',
-                    padding: '2rem', cursor: 'pointer',
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem',
+                    padding: '2.5rem', cursor: 'pointer',
                     backgroundColor: isActive ? '#111' : '#fff',
                     border: isActive ? '1px solid #111' : '1px solid #E0D9CE',
                     transition: 'all 0.3s ease', 
-                    width: '260px',
-                    height: '290px',
+                    width: '390px',
+                    height: '435px',
                     position: 'relative'
                   }}
                   className="cat-large-card"
                 >
-                  <div style={{ width: '100%', height: '170px', overflow: 'hidden', backgroundColor: isActive ? '#222' : '#F5F0E8', border: '1px solid #ECE6DB' }}>
+                  <div style={{ width: '100%', height: '255px', overflow: 'hidden', backgroundColor: isActive ? '#222' : '#F5F0E8', border: '1px solid #ECE6DB' }}>
                     <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} className="cat-card-img" />
                   </div>
-                  <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
-                    <span style={{ fontSize: '1rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: isActive ? '#C9A96E' : '#111', display: 'block' }}>{cat.label}</span>
+                  <div style={{ textAlign: 'center', marginTop: '0.75rem' }}>
+                    <span style={{ fontSize: '1.25rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: isActive ? '#C9A96E' : '#111', display: 'block' }}>{cat.label}</span>
                     {cat.slug && (
-                      <span style={{ fontSize: '0.7rem', color: isActive ? '#aaa' : '#777', marginTop: '0.2rem', display: 'block' }}>
+                      <span style={{ fontSize: '0.85rem', color: isActive ? '#aaa' : '#777', marginTop: '0.4rem', display: 'block' }}>
                         {allProducts.filter(p => p.category.toLowerCase() === cat.slug).length} Products Available
                       </span>
                     )}
                     {!cat.slug && (
-                      <span style={{ fontSize: '0.7rem', color: isActive ? '#aaa' : '#777', marginTop: '0.2rem', display: 'block' }}>
+                      <span style={{ fontSize: '0.85rem', color: isActive ? '#aaa' : '#777', marginTop: '0.4rem', display: 'block' }}>
                         {allProducts.length} Products Available
                       </span>
                     )}
