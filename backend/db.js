@@ -441,7 +441,23 @@ export const db = {
              is_featured = EXCLUDED.is_featured,
              stars = EXCLUDED.stars,
              variant_group_id = EXCLUDED.variant_group_id`,
-          [p.id, p.name, p.slug, p.category, p.description, p.price, p.stock, p.size, JSON.stringify(p.images), p.is_featured, p.stars, p.seo_title, p.seo_description, p.variant_group_id, p.created_at]
+          [
+            p.id,
+            p.name,
+            p.slug,
+            p.category,
+            p.description,
+            p.price,
+            p.stock,
+            p.size,
+            JSON.stringify(p.images),
+            p.is_featured,
+            p.stars,
+            p.seo_title === undefined ? null : p.seo_title,
+            p.seo_description === undefined ? null : p.seo_description,
+            p.variant_group_id === undefined ? null : p.variant_group_id,
+            p.created_at || new Date().toISOString()
+          ]
         );
       }
       return true;
@@ -460,6 +476,9 @@ export const db = {
     const newProduct = {
       ...product,
       id: product.id || `prod-${Date.now()}`,
+      seo_title: product.seo_title === undefined ? null : product.seo_title,
+      seo_description: product.seo_description === undefined ? null : product.seo_description,
+      variant_group_id: product.variant_group_id === undefined ? null : product.variant_group_id,
       created_at: new Date().toISOString()
     };
 
@@ -467,7 +486,23 @@ export const db = {
       await pool.query(
         `INSERT INTO products (id, name, slug, category, description, price, stock, size, images, is_featured, stars, seo_title, seo_description, variant_group_id, created_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
-        [newProduct.id, newProduct.name, newProduct.slug, newProduct.category, newProduct.description, newProduct.price, newProduct.stock, newProduct.size, JSON.stringify(newProduct.images), newProduct.is_featured, newProduct.stars, newProduct.seo_title, newProduct.seo_description, newProduct.variant_group_id, newProduct.created_at]
+        [
+          newProduct.id,
+          newProduct.name,
+          newProduct.slug,
+          newProduct.category,
+          newProduct.description,
+          newProduct.price,
+          newProduct.stock,
+          newProduct.size,
+          JSON.stringify(newProduct.images),
+          newProduct.is_featured,
+          newProduct.stars,
+          newProduct.seo_title,
+          newProduct.seo_description,
+          newProduct.variant_group_id,
+          newProduct.created_at
+        ]
       );
       return formatProduct(newProduct);
     }
@@ -488,7 +523,7 @@ export const db = {
     if (pool) {
       const keys = Object.keys(updatedFields);
       const setClause = keys.map((key, i) => `"${key}" = $${i + 2}`).join(', ');
-      const values = keys.map(key => key === 'images' ? JSON.stringify(updatedFields[key]) : updatedFields[key]);
+      const values = keys.map(key => key === 'images' ? JSON.stringify(updatedFields[key]) : (updatedFields[key] === undefined ? null : updatedFields[key]));
       const res = await pool.query(
         `UPDATE products SET ${setClause} WHERE id = $1 RETURNING *`,
         [id, ...values]
