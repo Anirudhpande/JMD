@@ -36,7 +36,7 @@ function AppContent() {
   
   // Shipping & settings
   const [shippingZones, setShippingZones] = useState([]);
-  const [whatsappNumber, setWhatsappNumber] = useState('447450148506');
+  const [whatsappNumber, setWhatsappNumber] = useState('447458148586');
 
   // Consent & widgets
   const [cookieConsentAccepted, setCookieConsentAccepted] = useState(() => {
