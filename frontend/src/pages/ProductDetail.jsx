@@ -758,6 +758,7 @@ export default function ProductDetail({ addToCart }) {
           display: flex;
           flex-direction: column;
           transition: transform 0.2s ease, box-shadow 0.2s ease;
+          height: 220px;
         }
         .sim-card:hover {
           transform: translateY(-3px);
@@ -769,8 +770,9 @@ export default function ProductDetail({ addToCart }) {
           overflow: hidden;
         }
         .sim-card-img {
+          padding: 10px;
           width: 100%;
-          height: 100%;
+          height: 180px;
           // object-fit: ;
           display: block;
           transition: transform 0.35s ease;
@@ -785,6 +787,7 @@ export default function ProductDetail({ addToCart }) {
           line-height: 1.35;
           color: #2a2218;
           margin: 0 0 0.35rem;
+          padding: 0px 0px 20px 0px;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
