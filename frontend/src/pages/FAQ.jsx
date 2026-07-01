@@ -216,7 +216,7 @@ export default function FAQ() {
             <a href="/contact" className="btn btn-primary" style={{ padding: '0.75rem 2rem', fontSize: '0.8rem', letterSpacing: '0.1em' }}>
               Contact Us
             </a>
-            <a href="https://wa.me/447450148506" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.75rem 2rem', fontSize: '0.8rem', letterSpacing: '0.1em' }}>
+            <a href="https://wa.me/447458148586" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '0.75rem 2rem', fontSize: '0.8rem', letterSpacing: '0.1em' }}>
               WhatsApp Us
             </a>
           </div>

@@ -3,72 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Star, SlidersHorizontal, Check, X, ShieldCheck, Truck, ShoppingBag, Eye } from 'lucide-react';
 import { apiFetch } from '../api.js';
 import useSEO from '../hooks/useSEO.js';
-function ProductCardImage({ images, name, category, inStock, badgeText }) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const intervalRef = React.useRef(null);
-
-  const startCycling = () => {
-    if (!images || images.length <= 1) return;
-    intervalRef.current = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 1000);
-  };
-
-  const stopCycling = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-    setCurrentImageIndex(0);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
-  return (
-    <div 
-      className="product-image-wrapper" 
-      onMouseEnter={startCycling}
-      onMouseLeave={stopCycling}
-      style={{ position: 'relative', overflow: 'hidden' }}
-    >
-      {images && images.map((imgUrl, idx) => (
-        <img
-          key={idx}
-          src={imgUrl}
-          alt={`${name} - View ${idx + 1}`}
-          className="product-image-cycle-item"
-          style={{
-            position: idx === 0 ? 'relative' : 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: idx === currentImageIndex ? 1 : 0,
-            zIndex: idx === currentImageIndex ? 1 : 0,
-            transition: 'opacity 0.4s ease-in-out'
-          }}
-          loading="lazy"
-          decoding="async"
-        />
-      ))}
-      {!inStock && (
-        <span className="badge badge-out-of-stock" style={{ backgroundColor: 'var(--color-danger)', zIndex: 10 }}>
-          Out of Stock
-        </span>
-      )}
-      {badgeText && inStock && (
-        <span className="badge badge-featured" style={{ zIndex: 10 }}>
-          {badgeText}
-        </span>
-      )}
-    </div>
-  );
-}
+import ProductCardImage from '../components/ProductCardImage.jsx';
 
 export default function Products() {
   const [products, setProducts] = useState([]);

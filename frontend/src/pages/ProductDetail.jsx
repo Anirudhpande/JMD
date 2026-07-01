@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Star, Truck, AlertTriangle, ChevronDown, ChevronUp, CheckCircle, Package, Layers, Info } from 'lucide-react';
 import { apiFetch } from '../api.js';
 import useSEO from '../hooks/useSEO.js';
+import ProductCardImage from '../components/ProductCardImage.jsx';
 
 export default function ProductDetail({ addToCart }) {
   const { slug } = useParams();
@@ -325,7 +326,16 @@ export default function ProductDetail({ addToCart }) {
                       className="sim-card"
                     >
                       <div className="sim-card-img-wrap">
-                        <img src={prod.images[0]} alt={prod.name} className="sim-card-img" />
+                        <ProductCardImage
+                          images={prod.images}
+                          name={prod.name}
+                          category={prod.category}
+                          inStock={true}
+                          aspectRatio="auto"
+                          objectFit="contain"
+                          padding="6px"
+                          style={{ height: '100%', width: '100%', border: 'none', backgroundColor: 'transparent', marginBottom: 0 }}
+                        />
                       </div>
                       <div className="sim-card-body">
                         <p className="sim-card-name">{prod.name}</p>

@@ -66,11 +66,11 @@ export default function Care() {
   });
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-light)', padding: '8rem 0', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: 'var(--bg-light)', padding: '0.75rem 0 6rem 0', minHeight: '100vh' }}>
       <div className="container">
         
         {/* Header */}
-        <div style={{ marginBottom: '6rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '3.5rem' }}>
+        <div style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '2rem' }}>
           <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.15em' }}>Technical Advisory</span>
           <h1 style={{ fontSize: '3.6rem', fontFamily: 'var(--font-heading)', marginTop: '0.75rem', marginBottom: '1.5rem', fontWeight: 400, lineHeight: 1.1 }}>
             Laying Advice, Care & Maintenance
@@ -81,7 +81,7 @@ export default function Care() {
         </div>
 
         {/* Tab & Content Grid (Images + Guide) */}
-        <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '3.5rem', marginBottom: '8rem' }} className="care-layout">
+        <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '3.5rem', marginBottom: '3rem' }} className="care-layout">
           
           {/* Column 1: Material Selection */}
           <div>

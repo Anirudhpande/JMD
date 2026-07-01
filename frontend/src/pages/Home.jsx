@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Truck, ShieldCheck, Star, ArrowRight, ArrowLeft, ChevronRight, Package, Zap, Award, MessageSquare } from 'lucide-react';
 import { apiFetch } from '../api.js';
 import useSEO from '../hooks/useSEO.js';
+import ProductCardImage from '../components/ProductCardImage.jsx';
 
 const CATEGORY_TABS = [
   { label: 'All',       slug: null,        img: '/images/raj-green-sandstone.png' },
@@ -382,12 +383,14 @@ export default function Home({ addToCart }) {
 
                   {/* Image */}
                   <Link to={`/products/${prod.slug}`} style={{ display: 'block', overflow: 'hidden', backgroundColor: '#F8F5EF', flexShrink: 0 }}>
-                    <img
-                      src={prod.images[0]}
-                      alt={prod.name}
-                      style={{ width: '100%', aspectRatio: '1', objectFit: 'contain', padding: '1rem', transition: 'transform 0.5s ease' }}
-                      onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.06)'}
-                      onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                    <ProductCardImage
+                      images={prod.images}
+                      name={prod.name}
+                      category={prod.category}
+                      inStock={true}
+                      objectFit="contain"
+                      padding="1rem"
+                      style={{ border: 'none', backgroundColor: 'transparent', marginBottom: 0 }}
                     />
                   </Link>
 
