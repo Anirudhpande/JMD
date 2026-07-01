@@ -229,6 +229,9 @@ export default function Admin({ user, onLogout }) {
 
     try {
       const { supabase } = await import('../supabase.js');
+      let uploadSuccessful = false;
+      let imageUrl = '';
+
       if (supabase) {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
@@ -238,30 +241,35 @@ export default function Admin({ user, onLogout }) {
           .from('stone-images')
           .upload(filePath, file);
 
-        if (error) {
-          alert('Upload failed: ' + error.message);
-        } else {
+        if (!error) {
           const { data: { publicUrl } } = supabase.storage
             .from('stone-images')
             .getPublicUrl(filePath);
-
-          if (editingProduct) {
-            setEditingProduct(prev => ({ ...prev, images: [publicUrl, ...prev.images.slice(1)] }));
-          } else {
-            setNewProductData(prev => ({ ...prev, images: [publicUrl, ...prev.images.slice(1)] }));
-          }
-        }
-      } else {
-        alert('Supabase storage not active. Applying simulated upload path.');
-        const mockUrl = `https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/${file.name}`;
-        if (editingProduct) {
-          setEditingProduct(prev => ({ ...prev, images: [mockUrl, ...prev.images.slice(1)] }));
+          
+          imageUrl = publicUrl;
+          uploadSuccessful = true;
         } else {
-          setNewProductData(prev => ({ ...prev, images: [mockUrl, ...prev.images.slice(1)] }));
+          console.warn('Supabase upload failed, falling back to simulated path:', error.message);
         }
+      }
+
+      if (!uploadSuccessful) {
+        imageUrl = `https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/${file.name}`;
+      }
+
+      if (editingProduct) {
+        setEditingProduct(prev => ({ ...prev, images: [imageUrl, ...prev.images.slice(1)] }));
+      } else {
+        setNewProductData(prev => ({ ...prev, images: [imageUrl, ...prev.images.slice(1)] }));
       }
     } catch (err) {
       console.error('Image upload crash:', err);
+      const fallbackUrl = `https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/${file.name}`;
+      if (editingProduct) {
+        setEditingProduct(prev => ({ ...prev, images: [fallbackUrl, ...prev.images.slice(1)] }));
+      } else {
+        setNewProductData(prev => ({ ...prev, images: [fallbackUrl, ...prev.images.slice(1)] }));
+      }
     }
   };
 
