@@ -449,67 +449,69 @@ export default function ProductDetail({ addToCart }) {
 
 
             {/* Interactive Patio Coverage Calculator */}
-            <div style={{ border: '1px solid var(--color-border-light)', padding: '1.75rem', backgroundColor: '#EBE4D9', marginBottom: '2.5rem' }}>
-              <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, marginBottom: '1rem' }}>
-                <Layers size={15} style={{ color: 'var(--color-accent)' }} /> Patio Coverage Calculator
-              </h4>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted-on-light)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
-                Enter your total patio area in square meters. We'll convert it to required packs, based on this pack's coverage of <strong>{packCoverage} m²</strong>.
-              </p>
+            {product.category !== 'Bricks' && (
+              <div style={{ border: '1px solid var(--color-border-light)', padding: '1.75rem', backgroundColor: '#EBE4D9', marginBottom: '2.5rem' }}>
+                <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, marginBottom: '1rem' }}>
+                  <Layers size={15} style={{ color: 'var(--color-accent)' }} /> Patio Coverage Calculator
+                </h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted-on-light)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+                  Enter your total patio area in square meters. We'll convert it to required packs, based on this pack's coverage of <strong>{packCoverage} m²</strong>.
+                </p>
 
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }} className="calc-inputs">
-                <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--color-border-light)', backgroundColor: '#FFFFFF', flexGrow: 1, padding: '0.5rem 0.75rem' }}>
-                  <input 
-                    type="number" 
-                    min="1" 
-                    value={calcArea} 
-                    onChange={(e) => setCalcArea(e.target.value)} 
-                    placeholder="Patio Area (m²)" 
-                    style={{ width: '100%', padding: '0.25rem', fontSize: '0.9rem' }}
-                  />
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted-on-light)', marginLeft: '0.5rem' }}>m²</span>
-                </div>
-                
-                <button 
-                  type="button" 
-                  onClick={() => setCalcIncludeWastage(!calcIncludeWastage)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-on-light)', cursor: 'pointer' }}
-                >
-                  <div style={{ width: '16px', height: '16px', border: '1px solid var(--color-border-light)', backgroundColor: calcIncludeWastage ? 'var(--color-accent)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {calcIncludeWastage && <CheckCircle size={12} style={{ color: '#111111' }} />}
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }} className="calc-inputs">
+                  <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--color-border-light)', backgroundColor: '#FFFFFF', flexGrow: 1, padding: '0.5rem 0.75rem' }}>
+                    <input 
+                      type="number" 
+                      min="1" 
+                      value={calcArea} 
+                      onChange={(e) => setCalcArea(e.target.value)} 
+                      placeholder="Patio Area (m²)" 
+                      style={{ width: '100%', padding: '0.25rem', fontSize: '0.9rem' }}
+                    />
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted-on-light)', marginLeft: '0.5rem' }}>m²</span>
                   </div>
-                  Add 10% wastage
-                </button>
+                  
+                  <button 
+                    type="button" 
+                    onClick={() => setCalcIncludeWastage(!calcIncludeWastage)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-on-light)', cursor: 'pointer' }}
+                  >
+                    <div style={{ width: '16px', height: '16px', border: '1px solid var(--color-border-light)', backgroundColor: calcIncludeWastage ? 'var(--color-accent)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {calcIncludeWastage && <CheckCircle size={12} style={{ color: '#111111' }} />}
+                    </div>
+                    Add 10% wastage
+                  </button>
+                </div>
+
+                {packsNeeded > 0 && (
+                  <div style={{ borderTop: '1px solid var(--color-border-light)', paddingTop: '1rem', marginTop: '1rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '1rem', fontSize: '0.85rem', marginBottom: '1rem' }}>
+                      <div>
+                        <p style={{ color: 'var(--text-muted-on-light)' }}>Packs Required:</p>
+                        <p style={{ fontWeight: 600, fontSize: '1rem' }}>{packsNeeded} wooden crates</p>
+                      </div>
+                      <div>
+                        <p style={{ color: 'var(--text-muted-on-light)' }}>Total Area covered:</p>
+                        <p style={{ fontWeight: 600, fontSize: '1rem' }}>{(packsNeeded * packCoverage).toFixed(1)} m²</p>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--color-accent)' }}>
+                        Total cost: £{calculatedPrice.toFixed(2)}
+                      </div>
+                      <button 
+                        type="button" 
+                        onClick={handleApplyPacks}
+                        style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-on-light)', cursor: 'pointer', border: '1px solid var(--color-accent)', padding: '0.5rem 1rem', transition: 'var(--transition-smooth)' }}
+                        className="btn-outline-gold"
+                      >
+                        Apply to Order
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-
-              {packsNeeded > 0 && (
-                <div style={{ borderTop: '1px solid var(--color-border-light)', paddingTop: '1rem', marginTop: '1rem' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '1rem', fontSize: '0.85rem', marginBottom: '1rem' }}>
-                    <div>
-                      <p style={{ color: 'var(--text-muted-on-light)' }}>Packs Required:</p>
-                      <p style={{ fontWeight: 600, fontSize: '1rem' }}>{packsNeeded} wooden crates</p>
-                    </div>
-                    <div>
-                      <p style={{ color: 'var(--text-muted-on-light)' }}>Total Area covered:</p>
-                      <p style={{ fontWeight: 600, fontSize: '1rem' }}>{(packsNeeded * packCoverage).toFixed(1)} m²</p>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--color-accent)' }}>
-                      Total cost: £{calculatedPrice.toFixed(2)}
-                    </div>
-                    <button 
-                      type="button" 
-                      onClick={handleApplyPacks}
-                      style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-on-light)', cursor: 'pointer', border: '1px solid var(--color-accent)', padding: '0.5rem 1rem', transition: 'var(--transition-smooth)' }}
-                      className="btn-outline-gold"
-                    >
-                      Apply to Order
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
 
             {/* Stock Warning & Add to Cart */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '3rem', marginBottom: '2.5rem' }}>
@@ -617,13 +619,13 @@ export default function ProductDetail({ addToCart }) {
                 {openAccordions.patterns && (() => {
                   const isProjectPack = product.name.toLowerCase().includes('project pack');
                   const isPorcelain   = product.category === 'Porcelain';
-                  // Sandstone single size = sandstone but NOT a project pack
+                  const isBricks      = product.category === 'Bricks';
 
                   return (
                     <div style={{ paddingBottom: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted-on-light)', lineHeight: 1.7 }}>
 
                       {/* ── Project Pack ── */}
-                      {isProjectPack && (
+                      {isProjectPack && !isBricks && (
                         <div>
                           <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                             Project Pack — Multi-Size Modular Layout
@@ -648,7 +650,7 @@ export default function ProductDetail({ addToCart }) {
                       )}
 
                       {/* ── Sandstone Single Size (22 mm) ── */}
-                      {!isProjectPack && !isPorcelain && (
+                      {!isProjectPack && !isPorcelain && !isBricks && (
                         <div>
                           <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                             Single Size Pack — Stretcher Bond Layout (22 mm Calibrated)
@@ -669,7 +671,7 @@ export default function ProductDetail({ addToCart }) {
                       )}
 
                       {/* ── Porcelain Single Size (20 mm) ── */}
-                      {isPorcelain && (
+                      {isPorcelain && !isBricks && (
                         <div>
                           <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                             Single Size Pack — Stretcher Bond Layout (20 mm Porcelain)
@@ -689,6 +691,48 @@ export default function ProductDetail({ addToCart }) {
                           <p>• Porcelain flags are non-porous and require no sealing — simply clean with water and a pH-neutral cleaner.</p>
                         </div>
                       )}
+
+                      {/* ── Bricks ── */}
+                      {isBricks && (() => {
+                        const isMulti = product.slug === 'smeed-dean-yellow-multi';
+                        const qtyText = isMulti ? '30 pieces' : '360 bricks';
+                        const sizeText = isMulti ? '900 × 600 mm' : '228 × 110 × 68 mm';
+                        const headingText = isMulti 
+                          ? 'Smeed Dean Yellow Multi — Laying Guide (900x600mm Pack)'
+                          : `${product.name} — Laying Guide`;
+                        const descText = isMulti
+                          ? 'This pack supplies consistent large-format flags, ideal for a clean, contemporary layout.'
+                          : 'This pack supplies traditional stock bricks, ideal for restoration work, character-rich walls, and partitions.';
+
+                        return (
+                          <div>
+                            <p style={{ fontWeight: 700, color: 'var(--text-on-light)', marginBottom: '0.6rem', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                              {headingText}
+                            </p>
+                            <p style={{ marginBottom: '0.75rem' }}>
+                              {descText}
+                            </p>
+                            <div style={{ background: '#f7f4ef', border: '1px solid #e0d9ce', padding: '0.85rem 1rem', marginBottom: '0.75rem' }}>
+                              <p style={{ fontWeight: 600, color: 'var(--text-on-light)', marginBottom: '0.5rem', fontSize: '0.78rem' }}>Pack Composition:</p>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.2rem 0', borderBottom: '1px solid #e0d9ce' }}>
+                                <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>{qtyText}</span>
+                                <span style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>{sizeText}</span>
+                              </div>
+                            </div>
+                            {isMulti ? (
+                              <>
+                                <p style={{ marginBottom: '0.4rem' }}>• Lay in a staggered brick-bond pattern, offsetting each row by one-third (300 mm) or one-half (450 mm) of the flag length.</p>
+                                <p>• Avoid a full stack-bond (grid) layout unless intentionally creating a formal, symmetrical design.</p>
+                              </>
+                            ) : (
+                              <>
+                                <p style={{ marginBottom: '0.4rem' }}>• Lay in a staggered brick-bond pattern, offsetting each row by one-half of the brick length.</p>
+                                <p>• Ensure proper mortar jointing and level alignments throughout the laying process.</p>
+                              </>
+                            )}
+                          </div>
+                        );
+                      })()}
 
                     </div>
                   );
