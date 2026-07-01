@@ -5,30 +5,30 @@ import useSEO from '../hooks/useSEO.js';
 export default function Delivery() {
   useSEO({
     title: 'Delivery Information | UK-Wide Stone Paving Delivery',
-    description: 'JMD Global Stones offers UK-wide kerbside paving delivery. Learn about our HGV access requirements, delivery timelines, and flat-rate shipping costs.',
+    description: 'JMD Global Stones offers UK-wide kerbside paving delivery. Learn about our HGV access requirements, delivery timelines, and postcode zone shipping costs.',
     canonical: 'https://jmdglobalstones.co.uk/delivery'
   });
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-light)', padding: '8rem 0', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: 'var(--bg-light)', padding: '0.75rem 0 6rem 0', minHeight: '100vh' }}>
       <div className="container">
         
         {/* Header */}
-        <div style={{ marginBottom: '6rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '3.5rem' }}>
+        <div style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '2rem' }}>
           <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.15em' }}>Logistics & Carriage</span>
           <h1 style={{ fontSize: '3.6rem', fontFamily: 'var(--font-heading)', marginTop: '0.75rem', marginBottom: '1.5rem', fontWeight: 400, lineHeight: 1.1 }}>
             Delivery Guidelines & Logistics
           </h1>
           <p style={{ color: 'var(--text-muted-on-light)', fontSize: '1.15rem', maxWidth: '800px', lineHeight: 1.75 }}>
-            To ensure the safe arrival of your natural stone or vitrified porcelain, please review our heavy goods vehicle (HGV) delivery rules. All paving packages are dispatched in crates and require flat, solid surface access.
+            To ensure the safe arrival of your natural stone or vitrified porcelain, please review our heavy goods vehicle (HGV) delivery rules. All paving packages are dispatched in crates and calculated dynamically based on your postal code zone during checkout.
           </p>
         </div>
 
         {/* Timeline Banner */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2.5rem', backgroundColor: '#FFFFFF', padding: '3rem 2.5rem', border: '1px solid var(--color-border-light)', marginBottom: '6rem', textAlign: 'center' }} className="delivery-timeline-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2.5rem', backgroundColor: '#FFFFFF', padding: '3rem 2.5rem', border: '1px solid var(--color-border-light)', marginBottom: '3rem', textAlign: 'center' }} className="delivery-timeline-grid">
           <div>
             <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.5rem' }}>Carriage Rate</h4>
-            <p style={{ fontSize: '1.8rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)' }}>£49 Flat Rate</p>
+            <p style={{ fontSize: '1.8rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)' }}>Variable Rate</p>
           </div>
           <div style={{ borderLeft: '1px solid var(--color-border-light)' }}>
             <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.5rem' }}>Dispatch Timeline</h4>
@@ -45,7 +45,7 @@ export default function Delivery() {
         </div>
 
         {/* Main Grid: Info Cards + Vertical Truck Image */}
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '3.5rem', marginBottom: '6rem' }} className="delivery-main-layout">
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '3.5rem', marginBottom: '3rem' }} className="delivery-main-layout">
           
           {/* Left Column: 6 Logistics Rules */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2.5rem' }} className="delivery-grid">

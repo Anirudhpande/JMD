@@ -227,7 +227,7 @@ export default function Home({ addToCart }) {
       <section style={{ backgroundColor: '#fff', borderTop: '1px solid #E5E0D8', borderBottom: '1px solid #E5E0D8', padding: '1.5rem 0' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           {[
-            { icon: <Truck size={18} />,      label: 'UK Nationwide Delivery',   sub: 'Flat rate per pack'     },
+            { icon: <Truck size={18} />,      label: 'UK Nationwide Delivery',   sub: 'Calculated by postcode' },
             { icon: <ShieldCheck size={18} />, label: '100% Genuine Stone',       sub: 'Direct quarry import'   },
             { icon: <Zap size={18} />,         label: '3–5 Day Dispatch',         sub: 'From UK yard stock'     },
             { icon: <Award size={18} />,       label: 'Expert Yard Support',      sub: 'Call or WhatsApp us'    },
