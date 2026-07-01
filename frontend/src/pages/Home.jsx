@@ -217,11 +217,10 @@ export default function Home({ addToCart }) {
             <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.15em' }}>Curated Collections</span>
             <h2 style={{ fontSize: '2.8rem', marginTop: '0.75rem', fontFamily: 'var(--font-heading)', fontWeight: 400 }}>Shop by Category</h2>
           </div>
-
           <div style={{ display: 'flex', justifyContent: 'center', gap: '2.5rem', flexWrap: 'wrap', paddingBottom: '2rem' }}>
             {categories.map((cat, idx) => (
               <Link to={`/products?category=${cat.slug}`} key={idx} style={{ display: 'block', position: 'relative', transition: 'var(--transition-smooth)', width: '260px' }} className="category-card">
-                <div style={{ width: '100%', aspectRatio: '0.85', overflow: 'hidden', backgroundColor: '#EBE4D9', border: '1px solid var(--color-border-light)' }}>
+                <div style={{ width: '100%', aspectRatio: '1', overflow: 'hidden', backgroundColor: '#EBE4D9', border: '1px solid var(--color-border-light)' }}>
                   <img src={cat.image} alt={cat.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'var(--transition-smooth)' }} className="cat-img" />
                 </div>
                 {/* Overlapping Parchment Title Box */}
