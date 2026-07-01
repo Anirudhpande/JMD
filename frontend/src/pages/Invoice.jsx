@@ -132,7 +132,7 @@ export default function Invoice() {
         {/* HEADER: Company address centred */}
         <div style={{ textAlign:'center', fontSize:'10.5px', color:'#333', lineHeight:1.65, marginBottom:'16px' }}>
           Registered Office: Twelve Quays House, Egerton Wharf, Wirral, United Kingdom, CH41 1LD<br/>
-          Website: www.jmdglobalstones.co.uk &nbsp;|&nbsp; Email: sales@jmdglobalstones.co.uk &nbsp;|&nbsp; Phone: 07458 148586<br/>
+          Website: www.jmdglobalstones.co.uk &nbsp;|&nbsp; Email: sales@jmdglobalstones.co.uk &nbsp;|&nbsp; Phone: 07458 148586 (Roopesh Kapur)<br/>
           Company House No.: 12807959 &nbsp;|&nbsp; VAT No.: GB 358688337
         </div>
 

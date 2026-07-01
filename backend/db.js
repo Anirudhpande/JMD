@@ -332,7 +332,7 @@ async function initializePostgresSchema(client) {
       ],
       why_choose_us: "We treat our stone as a luxury architectural material. Direct import pricing, strict thickness calibrations, and nationwide lorry delivery make us the trusted partner for landscape designers across the UK.",
       footer: {
-        contact_phone: "07458148586",
+        contact_phone: "07458148586 (Roopesh Kapur)",
         contact_email: "sales@jmdglobalstones.co.uk",
         company_no: "12807959",
         vat_no: "GB 358688337",

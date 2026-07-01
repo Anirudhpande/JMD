@@ -9,7 +9,7 @@ const products = [
     price: 279.00,
     description: "Premium Autumn Brown Indian Sandstone paving slabs are ideal for classic garden patios. Exhibiting warm brown tones mixed with hints of plum, grey, and ochre, this traditional paving stone provides a natural, hand-cut finish and calibrated thickness.",
     images: [
-      "/images/autumn-brown-900x600.png",
+      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png",
       "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-03.jpeg",
       "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-02.jpeg",
       "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-01.jpeg"
@@ -63,7 +63,7 @@ const products = [
     price: 285.00,
     description: "Camel Dust Indian Sandstone is a uniquely colored paving slab featuring golden yellow, tan, creamy buff, and peach tones. Perfectly suited to the British climate, its robust structure and riven texture offer both durability and beauty.",
     images: [
-      "/images/camel-dust-900x600.png"
+      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Camel-Dust-Sandstone-300x300.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 299.00, stock: 8 },
@@ -196,7 +196,7 @@ const products = [
     price: 292.00,
     description: "Kandla Grey Sandstone is the most popular garden paving material in the UK. Featuring cool blue-grey tones, straight hand-cut edges, and a consistent riven surface, it creates a clean, elegant look that coordinates with any garden layout.",
     images: [
-      "/images/kandla-grey-900x600.png"
+      "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/KG-Sandstone-300x300.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 307.00, stock: 85 },
@@ -280,7 +280,7 @@ const products = [
     price: 288.00,
     description: "Mint Indian Sandstone is renowned for its rich cream, ivory, buff, and amber tones, with beautiful natural fossil patterns. It provides a warm, sunny aesthetic to dark gardens or north-facing patios.",
     images: [
-      "/images/mint-sandstone-900x600.png"
+      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Mint-Sandstone-1-300x300.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 299.00, stock: 22 },
@@ -377,7 +377,7 @@ const products = [
     price: 292.00,
     description: "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust paving handles wet conditions excellently and ages beautifully over time.",
     images: [
-      "/images/raj-green-900x600.png"
+      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/RG-Sandstone-300x300.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 292.00, stock: 45 },
@@ -394,7 +394,7 @@ const products = [
     price: 292.00,
     description: "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut, split finish that catches the light wonderfully.",
     images: [
-      "/images/rippon-buff-900x600.png"
+      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ss_ripponbuff_01-300x300.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 292.00, stock: 35 },
@@ -507,6 +507,15 @@ async function seed() {
   console.log('Seeding products database (flattening size variants into individual listings)...');
   try {
     const flatProducts = [];
+    const SANDSTONE_900x600_IMAGES = {
+      "prod-1": "/images/autumn-brown-900x600.png",
+      "prod-4": "/images/camel-dust-900x600.png",
+      "prod-12": "/images/kandla-grey-900x600.png",
+      "prod-17": "/images/mint-sandstone-900x600.png",
+      "prod-23": "/images/raj-green-900x600.png",
+      "prod-24": "/images/rippon-buff-900x600.png"
+    };
+
     products.forEach(p => {
       if (p.variants && p.variants.length > 0) {
         p.variants.forEach((v, idx) => {
@@ -515,6 +524,11 @@ async function seed() {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)/g, '');
           
+          let imagesList = [...p.images];
+          if (v.size.toLowerCase().includes("900x600") && SANDSTONE_900x600_IMAGES[p.id]) {
+            imagesList = [SANDSTONE_900x600_IMAGES[p.id], ...p.images.slice(1)];
+          }
+
           flatProducts.push({
             id: `${p.id}-var-${idx + 1}`,
             name: `${p.name} - ${v.size}`,
@@ -524,7 +538,7 @@ async function seed() {
             stock: v.stock,
             size: v.size,
             description: p.description,
-            images: p.images,
+            images: imagesList,
             is_featured: p.is_featured,
             stars: p.stars,
             seo_title: `${p.name} (${v.size}) | JMD Global Stones`,

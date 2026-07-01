@@ -5,7 +5,7 @@ import useSEO from '../hooks/useSEO.js';
 export default function Contact() {
   useSEO({
     title: 'Contact Us | JMD Global Stones Wirral & Southampton',
-    description: 'Get in touch with JMD Global Stones. Call or WhatsApp 07458148586, email sales@jmdglobalstones.co.uk, or visit our Wirral HQ and Southampton yard.',
+    description: 'Get in touch with JMD Global Stones. Call or WhatsApp 07458148586 (Roopesh Kapur), email sales@jmdglobalstones.co.uk, or visit our Wirral HQ and Southampton yard.',
     canonical: 'https://jmdglobalstones.co.uk/contact'
   });
 
@@ -159,7 +159,7 @@ export default function Contact() {
               <div style={{ display: 'flex', justifyContent: 'space-around' }} className="info-bar">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-on-light)' }}>
                   <Phone size={16} style={{ color: 'var(--color-accent)' }} />
-                  <span>07458148586</span>
+                  <span>07458148586 (Roopesh Kapur)</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-on-light)' }}>
                   <Mail size={16} style={{ color: 'var(--color-accent)' }} />

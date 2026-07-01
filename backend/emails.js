@@ -470,7 +470,7 @@ export const emails = {
               </a>
             </div>
             <p style="font-size:0.85rem;color:#777;line-height:1.6;">
-              Any questions? Reply to this email or WhatsApp us on <strong>07458148586</strong> — 
+              Any questions? Reply to this email or WhatsApp us on <strong>07458148586 (Roopesh Kapur)</strong> — 
               our yard team is available Mon–Sat 8am–5pm.
             </p>
           </div>

@@ -1,260 +1,903 @@
 {
   "products": [
     {
-      "id": "prod-12-var-1",
-      "name": "Kandla Grey Indian Sandstone Paving Slabs - Project Pack",
-      "slug": "kandla-grey-indian-sandstone-paving-slabs-project-pack-18-9m2",
-      "category": "Sandstone",
-      "description": "Premium Kandla Grey Indian Sandstone. Offers a beautiful traditional finish with hand-dressed edges and a natural riven surface. Calibrated to 22mm thickness for ease of installation.",
-      "price": 307,
-      "stock": 53,
-      "size": "Project Pack 60 Pieces (Mixed Sizes) - Covers 18.9m²",
-      "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/KG-Sandstone-300x300.png"
-      ],
-      "is_featured": true,
-      "stars": 4.8,
-      "variant_group_id": "kandla-grey-sandstone"
-    },
-    {
-      "id": "prod-12-var-2",
-      "name": "Kandla Grey Indian Sandstone Paving Slabs - 900x600mm",
-      "slug": "kandla-grey-indian-sandstone-paving-slabs-900x600x22mm",
-      "category": "Sandstone",
-      "description": "Large format single-sized Kandla Grey Indian Sandstone slabs. Features clean hand-cut riven textures and uniform cool grey tones for a premium modern landscape feel.",
-      "price": 292,
-      "stock": 68,
-      "size": "900x600x22mm (Single Size) - Covers 17.0m²",
-      "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/KG-Sandstone-300x300.png"
-      ],
-      "is_featured": true,
-      "stars": 4.8,
-      "variant_group_id": "kandla-grey-sandstone"
-    },
-    {
-      "id": "prod-23-var-1",
-      "name": "Raj Green Indian Sandstone Paving Slabs - Project Pack",
-      "slug": "raj-green-indian-sandstone-paving-slabs-project-pack-18-9m2",
-      "category": "Sandstone",
-      "description": "Authentic Raj Green Indian Sandstone. Blends classic green, warm brown, and natural grey shades to mimic traditional English Yorkstone layouts. Hand-dressed 22mm calibrated slabs.",
-      "price": 292,
-      "stock": 37,
-      "size": "Project Pack 60 Pieces (Mixed Sizes) - Covers 18.9m²",
-      "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/RG-Sandstone-300x300.png"
-      ],
-      "is_featured": true,
-      "stars": 4.9,
-      "variant_group_id": "raj-green-sandstone"
-    },
-    {
-      "id": "prod-23-var-2",
-      "name": "Raj Green Indian Sandstone Paving Slabs - 900x600mm",
-      "slug": "raj-green-indian-sandstone-paving-slabs-900x600x22mm",
-      "category": "Sandstone",
-      "description": "Sleek large-format 900x600mm Raj Green Sandstone flags. Natural riven textures with warm khaki and stone grey variation. Calibrated 22mm for perfect patio leveling.",
-      "price": 279,
-      "stock": 34,
-      "size": "900x600x22mm (Single Size) - Covers 17.0m²",
-      "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/RG-Sandstone-300x300.png"
-      ],
-      "is_featured": true,
-      "stars": 4.9,
-      "variant_group_id": "raj-green-sandstone"
-    },
-    {
-      "id": "prod-24-var-1",
-      "name": "Rippon Buff Indian Sandstone Paving Slabs - Project Pack",
-      "slug": "rippon-buff-indian-sandstone-paving-slabs-project-pack-18-9m2",
-      "category": "Sandstone",
-      "description": "Warm and inviting Rippon Buff Sandstone paving packs. Displaying a rich mix of cream, beige, golden buff, and pinkish vein patterns. Ideal for brightening darker garden layouts.",
-      "price": 292,
-      "stock": 25,
-      "size": "Project Pack 60 Pieces (Mixed Sizes) - Covers 18.9m²",
-      "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ss_ripponbuff_01-300x300.png"
-      ],
-      "is_featured": false,
-      "stars": 4.7,
-      "variant_group_id": "rippon-buff-sandstone"
-    },
-    {
-      "id": "prod-24-var-2",
-      "name": "Rippon Buff Indian Sandstone Paving Slabs - 900x600mm",
-      "slug": "rippon-buff-indian-sandstone-paving-slabs-900x600x22mm",
-      "category": "Sandstone",
-      "description": "Stunning large-format single size Rippon Buff paving flags. Calibrated 22mm thickness. Bright sand textures with distinct orange and gold swirl details.",
-      "price": 279,
-      "stock": 11,
-      "size": "900x600x22mm (Single Size) - Covers 18.9m²",
-      "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ss_ripponbuff_01-300x300.png"
-      ],
-      "is_featured": false,
-      "stars": 4.7,
-      "variant_group_id": "rippon-buff-sandstone"
-    },
-    {
       "id": "prod-1-var-1",
-      "name": "Autumn Brown Indian Sandstone Paving Slabs - Project Pack",
-      "slug": "autumn-brown-indian-sandstone-paving-slabs-project-pack-18-9m2",
+      "name": "Autumn Brown Indian Sandstone Paving Slabs - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "autumn-brown-indian-sandstone-paving-slabs-project-pack-60-pieces-mixed-sizes",
       "category": "Sandstone",
-      "description": "Classic Autumn Brown natural stone flags. Riven cleft textures containing warm earthy browns, hazelnut, and dark grey tones. Fully calibrated 22mm slabs.",
       "price": 292,
-      "stock": 1,
-      "size": "Project Pack 60 Pieces (Mixed Sizes) - Covers 17.0m²",
+      "stock": 29,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Premium Autumn Brown Indian Sandstone paving slabs are ideal for classic garden patios. Exhibiting warm brown tones mixed with hints of plum, grey, and ochre, this traditional paving stone provides a natural, hand-cut finish and calibrated thickness.",
       "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png"
+        "/images/autumn-brown-900x600.png",
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-03.jpeg",
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-02.jpeg",
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-01.jpeg"
       ],
       "is_featured": true,
-      "stars": 4.6,
-      "variant_group_id": "autumn-brown-sandstone"
+      "stars": 4.8,
+      "seo_title": "Autumn Brown Indian Sandstone Paving Slabs (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Premium Autumn Brown Indian Sandstone paving slabs are ideal for classic garden patios. Exhibiting warm brown tones mixed with hints of plum, grey, an",
+      "variant_group_id": "prod-1",
+      "created_at": "2026-07-01T17:13:42.529Z"
     },
     {
       "id": "prod-1-var-2",
-      "name": "Autumn Brown Indian Sandstone Paving Slabs - 900x600mm",
-      "slug": "autumn-brown-indian-sandstone-paving-slabs-900x600x22mm",
+      "name": "Autumn Brown Indian Sandstone Paving Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "autumn-brown-indian-sandstone-paving-slabs-900x600mm-pack-30-pieces-single-size",
       "category": "Sandstone",
-      "description": "Large 900x600mm format Autumn Brown sandstone tiles. Earthy tones provide a warm, cozy feeling for classic country garden patios.",
       "price": 279,
-      "stock": 0,
-      "size": "900x600x22mm (Single Size) - Covers 21.3m²",
+      "stock": 51,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Premium Autumn Brown Indian Sandstone paving slabs are ideal for classic garden patios. Exhibiting warm brown tones mixed with hints of plum, grey, and ochre, this traditional paving stone provides a natural, hand-cut finish and calibrated thickness.",
       "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png"
+        "/images/autumn-brown-900x600.png",
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-03.jpeg",
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-02.jpeg",
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-01.jpeg"
       ],
       "is_featured": true,
-      "stars": 4.6,
-      "variant_group_id": "autumn-brown-sandstone"
+      "stars": 4.8,
+      "seo_title": "Autumn Brown Indian Sandstone Paving Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Premium Autumn Brown Indian Sandstone paving slabs are ideal for classic garden patios. Exhibiting warm brown tones mixed with hints of plum, grey, an",
+      "variant_group_id": "prod-1",
+      "created_at": "2026-07-01T17:13:42.529Z"
     },
     {
-      "id": "prod-6-var-2",
-      "name": "County Anthracite Porcelain Paving Slabs",
-      "slug": "county-anthracite-porcelain-paving-slabs-900x600mm",
-      "category": "Porcelain",
-      "description": "Premium dark anthracite vitrified outdoor porcelain. Modern anti-slip fine textured surface, sawn clean edges. Extremely durable and stain-resistant.",
-      "price": 370,
+      "id": "prod-2-var-1",
+      "name": "Brazilian Black Slate - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "brazilian-black-slate-project-pack-60-pieces-mixed-sizes",
+      "category": "Slate",
+      "price": 340,
+      "stock": 15,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Brazilian Black Slate paving slabs feature a very flat, lightly cleft surface and straight cut edges. This natural slate exhibits deep charcoal to black tones, giving modern or traditional spaces a sleek, sophisticated finish with outstanding slip resistance.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/BB-Slate-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.9,
+      "seo_title": "Brazilian Black Slate (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Brazilian Black Slate paving slabs feature a very flat, lightly cleft surface and straight cut edges. This natural slate exhibits deep charcoal to bla",
+      "variant_group_id": "prod-2",
+      "created_at": "2026-07-01T17:13:42.529Z"
+    },
+    {
+      "id": "prod-2-var-2",
+      "name": "Brazilian Black Slate - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "brazilian-black-slate-900x600mm-pack-30-pieces-single-size",
+      "category": "Slate",
+      "price": 320,
+      "stock": 22,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Brazilian Black Slate paving slabs feature a very flat, lightly cleft surface and straight cut edges. This natural slate exhibits deep charcoal to black tones, giving modern or traditional spaces a sleek, sophisticated finish with outstanding slip resistance.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/BB-Slate-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.9,
+      "seo_title": "Brazilian Black Slate (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Brazilian Black Slate paving slabs feature a very flat, lightly cleft surface and straight cut edges. This natural slate exhibits deep charcoal to bla",
+      "variant_group_id": "prod-2",
+      "created_at": "2026-07-01T17:13:42.529Z"
+    },
+    {
+      "id": "prod-3-var-1",
+      "name": "Brazilian Grey Slate - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "brazilian-grey-slate-project-pack-60-pieces-mixed-sizes",
+      "category": "Slate",
+      "price": 330,
+      "stock": 18,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Brazilian Grey Slate offers a smooth, clean texture with straight, clean-cut sawn edges. With light-to-medium grey tones and minor organic shade variations, this durable material is excellent for contemporary patio designs.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/BG-Slate-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "seo_title": "Brazilian Grey Slate (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Brazilian Grey Slate offers a smooth, clean texture with straight, clean-cut sawn edges. With light-to-medium grey tones and minor organic shade varia",
+      "variant_group_id": "prod-3",
+      "created_at": "2026-07-01T17:13:42.529Z"
+    },
+    {
+      "id": "prod-3-var-2",
+      "name": "Brazilian Grey Slate - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "brazilian-grey-slate-900x600mm-pack-30-pieces-single-size",
+      "category": "Slate",
+      "price": 310,
+      "stock": 14,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Brazilian Grey Slate offers a smooth, clean texture with straight, clean-cut sawn edges. With light-to-medium grey tones and minor organic shade variations, this durable material is excellent for contemporary patio designs.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/BG-Slate-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "seo_title": "Brazilian Grey Slate (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Brazilian Grey Slate offers a smooth, clean texture with straight, clean-cut sawn edges. With light-to-medium grey tones and minor organic shade varia",
+      "variant_group_id": "prod-3",
+      "created_at": "2026-07-01T17:13:42.529Z"
+    },
+    {
+      "id": "prod-4-var-1",
+      "name": "Camel Dust Sandstone - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "camel-dust-sandstone-project-pack-60-pieces-mixed-sizes",
+      "category": "Sandstone",
+      "price": 299,
+      "stock": 8,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Camel Dust Indian Sandstone is a uniquely colored paving slab featuring golden yellow, tan, creamy buff, and peach tones. Perfectly suited to the British climate, its robust structure and riven texture offer both durability and beauty.",
+      "images": [
+        "/images/camel-dust-900x600.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Camel Dust Sandstone (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Camel Dust Indian Sandstone is a uniquely colored paving slab featuring golden yellow, tan, creamy buff, and peach tones. Perfectly suited to the Brit",
+      "variant_group_id": "prod-4",
+      "created_at": "2026-07-01T17:13:42.529Z"
+    },
+    {
+      "id": "prod-4-var-2",
+      "name": "Camel Dust Sandstone - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "camel-dust-sandstone-900x600mm-pack-30-pieces-single-size",
+      "category": "Sandstone",
+      "price": 285,
       "stock": 16,
-      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Camel Dust Indian Sandstone is a uniquely colored paving slab featuring golden yellow, tan, creamy buff, and peach tones. Perfectly suited to the British climate, its robust structure and riven texture offer both durability and beauty.",
+      "images": [
+        "/images/camel-dust-900x600.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Camel Dust Sandstone (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Camel Dust Indian Sandstone is a uniquely colored paving slab featuring golden yellow, tan, creamy buff, and peach tones. Perfectly suited to the Brit",
+      "variant_group_id": "prod-4",
+      "created_at": "2026-07-01T17:13:42.529Z"
+    },
+    {
+      "id": "prod-5-var-1",
+      "name": "Charmis Black Limestone - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "charmis-black-limestone-project-pack-60-pieces-mixed-sizes",
+      "category": "Limestone",
+      "price": 315,
+      "stock": 24,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Charmis Black Limestone is a classic dark grey to carbon black paving stone. Its smooth natural surface looks clean and premium when wet or dry. Excellent for walkways, modern driveways, or courtyards.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/CB-Limestone-1-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.5,
+      "seo_title": "Charmis Black Limestone (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Charmis Black Limestone is a classic dark grey to carbon black paving stone. Its smooth natural surface looks clean and premium when wet or dry. Excel",
+      "variant_group_id": "prod-5",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-5-var-2",
+      "name": "Charmis Black Limestone - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "charmis-black-limestone-900x600mm-pack-30-pieces-single-size",
+      "category": "Limestone",
+      "price": 295,
+      "stock": 30,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Charmis Black Limestone is a classic dark grey to carbon black paving stone. Its smooth natural surface looks clean and premium when wet or dry. Excellent for walkways, modern driveways, or courtyards.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/CB-Limestone-1-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.5,
+      "seo_title": "Charmis Black Limestone (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Charmis Black Limestone is a classic dark grey to carbon black paving stone. Its smooth natural surface looks clean and premium when wet or dry. Excel",
+      "variant_group_id": "prod-5",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-6-var-1",
+      "name": "County Anthracite Porcelain Paving Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "county-anthracite-porcelain-paving-slabs-900x600mm-pack-30-pieces-single-size",
+      "category": "Porcelain",
+      "price": 373,
+      "stock": 40,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "County Anthracite Porcelain offers a sleek, ultra-modern dark grey finish with a refined textured surface. High-grade porcelain paving slabs from JMD present low water absorption, stain resistance, and are completely frost-proof.",
       "images": [
         "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png"
       ],
       "is_featured": true,
       "stars": 4.9,
-      "variant_group_id": "county-anthracite-porcelain"
+      "seo_title": "County Anthracite Porcelain Paving Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "County Anthracite Porcelain offers a sleek, ultra-modern dark grey finish with a refined textured surface. High-grade porcelain paving slabs from JMD ",
+      "variant_group_id": "prod-6",
+      "created_at": "2026-07-01T17:13:42.530Z"
     },
     {
-      "id": "prod-9-var-1",
-      "name": "Hammer Stone Grey Porcelain Paving Slabs",
-      "slug": "hammer-stone-grey-porcelain-paving-slabs-900x600mm",
+      "id": "prod-6-var-2",
+      "name": "County Anthracite Porcelain Paving Slabs - 600x600mm Pack 40 Pieces (Single Size)",
+      "slug": "county-anthracite-porcelain-paving-slabs-600x600mm-pack-40-pieces-single-size",
       "category": "Porcelain",
-      "description": "Textured Hammer Stone Grey vitrified porcelain paving. Replicates natural split stones with zero maintenance and excellent wet weather traction.",
-      "price": 360,
-      "stock": 10,
-      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "price": 350,
+      "stock": 12,
+      "size": "600x600mm Pack 40 Pieces (Single Size)",
+      "description": "County Anthracite Porcelain offers a sleek, ultra-modern dark grey finish with a refined textured surface. High-grade porcelain paving slabs from JMD present low water absorption, stain resistance, and are completely frost-proof.",
       "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/HSG-Porc-Tiles-300x300.png"
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/CA-Porc-Tiles-300x300.png"
       ],
-      "is_featured": false,
-      "stars": 4.7,
-      "variant_group_id": "hammer-stone-grey-porcelain"
-    },
-    {
-      "id": "prod-18-var-1",
-      "name": "Mountain White Porcelain Paving Slabs",
-      "slug": "mountain-white-porcelain-paving-slabs-900x600mm",
-      "category": "Porcelain",
-      "description": "Ultra-modern off-white vitrified porcelain. Creates an extremely bright, spacious, and luxurious feel for high-end modern garden builds.",
-      "price": 349,
-      "stock": 2,
-      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
-      "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/MW-Porc-Tiles-300x300.png"
-      ],
-      "is_featured": false,
-      "stars": 4.5,
-      "variant_group_id": "mountain-white-porcelain"
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "County Anthracite Porcelain Paving Slabs (600x600mm Pack 40 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "County Anthracite Porcelain offers a sleek, ultra-modern dark grey finish with a refined textured surface. High-grade porcelain paving slabs from JMD ",
+      "variant_group_id": "prod-6",
+      "created_at": "2026-07-01T17:13:42.530Z"
     },
     {
       "id": "prod-7-var-1",
-      "name": "Earth Core Grey Porcelain Slabs",
-      "slug": "earth-core-grey-porcelain-slabs-900x600mm",
+      "name": "Earth Core Grey Porcelain Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "earth-core-grey-porcelain-tiles-porcelain-slabs-900x600mm-pack-30-pieces-single-size",
       "category": "Porcelain",
-      "description": "Vitrified porcelain with a sleek concrete-grey mineral appearance. Perfect for minimal indoor-outdoor floor designs.",
-      "price": 360,
-      "stock": 3,
-      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "price": 374,
+      "stock": 35,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Earth Core Grey Porcelain paving captures the natural beauty of stone while delivering the strength of premium engineered porcelain. Straight cut edges allow for minimal grout lines for a smooth, high-end look.",
       "images": [
         "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ECG-Porc-Tiles-300x300.png"
       ],
       "is_featured": true,
       "stars": 4.8,
-      "variant_group_id": "earth-core-grey-porcelain"
+      "seo_title": "Earth Core Grey Porcelain Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Earth Core Grey Porcelain paving captures the natural beauty of stone while delivering the strength of premium engineered porcelain. Straight cut edge",
+      "variant_group_id": "prod-7",
+      "created_at": "2026-07-01T17:13:42.530Z"
     },
     {
-      "id": "prod-21-var-1",
-      "name": "Quartz Light Grey Porcelain Slabs",
-      "slug": "quartz-light-grey-porcelain-slabs-900x600mm",
-      "category": "Porcelain",
-      "description": "Features a quartz-veined mineral aesthetic in a bright, modern grey tone. Frost proof, slip proof R11 vitrified construction.",
-      "price": 373,
-      "stock": 21,
-      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "id": "prod-8-var-1",
+      "name": "Half Rounds Bricks - Pallet of 400 Pieces",
+      "slug": "half-rounds-bricks-pallet-of-400-pieces",
+      "category": "Bricks",
+      "price": 245,
+      "stock": 10,
+      "size": "Pallet of 400 Pieces",
+      "description": "JMD Premium Half Round bricks are specifically selected for edging, walling, and traditional features. They offer a rustic yellow/red color profile that fits perfectly with classic masonry and paving borders.",
       "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/QLG-Porc-Tiles-300x300.png"
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/HR-Bricks-1-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.4,
+      "seo_title": "Half Rounds Bricks (Pallet of 400 Pieces) | JMD Global Stones",
+      "seo_description": "JMD Premium Half Round bricks are specifically selected for edging, walling, and traditional features. They offer a rustic yellow/red color profile th",
+      "variant_group_id": "prod-8",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-9-var-1",
+      "name": "Hammer Stone Grey Porcelain Paving Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "hammer-stone-grey-porcelain-paving-slabs-900x600mm-pack-30-pieces-single-size",
+      "category": "Porcelain",
+      "price": 374,
+      "stock": 25,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Hammer Stone Grey Porcelain paving slabs deliver a luxurious textured grey feel. Offering exceptional durability and clean lines, this product is ideal for transforming patios, pathways, and indoor-outdoor living spaces.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/HSG-Porc-Tiles-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Hammer Stone Grey Porcelain Paving Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Hammer Stone Grey Porcelain paving slabs deliver a luxurious textured grey feel. Offering exceptional durability and clean lines, this product is idea",
+      "variant_group_id": "prod-9",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-10-var-1",
+      "name": "Indian Black Slate Paving - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "indain-black-slate-project-pack-60-pieces-mixed-sizes",
+      "category": "Slate",
+      "price": 329,
+      "stock": 12,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Indian Black Slate is imported directly from verified quarries in India. Featuring a rustic cleft finish and vibrant black tones, it is calibrated to a uniform thickness of 22mm for easy installation and longevity.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/BB-Slate-1-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Indian Black Slate Paving (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Indian Black Slate is imported directly from verified quarries in India. Featuring a rustic cleft finish and vibrant black tones, it is calibrated to ",
+      "variant_group_id": "prod-10",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-10-var-2",
+      "name": "Indian Black Slate Paving - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "indain-black-slate-900x600mm-pack-30-pieces-single-size",
+      "category": "Slate",
+      "price": 315,
+      "stock": 18,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Indian Black Slate is imported directly from verified quarries in India. Featuring a rustic cleft finish and vibrant black tones, it is calibrated to a uniform thickness of 22mm for easy installation and longevity.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/BB-Slate-1-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Indian Black Slate Paving (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Indian Black Slate is imported directly from verified quarries in India. Featuring a rustic cleft finish and vibrant black tones, it is calibrated to ",
+      "variant_group_id": "prod-10",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-11-var-1",
+      "name": "Indian Vijaya Gold Slate - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "indain-vijaya-gold-project-pack-60-pieces-mixed-sizes",
+      "category": "Slate",
+      "price": 350,
+      "stock": 9,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Indian Vijaya Gold Slate features striking ochre, rust orange, and gold tones on a base of steel grey. This flagstone slate creates a highly warm, rich feel for patios, pathways, and internal accent walls.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/VG-Slate-300x300.png"
       ],
       "is_featured": false,
       "stars": 4.7,
-      "variant_group_id": "quartz-light-grey-porcelain"
+      "seo_title": "Indian Vijaya Gold Slate (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Indian Vijaya Gold Slate features striking ochre, rust orange, and gold tones on a base of steel grey. This flagstone slate creates a highly warm, ric",
+      "variant_group_id": "prod-11",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-11-var-2",
+      "name": "Indian Vijaya Gold Slate - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "indain-vijaya-gold-900x600mm-pack-30-pieces-single-size",
+      "category": "Slate",
+      "price": 330,
+      "stock": 15,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Indian Vijaya Gold Slate features striking ochre, rust orange, and gold tones on a base of steel grey. This flagstone slate creates a highly warm, rich feel for patios, pathways, and internal accent walls.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/VG-Slate-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "seo_title": "Indian Vijaya Gold Slate (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Indian Vijaya Gold Slate features striking ochre, rust orange, and gold tones on a base of steel grey. This flagstone slate creates a highly warm, ric",
+      "variant_group_id": "prod-11",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-12-var-1",
+      "name": "Kandla Grey Indian Sandstone Paving - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "kandla-grey-indian-sandstone-paving-project-pack-60-pieces-mixed-sizes",
+      "category": "Sandstone",
+      "price": 307,
+      "stock": 85,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Kandla Grey Sandstone is the most popular garden paving material in the UK. Featuring cool blue-grey tones, straight hand-cut edges, and a consistent riven surface, it creates a clean, elegant look that coordinates with any garden layout.",
+      "images": [
+        "/images/kandla-grey-900x600.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "Kandla Grey Indian Sandstone Paving (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Kandla Grey Sandstone is the most popular garden paving material in the UK. Featuring cool blue-grey tones, straight hand-cut edges, and a consistent ",
+      "variant_group_id": "prod-12",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-12-var-2",
+      "name": "Kandla Grey Indian Sandstone Paving - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "kandla-grey-indian-sandstone-paving-900x600mm-pack-30-pieces-single-size",
+      "category": "Sandstone",
+      "price": 292,
+      "stock": 64,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Kandla Grey Sandstone is the most popular garden paving material in the UK. Featuring cool blue-grey tones, straight hand-cut edges, and a consistent riven surface, it creates a clean, elegant look that coordinates with any garden layout.",
+      "images": [
+        "/images/kandla-grey-900x600.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "Kandla Grey Indian Sandstone Paving (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Kandla Grey Sandstone is the most popular garden paving material in the UK. Featuring cool blue-grey tones, straight hand-cut edges, and a consistent ",
+      "variant_group_id": "prod-12",
+      "created_at": "2026-07-01T17:13:42.530Z"
     },
     {
       "id": "prod-13-var-1",
-      "name": "Kandla Grey Porcelain Slabs",
-      "slug": "kandla-grey-porcelain-slabs-900x600mm",
+      "name": "Kandla Grey Porcelain Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "kandla-grey-porcelain-900x600mm-pack-30-pieces-single-size",
       "category": "Porcelain",
-      "description": "Replicates the famous cool grey natural sandstone look, but with the high performance and low maintenance of vitrified porcelain.",
       "price": 373,
-      "stock": 34,
-      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "stock": 45,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Kandla Grey Porcelain captures the contemporary light-grey aesthetic of natural sandstone but with the maintenance-free benefit of engineered vitrified tiles. Extremely resistant to algae, dirt, and stains.",
       "images": [
         "https://jmdglobalstones.co.uk/wp-content/uploads/2025/07/Kandla-Grey-Porcelain-300x300.png"
       ],
       "is_featured": false,
-      "stars": 4.7,
-      "variant_group_id": "kandla-grey-porcelain"
+      "stars": 4.8,
+      "seo_title": "Kandla Grey Porcelain Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Kandla Grey Porcelain captures the contemporary light-grey aesthetic of natural sandstone but with the maintenance-free benefit of engineered vitrifie",
+      "variant_group_id": "prod-13",
+      "created_at": "2026-07-01T17:13:42.530Z"
     },
     {
-      "id": "prod-22-var-1",
-      "name": "Quartz White Porcelain Paving",
-      "slug": "quartz-white-porcelain-paving-900x600mm",
-      "category": "Porcelain",
-      "description": "Pure white vitrified porcelain flags with light marble-like quartz veining. R11 slip rating. Creates clean lines and bright modern garden zones.",
-      "price": 373,
-      "stock": 35,
-      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "id": "prod-14-var-1",
+      "name": "Kota Black Limestone Slabs - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "kota-black-limestone-project-pack-60-pieces-mixed-sizes",
+      "category": "Limestone",
+      "price": 305,
+      "stock": 19,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Kota Black Limestone features a flatter, smoother texture than sandstone, presenting a dark charcoal color that coordinates wonderfully with borders and green garden shrubbery. Imported from the highest quality limestone beds in India.",
       "images": [
-        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/07/Quartz-White-Porcelain-300x300.png"
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ls_Blacklimestone_02-300x340.jpg"
+      ],
+      "is_featured": true,
+      "stars": 4.7,
+      "seo_title": "Kota Black Limestone Slabs (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Kota Black Limestone features a flatter, smoother texture than sandstone, presenting a dark charcoal color that coordinates wonderfully with borders a",
+      "variant_group_id": "prod-14",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-14-var-2",
+      "name": "Kota Black Limestone Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "kota-black-limestone-900x600mm-pack-30-pieces-single-size",
+      "category": "Limestone",
+      "price": 289,
+      "stock": 26,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Kota Black Limestone features a flatter, smoother texture than sandstone, presenting a dark charcoal color that coordinates wonderfully with borders and green garden shrubbery. Imported from the highest quality limestone beds in India.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ls_Blacklimestone_02-300x340.jpg"
+      ],
+      "is_featured": true,
+      "stars": 4.7,
+      "seo_title": "Kota Black Limestone Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Kota Black Limestone features a flatter, smoother texture than sandstone, presenting a dark charcoal color that coordinates wonderfully with borders a",
+      "variant_group_id": "prod-14",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-15-var-1",
+      "name": "Kota Blue Limestone Paving - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "kota-blue-project-pack-60-pieces-mixed-sizes",
+      "category": "Limestone",
+      "price": 310,
+      "stock": 14,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Kota Blue Limestone displays subtle blue-grey hues with steel undertones. The surface is exceptionally flat and hard-wearing, offering a premium flagstone appearance suitable for extensive paving layouts.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/KB-Limestone-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Kota Blue Limestone Paving (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Kota Blue Limestone displays subtle blue-grey hues with steel undertones. The surface is exceptionally flat and hard-wearing, offering a premium flags",
+      "variant_group_id": "prod-15",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-15-var-2",
+      "name": "Kota Blue Limestone Paving - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "kota-blue-900x600mm-pack-30-pieces-single-size",
+      "category": "Limestone",
+      "price": 290,
+      "stock": 20,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Kota Blue Limestone displays subtle blue-grey hues with steel undertones. The surface is exceptionally flat and hard-wearing, offering a premium flagstone appearance suitable for extensive paving layouts.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/KB-Limestone-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Kota Blue Limestone Paving (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Kota Blue Limestone displays subtle blue-grey hues with steel undertones. The surface is exceptionally flat and hard-wearing, offering a premium flags",
+      "variant_group_id": "prod-15",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-16-var-1",
+      "name": "Kurnool Grey Limestone - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "kurnool-grey-project-pack-60-pieces-mixed-sizes",
+      "category": "Limestone",
+      "price": 315,
+      "stock": 5,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Kurnool Grey Limestone displays deep grey tones with a natural hand-split surface. Very dense and durable, it holds its slate-like color excellently and has a slightly textured feel that provides superb slip resistance.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ls_kurnoolgrey_06-300x225.jpg"
+      ],
+      "is_featured": false,
+      "stars": 4.5,
+      "seo_title": "Kurnool Grey Limestone (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Kurnool Grey Limestone displays deep grey tones with a natural hand-split surface. Very dense and durable, it holds its slate-like color excellently a",
+      "variant_group_id": "prod-16",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-16-var-2",
+      "name": "Kurnool Grey Limestone - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "kurnool-grey-900x600mm-pack-30-pieces-single-size",
+      "category": "Limestone",
+      "price": 295,
+      "stock": 8,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Kurnool Grey Limestone displays deep grey tones with a natural hand-split surface. Very dense and durable, it holds its slate-like color excellently and has a slightly textured feel that provides superb slip resistance.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ls_kurnoolgrey_06-300x225.jpg"
+      ],
+      "is_featured": false,
+      "stars": 4.5,
+      "seo_title": "Kurnool Grey Limestone (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Kurnool Grey Limestone displays deep grey tones with a natural hand-split surface. Very dense and durable, it holds its slate-like color excellently a",
+      "variant_group_id": "prod-16",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-17-var-1",
+      "name": "Mint Indian Sandstone Paving - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "mint-project-pack-60-pieces-mixed-sizes",
+      "category": "Sandstone",
+      "price": 299,
+      "stock": 22,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Mint Indian Sandstone is renowned for its rich cream, ivory, buff, and amber tones, with beautiful natural fossil patterns. It provides a warm, sunny aesthetic to dark gardens or north-facing patios.",
+      "images": [
+        "/images/mint-sandstone-900x600.png"
       ],
       "is_featured": false,
       "stars": 4.8,
-      "variant_group_id": "quartz-white-porcelain"
+      "seo_title": "Mint Indian Sandstone Paving (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Mint Indian Sandstone is renowned for its rich cream, ivory, buff, and amber tones, with beautiful natural fossil patterns. It provides a warm, sunny ",
+      "variant_group_id": "prod-17",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-17-var-2",
+      "name": "Mint Indian Sandstone Paving - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "mint-900x600mm-pack-30-pieces-single-size",
+      "category": "Sandstone",
+      "price": 288,
+      "stock": 17,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Mint Indian Sandstone is renowned for its rich cream, ivory, buff, and amber tones, with beautiful natural fossil patterns. It provides a warm, sunny aesthetic to dark gardens or north-facing patios.",
+      "images": [
+        "/images/mint-sandstone-900x600.png"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Mint Indian Sandstone Paving (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Mint Indian Sandstone is renowned for its rich cream, ivory, buff, and amber tones, with beautiful natural fossil patterns. It provides a warm, sunny ",
+      "variant_group_id": "prod-17",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-18-var-1",
+      "name": "Mountain White Porcelain Paving Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "mountain-white-porcelain-paving-slabs-900x600mm-pack-30-pieces-single-size",
+      "category": "Porcelain",
+      "price": 349,
+      "stock": 15,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Mountain White Porcelain paving slabs bring crisp, luminous bright white tones to gardens and patios. These high-grade ceramic tiles reflect light beautifully and possess an R11 anti-slip safety rating.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/MW-Porc-Tiles-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "seo_title": "Mountain White Porcelain Paving Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Mountain White Porcelain paving slabs bring crisp, luminous bright white tones to gardens and patios. These high-grade ceramic tiles reflect light bea",
+      "variant_group_id": "prod-18",
+      "created_at": "2026-07-01T17:13:42.530Z"
     },
     {
       "id": "prod-19-var-1",
-      "name": "Persia Beige Porcelain Paving Slabs",
-      "slug": "persia-beige-porcelain-paving-slabs-900x600mm",
+      "name": "Persia Beige Porcelain Paving Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "persia-beige-porcelain-paving-slabs-900x600mm-pack-30-pieces-single-size",
       "category": "Porcelain",
-      "description": "Sleek beige-toned porcelain slabs with highly detailed stone-vein finishes. High load capacity, frost resistant, and moss proof.",
       "price": 373,
-      "stock": 3,
-      "size": "900x600x20mm (Single Size) - Covers 21.3m²",
+      "stock": 20,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Persia Beige Porcelain slabs represent the height of outdoor luxury. Emulating premium ivory travertine with warm cream hues, it provides a bright, sprawling Mediterranean look for residential garden patios.",
       "images": [
         "https://jmdglobalstones.co.uk/wp-content/uploads/2026/06/Persia-Beige05-300x200.jpg"
       ],
       "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "Persia Beige Porcelain Paving Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Persia Beige Porcelain slabs represent the height of outdoor luxury. Emulating premium ivory travertine with warm cream hues, it provides a bright, sp",
+      "variant_group_id": "prod-19",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-20-var-1",
+      "name": "Plain Yellow Bricks - Pallet of 400 Pieces",
+      "slug": "plain-yellow-bricks-pallet-of-400-pieces",
+      "category": "Bricks",
+      "price": 250,
+      "stock": 14,
+      "size": "Pallet of 400 Pieces",
+      "description": "Traditional London Stock-style Plain Yellow bricks are designed for building characterful garden walls, borders, and decorative features. Authentic textures and color consistency make this a classic choice.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/PY-Bricks-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.3,
+      "seo_title": "Plain Yellow Bricks (Pallet of 400 Pieces) | JMD Global Stones",
+      "seo_description": "Traditional London Stock-style Plain Yellow bricks are designed for building characterful garden walls, borders, and decorative features. Authentic te",
+      "variant_group_id": "prod-20",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-21-var-1",
+      "name": "Quartz Light Grey Porcelain - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "quartz-light-grey-900x600mm-pack-30-pieces-single-size",
+      "category": "Porcelain",
+      "price": 373,
+      "stock": 32,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Quartz Light Grey Porcelain paving slabs mimic the speckled aggregate texture of natural granite. Stain-proof, scratch-resistant, and offering exceptional slip resistance, this paving is built to survive heavy footfall.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/QLG-Porc-Tiles-300x300.png"
+      ],
+      "is_featured": false,
       "stars": 4.8,
-      "variant_group_id": "persia-beige-porcelain"
+      "seo_title": "Quartz Light Grey Porcelain (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Quartz Light Grey Porcelain paving slabs mimic the speckled aggregate texture of natural granite. Stain-proof, scratch-resistant, and offering excepti",
+      "variant_group_id": "prod-21",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-22-var-1",
+      "name": "Quartz White Porcelain Paving - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "quartz-white-porcelain-paving-900x600mm-pack-30-pieces-single-size",
+      "category": "Porcelain",
+      "price": 373,
+      "stock": 18,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Quartz White Porcelain provides a pristine, high-brightness paving surface. Exhibiting extremely subtle grey speckles, it is the perfect flooring choice for high-contrast architectural patio spaces.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2025/07/Quartz-White-Porcelain-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Quartz White Porcelain Paving (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Quartz White Porcelain provides a pristine, high-brightness paving surface. Exhibiting extremely subtle grey speckles, it is the perfect flooring choi",
+      "variant_group_id": "prod-22",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-23-var-1",
+      "name": "Raj Green Indian Sandstone Paving - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "raj-green-indian-sandstone-paving-project-pack-60-pieces-mixed-sizes",
+      "category": "Sandstone",
+      "price": 292,
+      "stock": 45,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust paving handles wet conditions excellently and ages beautifully over time.",
+      "images": [
+        "/images/raj-green-900x600.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "Raj Green Indian Sandstone Paving (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust pavi",
+      "variant_group_id": "prod-23",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-23-var-2",
+      "name": "Raj Green Indian Sandstone Paving - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "raj-green-indian-sandstone-paving-900x600mm-pack-30-pieces-single-size",
+      "category": "Sandstone",
+      "price": 279,
+      "stock": 30,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust paving handles wet conditions excellently and ages beautifully over time.",
+      "images": [
+        "/images/raj-green-900x600.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "Raj Green Indian Sandstone Paving (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust pavi",
+      "variant_group_id": "prod-23",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-24-var-1",
+      "name": "Rippon Buff Indian Sandstone Paving - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "rippon-buff-indian-sandstone-paving-project-pack-60-pieces-mixed-sizes",
+      "category": "Sandstone",
+      "price": 292,
+      "stock": 35,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut, split finish that catches the light wonderfully.",
+      "images": [
+        "/images/rippon-buff-900x600.png"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Rippon Buff Indian Sandstone Paving (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut,",
+      "variant_group_id": "prod-24",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-24-var-2",
+      "name": "Rippon Buff Indian Sandstone Paving - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "rippon-buff-indian-sandstone-paving-900x600mm-pack-30-pieces-single-size",
+      "category": "Sandstone",
+      "price": 279,
+      "stock": 21,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut, split finish that catches the light wonderfully.",
+      "images": [
+        "/images/rippon-buff-900x600.png"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Rippon Buff Indian Sandstone Paving (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut,",
+      "variant_group_id": "prod-24",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-25-var-1",
+      "name": "Smeed Dean Yellow Bricks - Pallet of 400 Pieces",
+      "slug": "smeed-dean-yellow-pallet-of-400-pieces",
+      "category": "Bricks",
+      "price": 270,
+      "stock": 12,
+      "size": "Pallet of 400 Pieces",
+      "description": "Premium JMD Smeed Dean Yellow bricks replicate standard Kent stock bricks. Their distinctive yellow tint and slightly weathered face make them great for restoration work or character-rich garden partitions.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/SMDY-Bricks-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "seo_title": "Smeed Dean Yellow Bricks (Pallet of 400 Pieces) | JMD Global Stones",
+      "seo_description": "Premium JMD Smeed Dean Yellow bricks replicate standard Kent stock bricks. Their distinctive yellow tint and slightly weathered face make them great f",
+      "variant_group_id": "prod-25",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-26-var-1",
+      "name": "Smeed Dean Yellow Multi Bricks - Pallet of 400 Pieces",
+      "slug": "smeed-dean-yellow-multi-pallet-of-400-pieces",
+      "category": "Bricks",
+      "price": 280,
+      "stock": 15,
+      "size": "Pallet of 400 Pieces",
+      "description": "JMD Smeed Dean Yellow Multi bricks introduce varying dark soot marks and red/orange blend faces to create a highly varied rustic texture. Ideal for feature brickwork and classic masonry details.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/SMDYM-Bricks-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.5,
+      "seo_title": "Smeed Dean Yellow Multi Bricks (Pallet of 400 Pieces) | JMD Global Stones",
+      "seo_description": "JMD Smeed Dean Yellow Multi bricks introduce varying dark soot marks and red/orange blend faces to create a highly varied rustic texture. Ideal for fe",
+      "variant_group_id": "prod-26",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-27-var-1",
+      "name": "Soft Red Bricks - Pallet of 400 Pieces",
+      "slug": "soft-red-bricks-pallet-of-400-pieces",
+      "category": "Bricks",
+      "price": 260,
+      "stock": 11,
+      "size": "Pallet of 400 Pieces",
+      "description": "Traditional Soft Red facing bricks display a rich reddish-orange shade. Perfect for classic cottage-style walling, chimney updates, or edging paths to provide warmth and vintage architectural details.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/SR-Bricks-1-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.4,
+      "seo_title": "Soft Red Bricks (Pallet of 400 Pieces) | JMD Global Stones",
+      "seo_description": "Traditional Soft Red facing bricks display a rich reddish-orange shade. Perfect for classic cottage-style walling, chimney updates, or edging paths to",
+      "variant_group_id": "prod-27",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-28-var-1",
+      "name": "Stretcher Plinths Bricks - Pallet of 200 Pieces",
+      "slug": "stretcher-plinths-pallet-of-200-pieces",
+      "category": "Bricks",
+      "price": 265,
+      "stock": 8,
+      "size": "Pallet of 200 Pieces",
+      "description": "Premium Stretcher Plinths bricks feature a beautiful chamfered edge designed for creating architectural steps, transitions, plinths, and wall base capping. Highly durable and matching JMD classic ranges.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/SP-Bricks-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.3,
+      "seo_title": "Stretcher Plinths Bricks (Pallet of 200 Pieces) | JMD Global Stones",
+      "seo_description": "Premium Stretcher Plinths bricks feature a beautiful chamfered edge designed for creating architectural steps, transitions, plinths, and wall base cap",
+      "variant_group_id": "prod-28",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-29-var-1",
+      "name": "Tandoor Blue Limestone Slabs - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "tandoor-blue-project-pack-60-pieces-mixed-sizes",
+      "category": "Limestone",
+      "price": 300,
+      "stock": 15,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Tandoor Blue Limestone is a classic flat limestone that provides a clean, contemporary slate-like look. Beautiful grey-blue tones stand out elegantly and remain durable under all weather conditions.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/TB-Limestone-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "seo_title": "Tandoor Blue Limestone Slabs (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Tandoor Blue Limestone is a classic flat limestone that provides a clean, contemporary slate-like look. Beautiful grey-blue tones stand out elegantly ",
+      "variant_group_id": "prod-29",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-29-var-2",
+      "name": "Tandoor Blue Limestone Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "tandoor-blue-900x600mm-pack-30-pieces-single-size",
+      "category": "Limestone",
+      "price": 285,
+      "stock": 22,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Tandoor Blue Limestone is a classic flat limestone that provides a clean, contemporary slate-like look. Beautiful grey-blue tones stand out elegantly and remain durable under all weather conditions.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/TB-Limestone-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "seo_title": "Tandoor Blue Limestone Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Tandoor Blue Limestone is a classic flat limestone that provides a clean, contemporary slate-like look. Beautiful grey-blue tones stand out elegantly ",
+      "variant_group_id": "prod-29",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-30-var-1",
+      "name": "Tandoor Yellow Limestone Slabs - Project Pack 60 Pieces (Mixed Sizes)",
+      "slug": "tandoor-yellow-project-pack-60-pieces-mixed-sizes",
+      "category": "Limestone",
+      "price": 310,
+      "stock": 16,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Tandoor Yellow Limestone displays warm golden-buff and earthy beige hues. With sawn edges and a flat hand-cut surface, it gives paths and patios a natural warmth that blends perfectly into garden greenery.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/TY-Limestone-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Tandoor Yellow Limestone Slabs (Project Pack 60 Pieces (Mixed Sizes)) | JMD Global Stones",
+      "seo_description": "Tandoor Yellow Limestone displays warm golden-buff and earthy beige hues. With sawn edges and a flat hand-cut surface, it gives paths and patios a nat",
+      "variant_group_id": "prod-30",
+      "created_at": "2026-07-01T17:13:42.530Z"
+    },
+    {
+      "id": "prod-30-var-2",
+      "name": "Tandoor Yellow Limestone Slabs - 900x600mm Pack 30 Pieces (Single Size)",
+      "slug": "tandoor-yellow-900x600mm-pack-30-pieces-single-size",
+      "category": "Limestone",
+      "price": 290,
+      "stock": 20,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Tandoor Yellow Limestone displays warm golden-buff and earthy beige hues. With sawn edges and a flat hand-cut surface, it gives paths and patios a natural warmth that blends perfectly into garden greenery.",
+      "images": [
+        "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/TY-Limestone-300x300.png"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Tandoor Yellow Limestone Slabs (900x600mm Pack 30 Pieces (Single Size)) | JMD Global Stones",
+      "seo_description": "Tandoor Yellow Limestone displays warm golden-buff and earthy beige hues. With sawn edges and a flat hand-cut surface, it gives paths and patios a nat",
+      "variant_group_id": "prod-30",
+      "created_at": "2026-07-01T17:13:42.530Z"
     }
   ],
   "orders": [],
