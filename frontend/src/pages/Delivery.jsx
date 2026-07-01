@@ -13,34 +13,36 @@ export default function Delivery() {
     <div style={{ backgroundColor: 'var(--bg-light)', padding: '0.75rem 0 6rem 0', minHeight: '100vh' }}>
       <div className="container">
         
-        {/* Header */}
-        <div style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '2rem' }}>
-          <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.15em' }}>Logistics & Carriage</span>
-          <h1 style={{ fontSize: '3.6rem', fontFamily: 'var(--font-heading)', marginTop: '0.75rem', marginBottom: '1.5rem', fontWeight: 400, lineHeight: 1.1 }}>
-            Delivery Guidelines & Logistics
-          </h1>
-          <p style={{ color: 'var(--text-muted-on-light)', fontSize: '1.15rem', maxWidth: '800px', lineHeight: 1.75 }}>
-            To ensure the safe arrival of your natural stone or vitrified porcelain, please review our heavy goods vehicle (HGV) delivery rules. All paving packages are dispatched in crates and calculated dynamically based on your postal code zone during checkout.
-          </p>
-        </div>
-
-        {/* Timeline Banner */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2.5rem', backgroundColor: '#FFFFFF', padding: '3rem 2.5rem', border: '1px solid var(--color-border-light)', marginBottom: '3rem', textAlign: 'center' }} className="delivery-timeline-grid">
+        {/* Header & Stats Banner */}
+        <div className="delivery-header-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '3rem', alignItems: 'center', marginBottom: '3rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '2.5rem' }}>
           <div>
-            <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.5rem' }}>Carriage Rate</h4>
-            <p style={{ fontSize: '1.8rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)' }}>Variable Rate</p>
+            <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.15em' }}>Logistics & Carriage</span>
+            <h1 style={{ fontSize: '3rem', fontFamily: 'var(--font-heading)', marginTop: '0.5rem', marginBottom: '1rem', fontWeight: 400, lineHeight: 1.1 }}>
+              Delivery Guidelines & Logistics
+            </h1>
+            <p style={{ color: 'var(--text-muted-on-light)', fontSize: '1rem', lineHeight: 1.65, margin: 0 }}>
+              To ensure the safe arrival of your natural stone or vitrified porcelain, please review our heavy goods vehicle (HGV) delivery rules. All paving packages are dispatched in crates and calculated dynamically based on your postal code zone during checkout.
+            </p>
           </div>
-          <div style={{ borderLeft: '1px solid var(--color-border-light)' }}>
-            <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.5rem' }}>Dispatch Timeline</h4>
-            <p style={{ fontSize: '1.8rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)' }}>3–5 Working Days</p>
-          </div>
-          <div style={{ borderLeft: '1px solid var(--color-border-light)' }}>
-            <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.5rem' }}>Service Type</h4>
-            <p style={{ fontSize: '1.8rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)' }}>Kerbside Drop Only</p>
-          </div>
-          <div style={{ borderLeft: '1px solid var(--color-border-light)' }}>
-            <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.5rem' }}>Standard Fleet</h4>
-            <p style={{ fontSize: '1.8rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)' }}>18–28t Tail-Lift HGV</p>
+
+          {/* Stats Box */}
+          <div style={{ backgroundColor: '#FFFFFF', padding: '1.5rem 2rem', border: '1px solid var(--color-border-light)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            <div style={{ paddingBottom: '0.75rem', borderBottom: '1px solid var(--color-border-light)' }}>
+              <h4 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.25rem' }}>Carriage Rate</h4>
+              <p style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)', margin: 0 }}>Variable Rate</p>
+            </div>
+            <div style={{ paddingBottom: '0.75rem', borderBottom: '1px solid var(--color-border-light)' }}>
+              <h4 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.25rem' }}>Dispatch Timeline</h4>
+              <p style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)', margin: 0 }}>3–5 Working Days</p>
+            </div>
+            <div>
+              <h4 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.25rem' }}>Service Type</h4>
+              <p style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)', margin: 0 }}>Kerbside Only</p>
+            </div>
+            <div>
+              <h4 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.25rem' }}>Standard Fleet</h4>
+              <p style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)', margin: 0 }}>Tail-Lift HGV</p>
+            </div>
           </div>
         </div>
 
@@ -153,6 +155,7 @@ export default function Delivery() {
 
       <style>{`
         @media (max-width: 1200px) {
+          .delivery-header-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
           .delivery-timeline-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 1.5rem !important; }
           .delivery-timeline-grid > div { border-left: none !important; border-bottom: 1px solid var(--color-border-light); padding-bottom: 1rem; }
           .delivery-timeline-grid > div:nth-child(3), .delivery-timeline-grid > div:nth-child(4) { border-bottom: none; }

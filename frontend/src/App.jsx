@@ -429,7 +429,7 @@ function AppContent() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '0.85rem', color: 'var(--text-muted-on-dark)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                   <Phone size={16} style={{ color: 'var(--color-accent)' }} />
-                  <span>07450148506</span>
+                  <span>07458148586</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                   <Mail size={16} style={{ color: 'var(--color-accent)' }} />
