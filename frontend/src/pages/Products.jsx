@@ -296,20 +296,7 @@ export default function Products() {
           {/* Catalog Listing */}
           <div>
             
-            {/* Sort Toolbar */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', alignItems: 'center', marginBottom: '2.5rem', padding: '1rem 1.5rem', border: '1px solid var(--color-border-light)' }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted-on-light)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sort By:</span>
-              <select 
-                value={sortBy} 
-                onChange={(e) => setSortBy(e.target.value)}
-                style={{ border: '1px solid var(--color-border-light)', padding: '0.5rem 2rem 0.5rem 0.75rem', backgroundColor: 'transparent', fontSize: '0.85rem', cursor: 'pointer', outline: 'none' }}
-              >
-                <option value="popularity">Popularity / Stars</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="name-asc">Alphabetical (A-Z)</option>
-              </select>
-            </div>
+
 
             {/* Product Grid - Asymmetric Layout styling */}
             {filteredProducts.length === 0 ? (
