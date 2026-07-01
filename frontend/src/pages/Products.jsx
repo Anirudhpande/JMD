@@ -213,7 +213,7 @@ export default function Products() {
         <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '3.5rem' }} className="catalog-layout">
           
           {/* Sidebar Filters */}
-          <aside style={{ border: '1px solid var(--color-border-light)', padding: '2.5rem 2rem', height: 'fit-content', backgroundColor: 'transparent' }}>
+          <aside style={{ border: '1px solid var(--color-border-light)', padding: '2.5rem 2rem', height: 'fit-content', backgroundColor: 'transparent', position: 'sticky', top: '115px', alignSelf: 'start' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '2.25rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '1rem' }}>
               <SlidersHorizontal size={16} style={{ color: 'var(--color-accent)' }} />
               <h3 style={{ textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.1em', fontWeight: 600 }}>Filter Slabs</h3>

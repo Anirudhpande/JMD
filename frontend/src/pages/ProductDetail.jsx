@@ -284,7 +284,7 @@ export default function ProductDetail({ addToCart }) {
         <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '5rem', marginBottom: '6rem' }} className="detail-layout">
           
           {/* Gallery Column */}
-          <div>
+          <div style={{ position: 'sticky', top: '115px', alignSelf: 'start' }}>
             <div style={{ width: '100%', aspectRatio: '1.1', backgroundColor: '#EBE4D9', border: '1px solid var(--color-border-light)', marginBottom: '1.25rem', overflow: 'hidden' }}>
               <img 
                 src={product.images[activeImageIdx]} 
