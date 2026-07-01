@@ -268,13 +268,13 @@ export default function Home({ addToCart }) {
                     border: isActive ? '1px solid #111' : '1px solid #E0D9CE',
                     transition: 'all 0.3s ease', 
                     width: '390px',
-                    height: '435px',
+                    height: 'auto',
                     position: 'relative'
                   }}
                   className="cat-large-card"
                 >
-                  <div style={{ width: '100%', height: '255px', overflow: 'hidden', backgroundColor: isActive ? '#222' : '#F5F0E8', border: '1px solid #ECE6DB' }}>
-                    <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} className="cat-card-img" />
+                  <div style={{ width: '100%', aspectRatio: '1', overflow: 'hidden', backgroundColor: isActive ? '#222' : '#F5F0E8', border: '1px solid #ECE6DB' }}>
+                    <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'contain', transition: 'transform 0.5s ease' }} className="cat-card-img" />
                   </div>
                   <div style={{ textAlign: 'center', marginTop: '0.75rem' }}>
                     <span style={{ fontSize: '1.25rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: isActive ? '#C9A96E' : '#111', display: 'block' }}>{cat.label}</span>
