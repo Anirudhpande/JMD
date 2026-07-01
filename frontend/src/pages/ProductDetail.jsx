@@ -244,7 +244,7 @@ export default function ProductDetail({ addToCart }) {
   const otherSizes = groupVariants.filter(v => v.id !== product.id);
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-light)', padding: '5rem 0', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: 'var(--bg-light)', padding: '2.5rem 0 5rem 0', minHeight: '100vh' }}>
       
       {/* Dynamic SEO JSON-LD block */}
       <script type="application/ld+json">

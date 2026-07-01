@@ -196,11 +196,11 @@ export default function Products() {
   }
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-light)', minHeight: '100vh', padding: '6rem 0' }}>
+    <div style={{ backgroundColor: 'var(--bg-light)', minHeight: '100vh', padding: '2.5rem 0 6rem 0' }}>
       <div className="container">
         
         {/* Page Title */}
-        <div style={{ marginBottom: '4rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '2rem' }}>
+        <div style={{ marginBottom: '2rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '2rem' }}>
           <h1 style={{ fontSize: '3rem', fontFamily: 'var(--font-heading)', fontWeight: 400, color: 'var(--text-on-light)' }}>
             Premium Architectural Materials
           </h1>
