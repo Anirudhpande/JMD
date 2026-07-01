@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Truck, ShieldCheck, Star, ArrowRight, ArrowLeft, ChevronRight, Package, Zap, Award, MessageSquare } from 'lucide-react';
+import { Truck, ShieldCheck, Star, ArrowRight, ArrowLeft, ChevronRight, Package, Zap, Award, MessageSquare, Check } from 'lucide-react';
 import { apiFetch } from '../api.js';
 import useSEO from '../hooks/useSEO.js';
 import ProductCardImage from '../components/ProductCardImage.jsx';
@@ -499,45 +499,172 @@ export default function Home({ addToCart }) {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }} className="gallery-grid">
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
+            
+            {/* Card 1: Speak to Team */}
+            <div style={{ position: 'relative', overflow: 'hidden', height: '420px', borderRadius: '4px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
               <img
                 src="/gallery-before-after.png"
-                alt="Garden patio transformation — before and after Indian Sandstone installation"
+                alt="Speak to our team"
                 loading="lazy"
-                style={{ width: '100%', height: '420px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
-                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
-                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.8s ease' }}
+                className="transform-card-bg"
               />
-              <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: 'rgba(0,0,0,0.7)', color: '#fff', padding: '0.4rem 1rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
-                Before → After
-              </div>
-              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem' }}>
-                <div style={{ backgroundColor: 'rgba(10,10,10,0.8)', padding: '1rem 1.25rem' }}>
-                  <p style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.15rem' }}>Sandstone Patio — Wirral</p>
-                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.73rem' }}>Raj Green Indian Sandstone, Mixed Size Patio Pack</p>
-                </div>
+              {/* Full overlay with dark overlay gradient */}
+              <div style={{ 
+                position: 'absolute', 
+                top: 0, 
+                left: 0, 
+                right: 0, 
+                bottom: 0, 
+                backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                padding: '2rem',
+                textAlign: 'center',
+                color: '#fff',
+                zIndex: 2
+              }}>
+                <h3 style={{ 
+                  fontFamily: 'var(--font-heading)', 
+                  fontSize: '1.9rem', 
+                  fontWeight: 400, 
+                  lineHeight: 1.35, 
+                  marginBottom: '1.5rem',
+                  maxWidth: '380px',
+                  color: '#fff'
+                }}>
+                  Speak to our friendly & knowledgeable team for
+                </h3>
+                
+                <ul style={{ 
+                  listStyle: 'none', 
+                  padding: 0, 
+                  margin: '0 0 2rem 0', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: '0.75rem',
+                  alignItems: 'flex-start',
+                  fontSize: '1rem',
+                  color: 'rgba(255, 255, 255, 0.9)'
+                }}>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Check size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} /> Phone Orders
+                  </li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Check size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} /> Pre-Sales Advice
+                  </li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Check size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} /> Customer Support
+                  </li>
+                </ul>
+
+                <a 
+                  href="tel:07458148586" 
+                  style={{ 
+                    display: 'inline-block',
+                    backgroundColor: 'var(--color-accent)', 
+                    color: '#000', 
+                    padding: '0.85rem 2.25rem', 
+                    borderRadius: '2px', 
+                    fontSize: '0.9rem', 
+                    fontWeight: 700, 
+                    textDecoration: 'none',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
+                  }}
+                  className="btn-hover-scale"
+                >
+                  07458148586 (Roopesh Kapur)
+                </a>
               </div>
             </div>
 
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
+            {/* Card 2: Delivery information & timelines */}
+            <div style={{ position: 'relative', overflow: 'hidden', height: '420px', borderRadius: '4px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
               <img
                 src="/gallery-porcelain.png"
-                alt="Luxury anthracite porcelain paving installation — modern British garden"
+                alt="Delivery information"
                 loading="lazy"
-                style={{ width: '100%', height: '420px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
-                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
-                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.8s ease' }}
+                className="transform-card-bg"
               />
-              <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: 'var(--color-accent)', color: '#000', padding: '0.4rem 1rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                Porcelain
-              </div>
-              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem' }}>
-                <div style={{ backgroundColor: 'rgba(10,10,10,0.8)', padding: '1rem 1.25rem' }}>
-                  <p style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.15rem' }}>County Anthracite — Southampton</p>
-                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.73rem' }}>Large Format Porcelain, 900×600mm</p>
-                </div>
+              {/* Full overlay with dark overlay gradient */}
+              <div style={{ 
+                position: 'absolute', 
+                top: 0, 
+                left: 0, 
+                right: 0, 
+                bottom: 0, 
+                backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                padding: '2rem',
+                textAlign: 'center',
+                color: '#fff',
+                zIndex: 2
+              }}>
+                <h3 style={{ 
+                  fontFamily: 'var(--font-heading)', 
+                  fontSize: '1.9rem', 
+                  fontWeight: 400, 
+                  lineHeight: 1.35, 
+                  marginBottom: '1.5rem',
+                  maxWidth: '380px',
+                  color: '#fff'
+                }}>
+                  Delivery information & timelines
+                </h3>
+                
+                <ul style={{ 
+                  listStyle: 'none', 
+                  padding: 0, 
+                  margin: '0 0 2rem 0', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: '0.75rem',
+                  alignItems: 'flex-start',
+                  fontSize: '1rem',
+                  color: 'rgba(255, 255, 255, 0.9)'
+                }}>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Check size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} /> Kerbside Delivery
+                  </li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Check size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} /> 3-5 Business Days
+                  </li>
+                </ul>
+
+                <Link 
+                  to="/delivery" 
+                  style={{ 
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    backgroundColor: 'var(--color-accent)', 
+                    color: '#000', 
+                    padding: '0.85rem 2.25rem', 
+                    borderRadius: '2px', 
+                    fontSize: '0.9rem', 
+                    fontWeight: 700, 
+                    textDecoration: 'none',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
+                  }}
+                  className="btn-hover-scale"
+                >
+                  Read More <ChevronRight size={16} />
+                </Link>
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -599,6 +726,18 @@ export default function Home({ addToCart }) {
         .promo-grid { grid-template-columns: 1.1fr 0.9fr; }
         .cat-scroll::-webkit-scrollbar { display: none; }
         .cat-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .gallery-grid > div:hover .transform-card-bg {
+          transform: scale(1.05);
+        }
+        .btn-hover-scale {
+          transition: all 0.3s ease !important;
+        }
+        .btn-hover-scale:hover {
+          background-color: #ffffff !important;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.45) !important;
+        }
         
         .cat-large-card:hover {
           border-color: var(--color-accent) !important;
