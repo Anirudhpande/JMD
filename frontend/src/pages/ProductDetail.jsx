@@ -768,12 +768,16 @@ export default function ProductDetail({ addToCart }) {
           width: 100%;
           height: 115px;
           overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #F8F5EF;
         }
         .sim-card-img {
-          padding: 10px;
+          padding: 6px;
           width: 100%;
-          height: 180px;
-          // object-fit: ;
+          height: 100%;
+          object-fit: contain;
           display: block;
           transition: transform 0.35s ease;
         }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Truck, ShieldCheck, Star, ArrowRight, ArrowLeft, ChevronRight, Package, Zap, Award } from 'lucide-react';
+import { Truck, ShieldCheck, Star, ArrowRight, ArrowLeft, ChevronRight, Package, Zap, Award, MessageSquare } from 'lucide-react';
 import { apiFetch } from '../api.js';
 import useSEO from '../hooks/useSEO.js';
 
@@ -57,7 +57,10 @@ export default function Home({ addToCart }) {
   const [heroIdx, setHeroIdx]               = useState(0);
   const [reviewIdx, setReviewIdx]           = useState(0);
   const [loading, setLoading]               = useState(true);
+  
   const heroTimer = useRef(null);
+  const productCarouselRef = useRef(null);
+  const isCarouselHovered = useRef(false);
 
   useSEO({
     title:       'Buy Paving Slabs UK | Indian Sandstone, Porcelain & Natural Stone | JMD Global Stones',
@@ -92,8 +95,36 @@ export default function Home({ addToCart }) {
     return () => clearInterval(t);
   }, []);
 
+  // Product Carousel Auto-Scroll Effect
+  useEffect(() => {
+    if (loading || allProducts.length === 0) return;
+
+    const scrollInterval = setInterval(() => {
+      const el = productCarouselRef.current;
+      if (!el || isCarouselHovered.current) return;
+
+      const cardWidth = 320 + 20; // card width + gap
+      const maxScroll = el.scrollWidth - el.clientWidth;
+
+      if (el.scrollLeft >= maxScroll - 5) {
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        el.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      }
+    }, 3000);
+
+    return () => clearInterval(scrollInterval);
+  }, [loading, allProducts, activeCategory]);
+
+  const scrollCarouselManual = (direction) => {
+    const el = productCarouselRef.current;
+    if (!el) return;
+    const cardWidth = 320 + 20;
+    el.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+  };
+
   const filteredProducts = activeCategory
-    ? allProducts.filter(p => p.category === activeCategory)
+    ? allProducts.filter(p => p.category.toLowerCase() === activeCategory)
     : allProducts;
 
   const slide = HERO_SLIDES[heroIdx];
@@ -117,7 +148,7 @@ export default function Home({ addToCart }) {
       ═══════════════════════════════════════════════════════ */}
       <section style={{ background: slide.bg, transition: 'background 0.8s ease', overflow: 'hidden', position: 'relative' }}>
 
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '500px', alignItems: 'center', gap: '2rem', padding: '4rem 2.5rem' }} className="container hero-grid">
+        <div className="container hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '500px', alignItems: 'center', gap: '2rem', padding: '4rem 2.5rem' }}>
 
           {/* LEFT — text */}
           <div style={{ zIndex: 2 }}>
@@ -213,18 +244,16 @@ export default function Home({ addToCart }) {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          BROWSE BY CATEGORY — pill cards with images
+          BROWSE BY CATEGORY — Large, premium category cards (200% size)
       ═══════════════════════════════════════════════════════ */}
-      <section style={{ backgroundColor: 'var(--bg-light)', padding: '4rem 0 2rem' }}>
+      <section style={{ backgroundColor: 'var(--bg-light)', padding: '5rem 0 3rem' }}>
         <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-            <div>
-              <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Collections</span>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.9rem', fontWeight: 400, marginTop: '0.25rem', color: '#111' }}>Browse by Category</h2>
-            </div>
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#C9A96E', fontWeight: 700 }}>Collections</span>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: 400, marginTop: '0.5rem', color: '#111' }}>Browse by Category</h2>
           </div>
 
-          <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '0.5rem' }} className="cat-scroll">
+          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             {CATEGORY_TABS.map(cat => {
               const isActive = activeCategory === cat.slug;
               return (
@@ -232,25 +261,33 @@ export default function Home({ addToCart }) {
                   key={cat.label}
                   onClick={() => setActiveCategory(cat.slug)}
                   style={{
-                    flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.65rem',
-                    padding: '1rem 1.5rem', cursor: 'pointer',
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem',
+                    padding: '2rem', cursor: 'pointer',
                     backgroundColor: isActive ? '#111' : '#fff',
                     border: isActive ? '1px solid #111' : '1px solid #E0D9CE',
-                    transition: 'all 0.25s', minWidth: '110px'
+                    transition: 'all 0.3s ease', 
+                    width: '260px',
+                    height: '290px',
+                    position: 'relative'
                   }}
+                  className="cat-large-card"
                 >
-                  <div style={{ width: '56px', height: '56px', overflow: 'hidden', backgroundColor: isActive ? '#333' : '#F5F0E8' }}>
-                    <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div style={{ width: '100%', height: '170px', overflow: 'hidden', backgroundColor: isActive ? '#222' : '#F5F0E8', border: '1px solid #ECE6DB' }}>
+                    <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} className="cat-card-img" />
                   </div>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: isActive ? '#C9A96E' : '#333' }}>{cat.label}</span>
-                  {cat.slug && (
-                    <span style={{ fontSize: '0.6rem', color: isActive ? '#aaa' : '#999' }}>
-                      {allProducts.filter(p => p.category === cat.label).length} items
-                    </span>
-                  )}
-                  {!cat.slug && (
-                    <span style={{ fontSize: '0.6rem', color: isActive ? '#aaa' : '#999' }}>{allProducts.length} items</span>
-                  )}
+                  <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
+                    <span style={{ fontSize: '1rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: isActive ? '#C9A96E' : '#111', display: 'block' }}>{cat.label}</span>
+                    {cat.slug && (
+                      <span style={{ fontSize: '0.7rem', color: isActive ? '#aaa' : '#777', marginTop: '0.2rem', display: 'block' }}>
+                        {allProducts.filter(p => p.category.toLowerCase() === cat.slug).length} Products Available
+                      </span>
+                    )}
+                    {!cat.slug && (
+                      <span style={{ fontSize: '0.7rem', color: isActive ? '#aaa' : '#777', marginTop: '0.2rem', display: 'block' }}>
+                        {allProducts.length} Products Available
+                      </span>
+                    )}
+                  </div>
                 </button>
               );
             })}
@@ -259,72 +296,77 @@ export default function Home({ addToCart }) {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          PROMO BANNER — feature a sandstone collection
+          PRODUCT CAROUSEL — Single Row with Autoscroll & Controls
       ═══════════════════════════════════════════════════════ */}
-      <section style={{ padding: '2rem 0' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', overflow: 'hidden', backgroundColor: '#1A1A1A', minHeight: '240px' }} className="promo-grid">
-            {/* Left text */}
-            <div style={{ padding: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <span style={{ fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#C9A96E', fontWeight: 700, marginBottom: '0.75rem', display: 'block' }}>Quarry Direct Offer</span>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.2rem', color: '#F5F0E8', fontWeight: 400, lineHeight: 1.15, marginBottom: '1rem' }}>
-                Authentic Indian<br />Sandstone Collection
-              </h2>
-              <p style={{ fontSize: '0.85rem', color: '#888', lineHeight: 1.6, marginBottom: '1.75rem', maxWidth: '360px' }}>
-                Sourced directly from our quarry partners in Rajasthan. Calibrated thickness. Riven surface. Ready from UK yard stock.
-              </p>
-              <Link
-                to="/products?category=sandstone"
-                style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#C9A96E', color: '#111', padding: '0.8rem 1.75rem', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'background 0.3s' }}
-                onMouseEnter={e => e.currentTarget.style.backgroundColor = '#B8965B'}
-                onMouseLeave={e => e.currentTarget.style.backgroundColor = '#C9A96E'}
-              >
-                Explore Sandstone <ArrowRight size={13} />
-              </Link>
-            </div>
-            {/* Right image */}
-            <div style={{ position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#111' }}>
-              <img
-                src="/images/autumn-brown-sandstone.png"
-                alt="Indian Sandstone collection"
-                style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '1rem', filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-          PRODUCT GRID — "Explore our Products"
-      ═══════════════════════════════════════════════════════ */}
-      <section style={{ backgroundColor: 'var(--bg-light)', padding: '3rem 0 6rem' }}>
-        <div className="container">
+      <section style={{ backgroundColor: 'var(--bg-light)', padding: '4rem 0 5rem' }}>
+        <div className="container" style={{ position: 'relative' }}>
+          
           {/* Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem' }}>
             <div>
-              <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Our Products</span>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.9rem', fontWeight: 400, marginTop: '0.25rem', color: '#111' }}>Explore Our Collection</h2>
+              <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Curated Paving</span>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.3rem', fontWeight: 400, marginTop: '0.25rem', color: '#111' }}>Featured Materials</h2>
             </div>
-            <Link to="/products" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#C9A96E', borderBottom: '1px solid #C9A96E', paddingBottom: '0.15rem' }}>
-              View All <ArrowRight size={12} />
-            </Link>
+            
+            {/* Carousel navigation controls */}
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button 
+                onClick={() => scrollCarouselManual(-1)}
+                style={{ width: '42px', height: '42px', border: '1px solid #D9D2C5', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', backgroundColor: '#fff', transition: 'all 0.25s' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = '#C9A96E'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = '#D9D2C5'}
+              >
+                <ArrowLeft size={16} />
+              </button>
+              <button 
+                onClick={() => scrollCarouselManual(1)}
+                style={{ width: '42px', height: '42px', border: '1px solid #D9D2C5', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', backgroundColor: '#fff', transition: 'all 0.25s' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = '#C9A96E'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = '#D9D2C5'}
+              >
+                <ArrowRight size={16} />
+              </button>
+            </div>
           </div>
 
-          {/* Grid */}
+          {/* Autoscrolling Row Wrapper */}
           {filteredProducts.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '5rem', color: '#aaa' }}>
+            <div style={{ textAlign: 'center', padding: '5rem', color: '#aaa', backgroundColor: '#fff', border: '1px solid #EDE7DC' }}>
               <Package size={36} style={{ opacity: 0.3, marginBottom: '1rem' }} />
               <p style={{ fontSize: '0.9rem' }}>No products in this category yet.</p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }} className="ecom-grid">
+            <div 
+              ref={productCarouselRef}
+              style={{ 
+                display: 'flex', 
+                gap: '20px', 
+                overflowX: 'auto', 
+                paddingBottom: '1rem',
+                scrollBehavior: 'smooth'
+              }}
+              className="cat-scroll"
+              onMouseEnter={() => isCarouselHovered.current = true}
+              onMouseLeave={() => isCarouselHovered.current = false}
+              onTouchStart={() => isCarouselHovered.current = true}
+              onTouchEnd={() => isCarouselHovered.current = false}
+            >
               {filteredProducts.map(prod => (
                 <div
                   key={prod.id}
-                  style={{ backgroundColor: '#fff', border: '1px solid #EDE7DC', display: 'flex', flexDirection: 'column', transition: 'all 0.3s', position: 'relative' }}
+                  style={{ 
+                    backgroundColor: '#fff', 
+                    border: '1px solid #EDE7DC', 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    transition: 'all 0.3s', 
+                    position: 'relative',
+                    width: '320px',
+                    flexShrink: 0
+                  }}
                   className="ecom-card"
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#C9A96E'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#EDE7DC'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = '#C9A96E'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = '#EDE7DC'}
                 >
                   {/* Badge */}
                   {prod.is_featured && (
@@ -350,10 +392,10 @@ export default function Home({ addToCart }) {
                   </Link>
 
                   {/* Info */}
-                  <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', flexGrow: 1 }}>
+                  <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', flexGrow: 1 }}>
                     <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#C9A96E', fontWeight: 700 }}>{prod.category}</span>
                     <Link to={`/products/${prod.slug}`}>
-                      <h3 style={{ fontSize: '0.88rem', fontWeight: 600, color: '#111', lineHeight: 1.35, minHeight: '2.5rem' }}>{prod.name}</h3>
+                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#111', lineHeight: 1.4, minHeight: '2.5rem' }}>{prod.name}</h3>
                     </Link>
 
                     {/* Stars */}
@@ -361,20 +403,20 @@ export default function Home({ addToCart }) {
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} size={11} fill={i < Math.floor(prod.stars) ? '#C9A96E' : 'none'} stroke={i < Math.floor(prod.stars) ? '#C9A96E' : '#ccc'} style={{ strokeWidth: 1.5 }} />
                       ))}
-                      <span style={{ fontSize: '0.62rem', color: '#999', marginLeft: '0.2rem' }}>{prod.stars}</span>
+                      <span style={{ fontSize: '0.65rem', color: '#999', marginLeft: '0.2rem' }}>{prod.stars}</span>
                     </div>
 
                     {/* Price */}
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
-                      <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)' }}>£{prod.price.toFixed(2)}</span>
-                      <span style={{ fontSize: '0.62rem', color: '#999' }}>ex. VAT</span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginTop: '0.25rem' }}>
+                      <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)' }}>£{prod.price.toFixed(2)}</span>
+                      <span style={{ fontSize: '0.65rem', color: '#999' }}>ex. VAT</span>
                     </div>
 
                     {/* Actions */}
-                    <div style={{ marginTop: 'auto', paddingTop: '0.75rem', display: 'flex', gap: '0.5rem' }}>
+                    <div style={{ marginTop: 'auto', paddingTop: '1rem', display: 'flex', gap: '0.5rem' }}>
                       <button
                         onClick={() => addToCart(prod, prod.size, 1, prod.price)}
-                        style={{ flexGrow: 1, backgroundColor: '#111', color: '#fff', padding: '0.7rem 0', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer', border: '1px solid #111', transition: 'all 0.25s' }}
+                        style={{ flexGrow: 1, backgroundColor: '#111', color: '#fff', padding: '0.75rem 0', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer', border: '1px solid #111', transition: 'all 0.25s' }}
                         onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#C9A96E'; e.currentTarget.style.borderColor = '#C9A96E'; e.currentTarget.style.color = '#111'; }}
                         onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#111'; e.currentTarget.style.borderColor = '#111'; e.currentTarget.style.color = '#fff'; }}
                       >
@@ -382,7 +424,7 @@ export default function Home({ addToCart }) {
                       </button>
                       <Link
                         to={`/products/${prod.slug}`}
-                        style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D9D2C5', color: '#555', transition: 'all 0.25s', flexShrink: 0 }}
+                        style={{ width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D9D2C5', color: '#555', transition: 'all 0.25s', flexShrink: 0 }}
                         title="View Details"
                         onMouseEnter={e => { e.currentTarget.style.borderColor = '#C9A96E'; e.currentTarget.style.color = '#C9A96E'; }}
                         onMouseLeave={e => { e.currentTarget.style.borderColor = '#D9D2C5'; e.currentTarget.style.color = '#555'; }}
@@ -395,26 +437,121 @@ export default function Home({ addToCart }) {
               ))}
             </div>
           )}
-
-          {/* View All CTA */}
-          {filteredProducts.length > 0 && (
-            <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
-              <Link
-                to={`/products${activeCategory ? `?category=${activeCategory.toLowerCase()}` : ''}`}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', border: '1px solid #111', color: '#111', padding: '0.9rem 2.75rem', fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s' }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#111'; e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#111'; }}
-              >
-                View All Products <ArrowRight size={14} />
-              </Link>
-            </div>
-          )}
         </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          CUSTOMER REVIEWS — light bg strip
+          AESTHETICS BELOW PRODUCTS: case studies, transformations, quotations, reviews
       ═══════════════════════════════════════════════════════ */}
+
+      {/* Aesthetic 1: Promotional Collection Banner */}
+      <section style={{ padding: '3rem 0' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', overflow: 'hidden', backgroundColor: '#1A1A1A', minHeight: '280px' }} className="promo-grid">
+            {/* Left text */}
+            <div style={{ padding: '3.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#C9A96E', fontWeight: 700, marginBottom: '0.75rem', display: 'block' }}>Quarry Direct Offer</span>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.4rem', color: '#F5F0E8', fontWeight: 400, lineHeight: 1.15, marginBottom: '1rem' }}>
+                Authentic Indian<br />Sandstone Collection
+              </h2>
+              <p style={{ fontSize: '0.9rem', color: '#888', lineHeight: 1.6, marginBottom: '2rem', maxWidth: '400px' }}>
+                Sourced directly from our quarry partners in Rajasthan. Calibrated thickness. Riven surface. Ready from UK yard stock.
+              </p>
+              <Link
+                to="/products?category=sandstone"
+                style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#C9A96E', color: '#111', padding: '0.85rem 2rem', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'background 0.3s' }}
+                onMouseEnter={e => e.currentTarget.style.backgroundColor = '#B8965B'}
+                onMouseLeave={e => e.currentTarget.style.backgroundColor = '#C9A96E'}
+              >
+                Explore Sandstone <ArrowRight size={13} />
+              </Link>
+            </div>
+            {/* Right image */}
+            <div style={{ position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#111' }}>
+              <img
+                src="/images/autumn-brown-sandstone.png"
+                alt="Indian Sandstone collection"
+                style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '2rem', filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Aesthetic 2: Before & After Garden Transformations */}
+      <section style={{ backgroundColor: 'var(--bg-dark)', padding: '6rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-accent)', marginBottom: '1rem' }}>
+              <span style={{ width: '2rem', height: '1px', backgroundColor: 'var(--color-accent)', display: 'inline-block' }} />
+              <span style={{ textTransform: 'uppercase', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.2em' }}>Installations</span>
+              <span style={{ width: '2rem', height: '1px', backgroundColor: 'var(--color-accent)', display: 'inline-block' }} />
+            </div>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.8rem', fontWeight: 400, color: 'var(--text-on-dark)', lineHeight: 1.2, marginBottom: '1rem' }}>
+              Real Transformations
+            </h2>
+            <p style={{ color: 'var(--text-muted-on-dark)', fontSize: '0.95rem', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>
+              See the difference premium stone makes. Customer installations across the UK.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }} className="gallery-grid">
+            <div style={{ position: 'relative', overflow: 'hidden' }}>
+              <img
+                src="/gallery-before-after.png"
+                alt="Garden patio transformation — before and after Indian Sandstone installation"
+                loading="lazy"
+                style={{ width: '100%', height: '420px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+              />
+              <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: 'rgba(0,0,0,0.7)', color: '#fff', padding: '0.4rem 1rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
+                Before → After
+              </div>
+              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem' }}>
+                <div style={{ backgroundColor: 'rgba(10,10,10,0.8)', padding: '1rem 1.25rem' }}>
+                  <p style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.15rem' }}>Sandstone Patio — Wirral</p>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.73rem' }}>Raj Green Indian Sandstone, Mixed Size Patio Pack</p>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ position: 'relative', overflow: 'hidden' }}>
+              <img
+                src="/gallery-porcelain.png"
+                alt="Luxury anthracite porcelain paving installation — modern British garden"
+                loading="lazy"
+                style={{ width: '100%', height: '420px', objectFit: 'cover', display: 'block', transition: 'transform 0.6s ease' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+              />
+              <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: 'var(--color-accent)', color: '#000', padding: '0.4rem 1rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                Porcelain
+              </div>
+              <div style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', right: '1.25rem' }}>
+                <div style={{ backgroundColor: 'rgba(10,10,10,0.8)', padding: '1rem 1.25rem' }}>
+                  <p style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.15rem' }}>County Anthracite — Southampton</p>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.73rem' }}>Large Format Porcelain, 900×600mm</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Aesthetic 3: Tactile Brand Heritage Quotation */}
+      <section style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '9rem 0', textAlign: 'center', borderTop: '1px solid var(--color-border-dark)', borderBottom: '1px solid var(--color-border-dark)' }}>
+        <div className="container" style={{ maxWidth: '900px' }}>
+          <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.15em', display: 'block', marginBottom: '2rem' }}>Material Heritage</span>
+          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '2.4rem', lineHeight: 1.6, fontStyle: 'italic', fontWeight: 300, color: 'var(--text-on-dark)' }}>
+            “Stone does not belong to the yard; it belongs to the landscape. We source natural sandstone and vitrified porcelain that possess a raw, enduring geology—crafted by nature to weather gracefully for generations.”
+          </p>
+          <div style={{ width: '60px', height: '1px', backgroundColor: 'var(--color-accent)', margin: '2.5rem auto 1.5rem auto' }}></div>
+          <p style={{ fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>JMD Global Stones</p>
+        </div>
+      </section>
+
+      {/* Aesthetic 4: Client Testimonials Carousel */}
       <section style={{ backgroundColor: '#fff', borderTop: '1px solid #E5E0D8', borderBottom: '1px solid #E5E0D8', padding: '5rem 0' }}>
         <div className="container" style={{ maxWidth: '720px', textAlign: 'center' }}>
           <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Client Testimonials</span>
@@ -434,9 +571,7 @@ export default function Home({ addToCart }) {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          NEWSLETTER
-      ═══════════════════════════════════════════════════════ */}
+      {/* Aesthetic 5: Newsletter Sign up */}
       <section style={{ backgroundColor: '#111', color: '#F5F0E8', padding: '5rem 0', textAlign: 'center', borderTop: '1px solid #2C2C2C' }}>
         <div className="container" style={{ maxWidth: '520px' }}>
           <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#C9A96E', fontWeight: 700 }}>Trade Registry</span>
@@ -459,19 +594,21 @@ export default function Home({ addToCart }) {
         }
         .hero-grid { grid-template-columns: 1fr 1fr; }
         .promo-grid { grid-template-columns: 1.1fr 0.9fr; }
-        .ecom-grid  { grid-template-columns: repeat(4, 1fr); }
         .cat-scroll::-webkit-scrollbar { display: none; }
         .cat-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-        @media (max-width: 1100px) {
-          .ecom-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        
+        .cat-large-card:hover {
+          border-color: var(--color-accent) !important;
+          transform: translateY(-4px);
         }
-        @media (max-width: 860px) {
+        .cat-large-card:hover .cat-card-img {
+          transform: scale(1.04);
+        }
+        
+        @media (max-width: 900px) {
           .hero-grid  { grid-template-columns: 1fr !important; min-height: auto !important; }
           .promo-grid { grid-template-columns: 1fr !important; }
-          .ecom-grid  { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        @media (max-width: 480px) {
-          .ecom-grid  { grid-template-columns: 1fr !important; }
+          .gallery-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
