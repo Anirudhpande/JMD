@@ -606,8 +606,6 @@ export default function Admin({ user, onLogout }) {
                             >
                               <option value="Sandstone">Sandstone</option>
                               <option value="Porcelain">Porcelain</option>
-                              <option value="Limestone">Limestone</option>
-                              <option value="Slate">Slate</option>
                               <option value="Bricks">Bricks</option>
                             </select>
                           </div>
