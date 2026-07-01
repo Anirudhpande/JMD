@@ -9,7 +9,7 @@ const products = [
     price: 279.00,
     description: "Premium Autumn Brown Indian Sandstone paving slabs are ideal for classic garden patios. Exhibiting warm brown tones mixed with hints of plum, grey, and ochre, this traditional paving stone provides a natural, hand-cut finish and calibrated thickness.",
     images: [
-      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/AB-Sandstone.png",
+      "/images/autumn-brown-900x600.png",
       "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-03.jpeg",
       "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-02.jpeg",
       "https://jmdglobalstones.co.uk/wp-content/uploads/2026/01/Autumn-Brown-01.jpeg"
@@ -63,7 +63,7 @@ const products = [
     price: 285.00,
     description: "Camel Dust Indian Sandstone is a uniquely colored paving slab featuring golden yellow, tan, creamy buff, and peach tones. Perfectly suited to the British climate, its robust structure and riven texture offer both durability and beauty.",
     images: [
-      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Camel-Dust-Sandstone-300x300.png"
+      "/images/camel-dust-900x600.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 299.00, stock: 8 },
@@ -196,7 +196,7 @@ const products = [
     price: 292.00,
     description: "Kandla Grey Sandstone is the most popular garden paving material in the UK. Featuring cool blue-grey tones, straight hand-cut edges, and a consistent riven surface, it creates a clean, elegant look that coordinates with any garden layout.",
     images: [
-      "https://jmdglobalstones.co.uk/wp-content/uploads/2025/01/KG-Sandstone-300x300.png"
+      "/images/kandla-grey-900x600.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 307.00, stock: 85 },
@@ -280,7 +280,7 @@ const products = [
     price: 288.00,
     description: "Mint Indian Sandstone is renowned for its rich cream, ivory, buff, and amber tones, with beautiful natural fossil patterns. It provides a warm, sunny aesthetic to dark gardens or north-facing patios.",
     images: [
-      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Mint-Sandstone-1-300x300.png"
+      "/images/mint-sandstone-900x600.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 299.00, stock: 22 },
@@ -377,7 +377,7 @@ const products = [
     price: 292.00,
     description: "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust paving handles wet conditions excellently and ages beautifully over time.",
     images: [
-      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/RG-Sandstone-300x300.png"
+      "/images/raj-green-900x600.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 292.00, stock: 45 },
@@ -394,7 +394,7 @@ const products = [
     price: 292.00,
     description: "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut, split finish that catches the light wonderfully.",
     images: [
-      "https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/ss_ripponbuff_01-300x300.png"
+      "/images/rippon-buff-900x600.png"
     ],
     variants: [
       { size: "Project Pack 60 Pieces (Mixed Sizes)", price: 292.00, stock: 35 },
