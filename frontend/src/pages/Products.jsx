@@ -196,7 +196,7 @@ export default function Products() {
   }
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-light)', minHeight: '100vh', padding: '2.5rem 0 6rem 0' }}>
+    <div style={{ backgroundColor: 'var(--bg-light)', minHeight: '100vh', padding: '0.5rem 0 6rem 0' }}>
       <div className="container">
         
         {/* Page Title */}
