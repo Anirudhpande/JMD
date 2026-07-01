@@ -6,10 +6,10 @@ import useSEO from '../hooks/useSEO.js';
 import ProductCardImage from '../components/ProductCardImage.jsx';
 
 const CATEGORY_TABS = [
-  { label: 'All',       slug: null,        img: '/images/raj-green-sandstone.png' },
-  { label: 'Sandstone', slug: 'sandstone', img: '/images/raj-green-sandstone.png' },
-  { label: 'Porcelain', slug: 'porcelain', img: '/images/county-anthracite.png'   },
-  { label: 'Bricks',    slug: 'bricks',    img: '/images/half-round-bricks.png'   },
+  { label: 'All',       slug: null,        img: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Kandla_Grey_Sandstone__Every_Home_Needs_It_for_Their_Floor.webp' },
+  { label: 'Sandstone', slug: 'sandstone', img: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Kandla_Grey_Sandstone__Every_Home_Needs_It_for_Their_Floor.webp' },
+  { label: 'Porcelain', slug: 'porcelain', img: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/smoke-grey-porcelain-600x900-1.jpg' },
+  { label: 'Bricks',    slug: 'bricks',    img: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Amazon-Black-Slate-Paving-Westminster-Stone-820x1024-1.avif' },
 ];
 
 // Hero slides — one per featured product concept
@@ -274,7 +274,7 @@ export default function Home({ addToCart }) {
                   className="cat-large-card"
                 >
                   <div style={{ width: '100%', aspectRatio: '1', overflow: 'hidden', backgroundColor: isActive ? '#222' : '#F5F0E8', border: '1px solid #ECE6DB' }}>
-                    <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'contain', transition: 'transform 0.5s ease' }} className="cat-card-img" />
+                    <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} className="cat-card-img" />
                   </div>
                   <div style={{ textAlign: 'center', marginTop: '0.75rem' }}>
                     <span style={{ fontSize: '1.25rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: isActive ? '#C9A96E' : '#111', display: 'block' }}>{cat.label}</span>
