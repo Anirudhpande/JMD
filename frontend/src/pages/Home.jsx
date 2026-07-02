@@ -236,8 +236,8 @@ export default function Home({ addToCart }) {
             <div key={t.label} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <div style={{ color: '#C9A96E' }}>{t.icon}</div>
               <div>
-                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#111', lineHeight: 1.2 }}>{t.label}</div>
-                <div style={{ fontSize: '0.68rem', color: '#888' }}>{t.sub}</div>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: '#111', lineHeight: 1.2 }}>{t.label}</div>
+                <div style={{ fontSize: '0.8rem', color: '#888' }}>{t.sub}</div>
               </div>
             </div>
           ))}
@@ -279,7 +279,7 @@ export default function Home({ addToCart }) {
                   <div style={{ textAlign: 'center', marginTop: '0.75rem' }}>
                     <span style={{ fontSize: '1.25rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: isActive ? '#C9A96E' : '#111', display: 'block' }}>{cat.label}</span>
                     {cat.slug && (
-                      <span style={{ fontSize: '0.85rem', color: isActive ? '#aaa' : '#777', marginTop: '0.4rem', display: 'block' }}>
+                      <span style={{ fontSize: '0.9rem', color: isActive ? '#aaa' : '#777', marginTop: '0.4rem', display: 'block' }}>
                         {allProducts.filter(p => p.category.toLowerCase() === cat.slug).length} Products Available
                       </span>
                     )}
@@ -398,7 +398,7 @@ export default function Home({ addToCart }) {
                   <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', flexGrow: 1 }}>
                     <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#C9A96E', fontWeight: 700 }}>{prod.category}</span>
                     <Link to={`/products/${prod.slug}`}>
-                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#111', lineHeight: 1.4, minHeight: '2.5rem' }}>{prod.name}</h3>
+                      <h3 style={{ fontSize: '1.4rem', fontWeight: 600, color: '#111', lineHeight: 1.4, minHeight: '2.5rem' }}>{prod.name}</h3>
                     </Link>
 
                     {/* Stars */}
@@ -450,7 +450,7 @@ export default function Home({ addToCart }) {
       {/* Aesthetic 1: Promotional Collection Banner */}
       <section style={{ padding: '3rem 0' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', overflow: 'hidden', backgroundColor: '#1A1A1A', minHeight: '280px' }} className="promo-grid">
+          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', overflow: 'hidden', backgroundColor: '#1a1a1a', minHeight: '260px' }} className="promo-grid">
             {/* Left text */}
             <div style={{ padding: '3.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#C9A96E', fontWeight: 700, marginBottom: '0.75rem', display: 'block' }}>Quarry Direct Offer</span>
@@ -482,7 +482,7 @@ export default function Home({ addToCart }) {
       </section>
 
       {/* Aesthetic 2: Before & After Garden Transformations */}
-      <section style={{ backgroundColor: 'var(--bg-dark)', padding: '6rem 0' , height: '895px' }}>
+      <section style={{ backgroundColor: 'var(--bg-dark)', padding: ' 6rem 0' , height: '895px'}}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-accent)', marginBottom: '1rem' }}>
@@ -673,15 +673,15 @@ export default function Home({ addToCart }) {
       {/* Aesthetic 4: Client Testimonials Carousel */}
       <section style={{ backgroundColor: '#fff', borderTop: '1px solid #E5E0D8', borderBottom: '1px solid #E5E0D8', padding: '3.5rem 0' }}>
         <div className="container" style={{ maxWidth: '720px', textAlign: 'center' }}>
-          <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Client Testimonials</span>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 400, marginTop: '0.4rem', marginBottom: '1.5rem', color: '#111' }}>What Our Clients Say</h2>
+          <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Client Testimonials</span>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 400, marginTop: '0.4rem', marginBottom: '1.5rem', color: '#111' }}>What Our Clients Say</h2>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '0.2rem', color: '#C9A96E', marginBottom: '1rem' }}>
             {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" style={{ strokeWidth: 1 }} />)}
           </div>
-          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', fontStyle: 'italic', fontWeight: 300, color: '#222', lineHeight: 1.5, marginBottom: '1.25rem' }}>
+          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.7rem', fontStyle: 'italic', fontWeight: 300, color: '#222', lineHeight: 1.5, marginBottom: '1.25rem' }}>
             "{reviews[reviewIdx].comment}"
           </p>
-          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>{reviews[reviewIdx].name}</span>
+          <span style={{ fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>{reviews[reviewIdx].name}</span>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
             {reviews.map((_, i) => (
               <button key={i} onClick={() => setReviewIdx(i)} style={{ width: i === reviewIdx ? '18px' : '6px', height: '6px', backgroundColor: i === reviewIdx ? '#111' : '#D9D2C5', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }} />

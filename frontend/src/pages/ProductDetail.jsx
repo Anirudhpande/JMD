@@ -303,7 +303,7 @@ export default function ProductDetail({ addToCart }) {
                     onClick={() => setActiveImageIdx(idx)}
                     style={{ width: '80px', height: '80px', flexShrink: 0, border: activeImageIdx === idx ? '1px solid var(--color-accent)' : '1px solid var(--color-border-light)', overflow: 'hidden', cursor: 'pointer', backgroundColor: 'transparent' }}
                   >
-                    <img src={img} alt={`${product.name} Thumb ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={img} alt={`${product.name} Thumb ${idx + 1}`} style={{ width: '80%', height: '80%', objectFit: 'cover' }} />
                   </button>
                 ))}
               </div>
