@@ -445,18 +445,7 @@ function AppContent() {
               
               {/* Social Media Row */}
               <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E5DDCF', color: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="footer-social-icon">
-                  <Facebook size={16} />
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E5DDCF', color: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="footer-social-icon">
-                  <Twitter size={16} />
-                </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E5DDCF', color: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="footer-social-icon">
-                  <Youtube size={16} />
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E5DDCF', color: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="footer-social-icon">
-                  <Linkedin size={16} />
-                </a>
+                
               </div>
             </div>
 
