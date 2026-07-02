@@ -106,12 +106,16 @@ export default function ProductDetail({ addToCart }) {
           .then(res => res.json())
           .then(allProducts => {
             let related = allProducts.filter(
-              p => p.category === data.category && p.slug !== data.slug && p.variant_group_id !== data.variant_group_id
+              p => p.category === data.category && 
+                   p.slug !== data.slug && 
+                   (!data.variant_group_id || p.variant_group_id !== data.variant_group_id)
             );
             
             if (related.length < 6) {
               const other = allProducts.filter(
-                p => p.category !== data.category && p.slug !== data.slug && p.variant_group_id !== data.variant_group_id
+                p => p.category !== data.category && 
+                     p.slug !== data.slug && 
+                     (!data.variant_group_id || p.variant_group_id !== data.variant_group_id)
               );
               related = [...related, ...other];
             }
@@ -422,9 +426,10 @@ export default function ProductDetail({ addToCart }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                   {groupVariants.map((v) => {
                     const isCurrent = v.id === product.id;
-                    const isMixed = v.size.toLowerCase().includes('mixed') || v.size.toLowerCase().includes('project pack');
+                    const sizeStr = v.size || '';
+                    const isMixed = sizeStr.toLowerCase().includes('mixed') || sizeStr.toLowerCase().includes('project pack');
                     const labelTitle = isMixed ? 'Project Pack (Mixed Sizes)' : '900x600mm (Single Size)';
-                    const covMatch = v.size.match(/Covers\s+([\d.]+)/i);
+                    const covMatch = sizeStr.match(/Covers\s+([\d.]+)/i);
                     const coverage = covMatch ? `${covMatch[1]} m²` : (isMixed ? '18.9 m²' : '17.0 m²');
                     
                     return (
