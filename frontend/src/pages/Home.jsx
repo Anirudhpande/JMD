@@ -670,47 +670,34 @@ export default function Home({ addToCart }) {
       </section>
 
       {/* Aesthetic 3: Tactile Brand Heritage Quotation */}
-      <section style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '9rem 0', textAlign: 'center', borderTop: '1px solid var(--color-border-dark)', borderBottom: '1px solid var(--color-border-dark)' }}>
+      <section style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '5rem 0', textAlign: 'center', borderTop: '1px solid var(--color-border-dark)', borderBottom: '1px solid var(--color-border-dark)' }}>
         <div className="container" style={{ maxWidth: '900px' }}>
-          <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.15em', display: 'block', marginBottom: '2rem' }}>Material Heritage</span>
-          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '2.4rem', lineHeight: 1.6, fontStyle: 'italic', fontWeight: 300, color: 'var(--text-on-dark)' }}>
+          <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.15em', display: 'block', marginBottom: '1rem' }}>Material Heritage</span>
+          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', lineHeight: 1.5, fontStyle: 'italic', fontWeight: 300, color: 'var(--text-on-dark)' }}>
             “Stone does not belong to the yard; it belongs to the landscape. We source natural sandstone and vitrified porcelain that possess a raw, enduring geology.”
           </p>
-          <div style={{ width: '60px', height: '1px', backgroundColor: 'var(--color-accent)', margin: '2.5rem auto 1.5rem auto' }}></div>
-          <p style={{ fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>JMD Global Stones</p>
+          <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--color-accent)', margin: '1.5rem auto 1rem auto' }}></div>
+          <p style={{ fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>JMD Global Stones</p>
         </div>
       </section>
 
       {/* Aesthetic 4: Client Testimonials Carousel */}
-      <section style={{ backgroundColor: '#fff', borderTop: '1px solid #E5E0D8', borderBottom: '1px solid #E5E0D8', padding: '5rem 0' }}>
+      <section style={{ backgroundColor: '#fff', borderTop: '1px solid #E5E0D8', borderBottom: '1px solid #E5E0D8', padding: '3.5rem 0' }}>
         <div className="container" style={{ maxWidth: '720px', textAlign: 'center' }}>
-          <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Client Testimonials</span>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 400, marginTop: '0.4rem', marginBottom: '3rem', color: '#111' }}>What Our Clients Say</h2>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.2rem', color: '#C9A96E', marginBottom: '1.25rem' }}>
-            {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" style={{ strokeWidth: 1 }} />)}
+          <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>Client Testimonials</span>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 400, marginTop: '0.4rem', marginBottom: '1.5rem', color: '#111' }}>What Our Clients Say</h2>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.2rem', color: '#C9A96E', marginBottom: '1rem' }}>
+            {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" style={{ strokeWidth: 1 }} />)}
           </div>
-          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontStyle: 'italic', fontWeight: 300, color: '#222', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', fontStyle: 'italic', fontWeight: 300, color: '#222', lineHeight: 1.5, marginBottom: '1.25rem' }}>
             "{reviews[reviewIdx].comment}"
           </p>
-          <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>{reviews[reviewIdx].name}</span>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '2rem' }}>
+          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#C9A96E', fontWeight: 700 }}>{reviews[reviewIdx].name}</span>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '1.25rem' }}>
             {reviews.map((_, i) => (
-              <button key={i} onClick={() => setReviewIdx(i)} style={{ width: i === reviewIdx ? '22px' : '7px', height: '7px', backgroundColor: i === reviewIdx ? '#111' : '#D9D2C5', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }} />
+              <button key={i} onClick={() => setReviewIdx(i)} style={{ width: i === reviewIdx ? '18px' : '6px', height: '6px', backgroundColor: i === reviewIdx ? '#111' : '#D9D2C5', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }} />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Aesthetic 5: Newsletter Sign up */}
-      <section style={{ backgroundColor: '#111', color: '#F5F0E8', padding: '5rem 0', textAlign: 'center', borderTop: '1px solid #2C2C2C' }}>
-        <div className="container" style={{ maxWidth: '520px' }}>
-          <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#C9A96E', fontWeight: 700 }}>Trade Registry</span>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 400, margin: '0.5rem 0 0.9rem', color: '#F5F0E8' }}>Get Stock Updates</h2>
-          <p style={{ fontSize: '0.85rem', color: '#888', marginBottom: '2rem', lineHeight: 1.6 }}>Container arrivals, new varieties and commercial pricing direct to your inbox.</p>
-          <form onSubmit={e => { e.preventDefault(); alert('Thank you for subscribing!'); }} style={{ display: 'flex', border: '1px solid #333' }}>
-            <input type="email" required placeholder="Your email address" style={{ flexGrow: 1, padding: '1rem 1.25rem', backgroundColor: '#1A1A1A', color: '#fff', borderRight: '1px solid #333', fontSize: '0.85rem' }} />
-            <button type="submit" style={{ whiteSpace: 'nowrap', border: 'none', padding: '0 1.75rem', backgroundColor: '#C9A96E', color: '#111', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', cursor: 'pointer' }}>Subscribe</button>
-          </form>
         </div>
       </section>
 

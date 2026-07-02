@@ -368,9 +368,9 @@ function AppContent() {
       </main>
 
       {/* Footer - Deep Charcoal with thin gold top border */}
-      <footer style={{ backgroundColor: '#2E3033', color: 'rgba(255,255,255,0.75)', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '5rem 0 3rem 0', marginTop: 'auto' }} className="no-print">
+      <footer style={{ backgroundColor: '#2E3033', color: 'rgba(255,255,255,0.75)', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '3rem 0 2rem 0', marginTop: 'auto' }} className="no-print">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 0.8fr 1.2fr 1.5fr', gap: '3.5rem' }} className="footer-grid">
+          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 0.8fr 1.2fr 1.5fr', gap: '2rem' }} className="footer-grid">
             
             {/* Col 1: Logo & Tagline */}
             <div>
@@ -463,7 +463,7 @@ function AppContent() {
           </div>
 
           {/* Bottom copyright row */}
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: '4rem', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: 'rgba(255,255,255,0.45)' }} className="footer-bottom">
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: '2rem', paddingTop: '1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: 'rgba(255,255,255,0.45)' }} className="footer-bottom">
             <span>copyright {new Date().getFullYear()} | JMD GLOBAL STONES PVT LTD</span>
             <span>Design & DEV By Deasy Solution</span>
           </div>
