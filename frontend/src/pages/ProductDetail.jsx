@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Star, Truck, AlertTriangle, ChevronDown, ChevronUp, CheckCircle, Package, Layers, Info, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Star, Truck, AlertTriangle, ChevronDown, ChevronUp, CheckCircle, Package, Layers, Info } from 'lucide-react';
 import { apiFetch } from '../api.js';
 import useSEO from '../hooks/useSEO.js';
 import ProductCardImage from '../components/ProductCardImage.jsx';
@@ -71,13 +71,6 @@ export default function ProductDetail({ addToCart }) {
       }
     };
   }, [relatedProducts]);
-
-  const scrollCarouselManual = (direction) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const CARD_W = 255;
-    el.scrollBy({ left: direction * CARD_W, behavior: 'smooth' });
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -319,27 +312,9 @@ export default function ProductDetail({ addToCart }) {
             {/* Similar Products — autoscroll carousel with controls */}
             {relatedProducts.length > 0 && (
               <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--color-border-light)', paddingTop: '2rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, color: 'var(--text-muted-on-light)', margin: 0 }}>
-                    View Similar Products
-                  </p>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <button 
-                      onClick={() => scrollCarouselManual(-1)}
-                      style={{ width: '36px', height: '36px', borderRadius: '50%', border: '1px solid var(--color-border-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', cursor: 'pointer', color: 'var(--text-on-light)' }}
-                      aria-label="Scroll left"
-                    >
-                      <ArrowLeft size={16} />
-                    </button>
-                    <button 
-                      onClick={() => scrollCarouselManual(1)}
-                      style={{ width: '36px', height: '36px', borderRadius: '50%', border: '1px solid var(--color-border-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', cursor: 'pointer', color: 'var(--text-on-light)' }}
-                      aria-label="Scroll right"
-                    >
-                      <ArrowRight size={16} />
-                    </button>
-                  </div>
-                </div>
+                <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, color: 'var(--text-muted-on-light)', marginBottom: '1rem', margin: '0 0 1rem' }}>
+                  View Similar Products
+                </p>
                 
                 <div
                   ref={carouselRef}
@@ -821,10 +796,11 @@ export default function ProductDetail({ addToCart }) {
           display: flex;
           gap: 15px;
           overflow-x: auto;
-          scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
           -ms-overflow-style: none;
           scrollbar-width: none;
-        }
+          scroll-snap-type: x proximity;
+}
         .sim-scroll::-webkit-scrollbar { display: none; }
 
         .sim-card {
