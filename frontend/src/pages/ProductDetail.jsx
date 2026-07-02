@@ -101,14 +101,22 @@ export default function ProductDetail({ addToCart }) {
           setGroupVariants([]);
         }
 
-        // Fetch related products (same category, different slug)
+        // Fetch related products (same category first, then backfill with others to ensure overflow/scroll works)
         apiFetch('/api/products')
           .then(res => res.json())
           .then(allProducts => {
-            const related = allProducts.filter(
+            let related = allProducts.filter(
               p => p.category === data.category && p.slug !== data.slug && p.variant_group_id !== data.variant_group_id
-            ).slice(0, 4);
-            setRelatedProducts(related);
+            );
+            
+            if (related.length < 6) {
+              const other = allProducts.filter(
+                p => p.category !== data.category && p.slug !== data.slug && p.variant_group_id !== data.variant_group_id
+              );
+              related = [...related, ...other];
+            }
+            
+            setRelatedProducts(related.slice(0, 8));
           });
 
         setLoading(false);
@@ -318,7 +326,7 @@ export default function ProductDetail({ addToCart }) {
 
             {/* Similar Products — autoscroll carousel with controls */}
             {relatedProducts.length > 0 && (
-              <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--color-border-light)', paddingTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--color-border-light)', paddingTop: '2rem', overflow: 'hidden' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                   <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, color: 'var(--text-muted-on-light)', margin: 0 }}>
                     View Similar Products
@@ -821,7 +829,7 @@ export default function ProductDetail({ addToCart }) {
           display: flex;
           gap: 15px;
           overflow-x: auto;
-          scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
@@ -830,7 +838,6 @@ export default function ProductDetail({ addToCart }) {
         .sim-card {
           width: 240px;
           flex-shrink: 0;
-          scroll-snap-align: start;
           text-decoration: none;
           color: inherit;
           background: #fff;
