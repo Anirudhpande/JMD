@@ -482,7 +482,7 @@ export default function Home({ addToCart }) {
       </section>
 
       {/* Aesthetic 2: Before & After Garden Transformations */}
-      <section style={{ backgroundColor: 'var(--bg-dark)', padding: '6rem 0' }}>
+      <section style={{ backgroundColor: 'var(--bg-dark)', padding: '6rem 0' , height: '895px' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-accent)', marginBottom: '1rem' }}>

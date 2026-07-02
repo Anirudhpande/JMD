@@ -397,12 +397,12 @@ function AppContent() {
               </h4>
               <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '0.85rem' }}>
                 <Link to="/" style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.85rem', textDecoration: 'none' }} className="nav-hover-gold">Home</Link>
-                <Link to="/products" style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.85rem', textDecoration: 'none' }} className="nav-hover-gold">Product</Link>
+                <Link to="/products" style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.85rem', textDecoration: 'none' }} className="nav-hover-gold">Products</Link>
               </div>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.85rem' }}>
-                <li><Link to="/delivery" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">Delivery Guide</Link></li>
-                <li><Link to="/care" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">care & maintenance</Link></li>
-                <li><Link to="/contact" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">contact us</Link></li>
+                <li><Link to="/delivery" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">Delivery</Link></li>
+                <li><Link to="/Care" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">care guide</Link></li>
+                <li><Link to="/contact" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">contact</Link></li>
               </ul>
             </div>
 
@@ -439,7 +439,7 @@ function AppContent() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
                   <MapPin size={16} style={{ color: 'var(--color-accent)', flexShrink: 0, marginTop: '2px' }} />
-                  <span style={{ lineHeight: 1.45 }}>Twelve Quays House, Egerton Wharf, Wirral, United Kingdom, CH41 1LD</span>
+                  <span style={{ lineHeight: 1.45 }}>70 Grange Road East, Wirral, United Kingdom, CH41 5FE</span>
                 </div>
               </div>
               
@@ -454,7 +454,6 @@ function AppContent() {
           {/* Bottom copyright row */}
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: '2rem', paddingTop: '1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: 'rgba(255,255,255,0.45)' }} className="footer-bottom">
             <span>copyright {new Date().getFullYear()} | JMD GLOBAL STONES PVT LTD</span>
-            <span>Design & DEV By Deasy Solution</span>
           </div>
         </div>
       </footer>
