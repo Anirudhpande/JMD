@@ -261,7 +261,7 @@ function AppContent() {
           
           {/* Logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-            <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '48px', objectFit: 'contain', mixBlendMode: 'multiply' }} />
+            <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '64px', objectFit: 'contain', mixBlendMode: 'multiply' }} />
           </Link>
 
           {/* Navigation Links */}
