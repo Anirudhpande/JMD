@@ -474,8 +474,17 @@ export const db = {
 
   async addProduct(product) {
     const newProduct = {
-      ...product,
       id: product.id || `prod-${Date.now()}`,
+      name: product.name === undefined ? null : product.name,
+      slug: product.slug === undefined ? null : product.slug,
+      category: product.category === undefined ? null : product.category,
+      description: product.description === undefined ? null : product.description,
+      price: product.price === undefined ? 0 : product.price,
+      stock: product.stock === undefined ? 0 : product.stock,
+      size: product.size === undefined ? null : product.size,
+      images: product.images === undefined ? [] : product.images,
+      is_featured: product.is_featured === undefined ? false : product.is_featured,
+      stars: product.stars === undefined ? 5 : product.stars,
       seo_title: product.seo_title === undefined ? null : product.seo_title,
       seo_description: product.seo_description === undefined ? null : product.seo_description,
       variant_group_id: product.variant_group_id === undefined ? null : product.variant_group_id,
@@ -520,10 +529,22 @@ export const db = {
   },
 
   async updateProduct(id, updatedFields) {
+    const VALID_COLUMNS = ['name', 'slug', 'category', 'description', 'price', 'stock', 'size', 'images', 'is_featured', 'stars', 'seo_title', 'seo_description', 'variant_group_id'];
+    const filteredFields = {};
+    VALID_COLUMNS.forEach(col => {
+      if (updatedFields[col] !== undefined) {
+        filteredFields[col] = updatedFields[col];
+      }
+    });
+
     if (pool) {
-      const keys = Object.keys(updatedFields);
+      const keys = Object.keys(filteredFields);
+      if (keys.length === 0) {
+        const res = await pool.query('SELECT * FROM products WHERE id = $1', [id]);
+        return res.rows.length > 0 ? formatProduct(res.rows[0]) : null;
+      }
       const setClause = keys.map((key, i) => `"${key}" = $${i + 2}`).join(', ');
-      const values = keys.map(key => key === 'images' ? JSON.stringify(updatedFields[key]) : (updatedFields[key] === undefined ? null : updatedFields[key]));
+      const values = keys.map(key => key === 'images' ? JSON.stringify(filteredFields[key]) : filteredFields[key]);
       const res = await pool.query(
         `UPDATE products SET ${setClause} WHERE id = $1 RETURNING *`,
         [id, ...values]
@@ -535,14 +556,14 @@ export const db = {
     }
 
     if (isSupabaseConfigured) {
-      const { data, error } = await supabase.from('products').update(updatedFields).eq('id', id).select().single();
+      const { data, error } = await supabase.from('products').update(filteredFields).eq('id', id).select().single();
       if (!error) return formatProduct(data);
     }
 
     const store = readLocalDb();
     const index = store.products.findIndex(p => p.id === id);
     if (index !== -1) {
-      store.products[index] = { ...store.products[index], ...updatedFields };
+      store.products[index] = { ...store.products[index], ...filteredFields };
       writeLocalDb(store);
       return formatProduct(store.products[index]);
     }
