@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
-import { ShoppingBag, User, X, Phone, Mail, MapPin, Menu, LogOut, MessageSquare } from 'lucide-react';
+import { ShoppingBag, User, X, Phone, Mail, MapPin, Menu, LogOut, MessageSquare, Facebook, Twitter, Youtube, Linkedin } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { supabase } from './supabase.js';
@@ -368,88 +368,124 @@ function AppContent() {
       </main>
 
       {/* Footer - Deep Charcoal with thin gold top border */}
-      <footer style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-muted-on-dark)', borderTop: '1px solid var(--color-accent)', padding: '5rem 0 3rem 0', marginTop: 'auto' }} className="no-print">
+      <footer style={{ backgroundColor: '#2E3033', color: 'rgba(255,255,255,0.75)', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '5rem 0 3rem 0', marginTop: 'auto' }} className="no-print">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1.5fr 1fr', gap: '3.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 0.8fr 1.2fr 1.5fr', gap: '3.5rem' }} className="footer-grid">
             
-            {/* Col 1 */}
+            {/* Col 1: Logo & Tagline */}
             <div>
-              <div style={{ marginBottom: '1.5rem' }}>
-                <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '48px', objectFit: 'contain', filter: 'invert(1)', mixBlendMode: 'screen' }} />
+              <div style={{ 
+                backgroundColor: '#ffffff', 
+                padding: '0.75rem 1.25rem', 
+                borderRadius: '8px', 
+                display: 'inline-block',
+                marginBottom: '1.25rem',
+                boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+              }}>
+                <img src="/logo.png" alt="JMD Global Stones Logo" style={{ height: '42px', objectFit: 'contain', display: 'block' }} />
               </div>
-              <p style={{ fontSize: '0.85rem', lineHeight: 1.7, color: 'var(--text-muted-on-dark)', marginBottom: '1.75rem' }}>
-                Premium UK supplier of authentic Indian Sandstone, slate, limestone, and porcelain slabs. Sourced directly from our quarries, delivered nationwide.
-              </p>
-              <p style={{ fontSize: '0.7rem', color: '#5E5A52', lineHeight: 1.5 }}>
-                Company No: 12807959 | VAT: GB 358688337<br />
-                Reg. Office: 70 Grange Road East, Wirral, UK, CH41 5FE
+              <h5 style={{ color: '#fff', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem' }}>JMD GLOBAL STONES PVT LTD</h5>
+              <p style={{ fontSize: '0.8rem', lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.65)', margin: 0 }}>
+                UK Supplier of Indian Sandstone, Porcelain Paving, Slate, Limestone Patio Slabs with Nationwide Delivery.
               </p>
             </div>
 
-            {/* Col 2 */}
+            {/* Col 2: Menu */}
             <div>
-              <h4 style={{ color: 'var(--text-on-dark)', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.85rem', marginBottom: '1.5rem', fontWeight: 600 }}>
-                Quick Links
+              <h4 style={{ color: '#fff', fontSize: '0.95rem', fontWeight: 700, marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Menu
               </h4>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.85rem' }}>
-                <li><Link to="/" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">Home</Link></li>
-                <li><Link to="/products" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">Paving Slabs</Link></li>
-                <li><Link to="/delivery" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">Delivery Guide</Link></li>
-                <li><Link to="/care" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">Care & Laying</Link></li>
-                <li><Link to="/blog" style={{ color: 'var(--text-muted-on-dark)' }} className="nav-hover-gold">Blog & Guides</Link></li>
+              <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '0.85rem' }}>
+                <Link to="/" style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.85rem', textDecoration: 'none' }} className="nav-hover-gold">Home</Link>
+                <Link to="/products" style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.85rem', textDecoration: 'none' }} className="nav-hover-gold">Product</Link>
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.85rem' }}>
+                <li><Link to="/delivery" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">Delivery Guide</Link></li>
+                <li><Link to="/care" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">care & maintenance</Link></li>
+                <li><Link to="/contact" style={{ color: 'rgba(255, 255, 255, 0.85)', textDecoration: 'none' }} className="nav-hover-gold">contact us</Link></li>
               </ul>
             </div>
 
-            {/* Col 3 */}
+            {/* Col 3: Company Details */}
             <div>
-              <h4 style={{ color: 'var(--text-on-dark)', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.85rem', marginBottom: '1.5rem', fontWeight: 600 }}>
-                Yards & Operations
+              <h4 style={{ color: '#fff', fontSize: '0.95rem', fontWeight: 700, marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Company Details
               </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '0.85rem', color: 'var(--text-muted-on-dark)' }}>
-                <div style={{ display: 'flex', gap: '0.6rem' }}>
-                  <MapPin size={16} style={{ flexShrink: 0, color: 'var(--color-accent)', marginTop: '2px' }} />
-                  <div style={{ lineHeight: 1.5 }}>
-                    <strong style={{ color: 'var(--text-on-dark)' }}>Wirral HQ:</strong> Twelve Quays House, Egerton Wharf, CH41 1LD
-                  </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '0.85rem' }}>
+                <div>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.45)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.25rem' }}>Company Number</p>
+                  <p style={{ color: '#fff', fontWeight: 600, margin: 0 }}>12807959</p>
                 </div>
-                <div style={{ display: 'flex', gap: '0.6rem' }}>
-                  <MapPin size={16} style={{ flexShrink: 0, color: 'var(--color-accent)', marginTop: '2px' }} />
-                  <div style={{ lineHeight: 1.5 }}>
-                    <strong style={{ color: 'var(--text-on-dark)' }}>Southampton Yard:</strong> Yard 2, Eling Wharf, SO40 4TE
-                  </div>
+                <div>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.45)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.25rem' }}>VAT Number</p>
+                  <p style={{ color: '#fff', fontWeight: 600, margin: 0 }}>GB 358688337</p>
                 </div>
               </div>
             </div>
 
-            {/* Col 4 */}
+            {/* Col 4: Contact Us */}
             <div>
-              <h4 style={{ color: 'var(--text-on-dark)', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.85rem', marginBottom: '1.5rem', fontWeight: 600 }}>
-                Contact Support
+              <h4 style={{ color: '#fff', fontSize: '0.95rem', fontWeight: 700, marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Contact Us
               </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '0.85rem', color: 'var(--text-muted-on-dark)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <Phone size={16} style={{ color: 'var(--color-accent)' }} />
-                  <span>07458148586 (Roopesh Kapur)</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem', fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.85)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <Mail size={16} style={{ color: 'var(--color-accent)', flexShrink: 0 }} />
+                  <a href="mailto:sales@jmdglobalstones.co.uk" style={{ color: 'inherit', textDecoration: 'none' }} className="nav-hover-gold">sales@jmdglobalstones.co.uk</a>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <Mail size={16} style={{ color: 'var(--color-accent)' }} />
-                  <span>sales@jmdglobalstones.co.uk</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <Phone size={16} style={{ color: 'var(--color-accent)', flexShrink: 0 }} />
+                  <a href="tel:07458148586" style={{ color: 'inherit', textDecoration: 'none' }} className="nav-hover-gold">07458148586 (Roopesh Kapur)</a>
                 </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                  <MapPin size={16} style={{ color: 'var(--color-accent)', flexShrink: 0, marginTop: '2px' }} />
+                  <span style={{ lineHeight: 1.45 }}>Twelve Quays House, Egerton Wharf, Wirral, United Kingdom, CH41 1LD</span>
+                </div>
+              </div>
+              
+              {/* Social Media Row */}
+              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E5DDCF', color: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="footer-social-icon">
+                  <Facebook size={16} />
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E5DDCF', color: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="footer-social-icon">
+                  <Twitter size={16} />
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E5DDCF', color: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="footer-social-icon">
+                  <Youtube size={16} />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E5DDCF', color: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="footer-social-icon">
+                  <Linkedin size={16} />
+                </a>
               </div>
             </div>
 
           </div>
 
-          <div style={{ borderTop: '1px solid #222222', marginTop: '4rem', paddingTop: '2rem', textAlign: 'center', fontSize: '0.75rem', color: '#5E5A52' }}>
-            © {new Date().getFullYear()} JMD Global Stones Pvt Ltd. All rights reserved.
+          {/* Bottom copyright row */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: '4rem', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: 'rgba(255,255,255,0.45)' }} className="footer-bottom">
+            <span>copyright {new Date().getFullYear()} | JMD GLOBAL STONES PVT LTD</span>
+            <span>Design & DEV By Deasy Solution</span>
           </div>
         </div>
       </footer>
 
       {/* Style for Grid Responsiveness in Footer */}
       <style>{`
-        @media (max-width: 768px) {
-          footer div.container div { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+        .footer-social-icon {
+          transition: all 0.3s ease !important;
+        }
+        .footer-social-icon:hover {
+          background-color: var(--color-accent) !important;
+          color: #fff !important;
+          transform: translateY(-2px);
+        }
+        @media (max-width: 900px) {
+          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 2.5rem !important; }
+        }
+        @media (max-width: 600px) {
+          .footer-grid { grid-template-columns: 1fr !important; }
+          .footer-bottom { flexDirection: column; gap: 1rem; text-align: center; }
         }
       `}</style>
 
