@@ -7,9 +7,9 @@ import ProductCardImage from '../components/ProductCardImage.jsx';
 
 const CATEGORY_TABS = [
   { label: 'All',       slug: null,        img: '/images/all_products_category.png' },
-  { label: 'Sandstone', slug: 'sandstone', img: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Kandla_Grey_Sandstone__Every_Home_Needs_It_for_Their_Floor.webp' },
+  { label: 'Sandstone', slug: 'sandstone', img: '/images/sandstone_category.png' },
   { label: 'Porcelain', slug: 'porcelain', img: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/smoke-grey-porcelain-600x900-1.jpg' },
-  { label: 'Bricks',    slug: 'bricks',    img: 'https://jmdglobalstones.co.uk/wp-content/uploads/2024/12/Amazon-Black-Slate-Paving-Westminster-Stone-820x1024-1.avif' },
+  { label: 'Bricks',    slug: 'bricks',    img: '/images/bricks_category.png' },
 ];
 
 // Hero slides — one per featured product concept
