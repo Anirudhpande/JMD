@@ -101,26 +101,14 @@ export default function ProductDetail({ addToCart }) {
           setGroupVariants([]);
         }
 
-        // Fetch related products (same category first, then backfill with others to ensure overflow/scroll works)
+        // Fetch related products (same category, different slug)
         apiFetch('/api/products')
           .then(res => res.json())
           .then(allProducts => {
-            let related = allProducts.filter(
-              p => p.category === data.category && 
-                   p.slug !== data.slug && 
-                   (!data.variant_group_id || p.variant_group_id !== data.variant_group_id)
-            );
-            
-            if (related.length < 6) {
-              const other = allProducts.filter(
-                p => p.category !== data.category && 
-                     p.slug !== data.slug && 
-                     (!data.variant_group_id || p.variant_group_id !== data.variant_group_id)
-              );
-              related = [...related, ...other];
-            }
-            
-            setRelatedProducts(related.slice(0, 8));
+            const related = allProducts.filter(
+              p => p.category === data.category && p.slug !== data.slug && p.variant_group_id !== data.variant_group_id
+            ).slice(0, 4);
+            setRelatedProducts(related);
           });
 
         setLoading(false);
@@ -330,7 +318,7 @@ export default function ProductDetail({ addToCart }) {
 
             {/* Similar Products — autoscroll carousel with controls */}
             {relatedProducts.length > 0 && (
-              <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--color-border-light)', paddingTop: '2rem', overflow: 'hidden' }}>
+              <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--color-border-light)', paddingTop: '2rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                   <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 700, color: 'var(--text-muted-on-light)', margin: 0 }}>
                     View Similar Products
@@ -426,10 +414,9 @@ export default function ProductDetail({ addToCart }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                   {groupVariants.map((v) => {
                     const isCurrent = v.id === product.id;
-                    const sizeStr = v.size || '';
-                    const isMixed = sizeStr.toLowerCase().includes('mixed') || sizeStr.toLowerCase().includes('project pack');
+                    const isMixed = v.size.toLowerCase().includes('mixed') || v.size.toLowerCase().includes('project pack');
                     const labelTitle = isMixed ? 'Project Pack (Mixed Sizes)' : '900x600mm (Single Size)';
-                    const covMatch = sizeStr.match(/Covers\s+([\d.]+)/i);
+                    const covMatch = v.size.match(/Covers\s+([\d.]+)/i);
                     const coverage = covMatch ? `${covMatch[1]} m²` : (isMixed ? '18.9 m²' : '17.0 m²');
                     
                     return (
@@ -834,7 +821,7 @@ export default function ProductDetail({ addToCart }) {
           display: flex;
           gap: 15px;
           overflow-x: auto;
-          scroll-behavior: smooth;
+          scroll-snap-type: x mandatory;
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
@@ -843,6 +830,7 @@ export default function ProductDetail({ addToCart }) {
         .sim-card {
           width: 240px;
           flex-shrink: 0;
+          scroll-snap-align: start;
           text-decoration: none;
           color: inherit;
           background: #fff;
