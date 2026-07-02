@@ -37,7 +37,7 @@ const faqs = [
       },
       {
         q: 'How long does delivery take?',
-        a: 'We aim to dispatch orders within 3-5 working days. You will receive a dispatch email with tracking information once your pallet is collected by our haulier.'
+        a: 'We aim to deliver orders within 5-7 working days. You will receive a dispatch email with tracking information once your pallet is collected by our haulier.'
       },
       {
         q: 'What is kerbside delivery?',

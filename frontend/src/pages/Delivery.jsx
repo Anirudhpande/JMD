@@ -32,8 +32,8 @@ export default function Delivery() {
               <p style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)', margin: 0 }}>Variable Rate</p>
             </div>
             <div style={{ paddingBottom: '0.75rem', borderBottom: '1px solid var(--color-border-light)' }}>
-              <h4 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.25rem' }}>Dispatch Timeline</h4>
-              <p style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)', margin: 0 }}>3–5 Working Days</p>
+              <h4 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.25rem' }}>Delivery Timeline</h4>
+              <p style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--text-on-light)', fontFamily: 'var(--font-heading)', margin: 0 }}>5–7 Working Days</p>
             </div>
             <div>
               <h4 style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted-on-light)', marginBottom: '0.25rem' }}>Service Type</h4>

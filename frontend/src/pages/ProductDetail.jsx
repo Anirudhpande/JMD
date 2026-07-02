@@ -532,7 +532,7 @@ export default function ProductDetail({ addToCart }) {
                 ) : (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-success)', fontSize: '0.85rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     <CheckCircle size={16} />
-                    <span>In Stock — Dispatched in 3-5 business days</span>
+                    <span>In Stock — Delivered in 5-7 business days</span>
                   </div>
                 )}
               </div>
@@ -583,7 +583,7 @@ export default function ProductDetail({ addToCart }) {
                 </button>
                 {openAccordions.delivery && (
                   <div style={{ paddingBottom: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted-on-light)', lineHeight: 1.6 }}>
-                    <p style={{ marginBottom: '0.5rem' }}>• <strong>Timeline:</strong> Deliveries are executed in 3-5 business days.</p>
+                    <p style={{ marginBottom: '0.5rem' }}>• <strong>Timeline:</strong> Deliveries are executed in 5-7 business days.</p>
                     {/* <p style={{ marginBottom: '0.5rem' }}>• <strong>Access Required:</strong> Kerbside delivery via an 18-28 tonne HGV tail-lift lorry.</p> */}
                     <Link to="/delivery" style={{ color: 'var(--color-accent)', fontWeight: 500, textDecoration: 'underline' }}>Read our complete Delivery Guide</Link>
                   </div>

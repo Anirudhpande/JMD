@@ -230,7 +230,7 @@ export default function Home({ addToCart }) {
           {[
             { icon: <Truck size={18} />,      label: 'UK Nationwide Delivery',   sub: 'Calculated by postcode' },
             { icon: <ShieldCheck size={18} />, label: '100% Genuine Stone',       sub: 'Direct quarry import'   },
-            { icon: <Zap size={18} />,         label: '3–5 Day Dispatch',         sub: 'From UK yard stock'     },
+            { icon: <Zap size={18} />,         label: '5–7 Day Delivery',         sub: 'From UK yard stock'     },
             { icon: <Award size={18} />,       label: 'Expert Yard Support',      sub: 'Call or WhatsApp us'    },
           ].map(t => (
             <div key={t.label} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -254,7 +254,7 @@ export default function Home({ addToCart }) {
             <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: 400, marginTop: '0.5rem', color: '#111' }}>Browse by Category</h2>
           </div>
 
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="cat-grid">
             {CATEGORY_TABS.map(cat => {
               const isActive = activeCategory === cat.slug;
               return (
@@ -267,7 +267,7 @@ export default function Home({ addToCart }) {
                     backgroundColor: isActive ? '#111' : '#fff',
                     border: isActive ? '1px solid #111' : '1px solid #E0D9CE',
                     transition: 'all 0.3s ease', 
-                    width: '390px',
+                    width: '100%',
                     height: 'auto',
                     position: 'relative'
                   }}
@@ -636,7 +636,7 @@ export default function Home({ addToCart }) {
                     <Check size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} /> Kerbside Delivery
                   </li>
                   <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <Check size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} /> 3-5 Business Days
+                    <Check size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} /> 5-7 Business Days
                   </li>
                 </ul>
 
@@ -669,17 +669,6 @@ export default function Home({ addToCart }) {
         </div>
       </section>
 
-      {/* Aesthetic 3: Tactile Brand Heritage Quotation */}
-      <section style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-on-dark)', padding: '5rem 0', textAlign: 'center', borderTop: '1px solid var(--color-border-dark)', borderBottom: '1px solid var(--color-border-dark)' }}>
-        <div className="container" style={{ maxWidth: '900px' }}>
-          <span style={{ color: 'var(--color-accent)', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.15em', display: 'block', marginBottom: '1rem' }}>Material Heritage</span>
-          <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', lineHeight: 1.5, fontStyle: 'italic', fontWeight: 300, color: 'var(--text-on-dark)' }}>
-            “Stone does not belong to the yard; it belongs to the landscape. We source natural sandstone and vitrified porcelain that possess a raw, enduring geology.”
-          </p>
-          <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--color-accent)', margin: '1.5rem auto 1rem auto' }}></div>
-          <p style={{ fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>JMD Global Stones</p>
-        </div>
-      </section>
 
       {/* Aesthetic 4: Client Testimonials Carousel */}
       <section style={{ backgroundColor: '#fff', borderTop: '1px solid #E5E0D8', borderBottom: '1px solid #E5E0D8', padding: '3.5rem 0' }}>
@@ -711,6 +700,22 @@ export default function Home({ addToCart }) {
         }
         .hero-grid { grid-template-columns: 1fr 1fr; }
         .promo-grid { grid-template-columns: 1.1fr 0.9fr; }
+        .cat-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 2rem;
+        }
+        @media (max-width: 1024px) {
+          .cat-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        @media (max-width: 600px) {
+          .cat-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+        }
         .cat-scroll::-webkit-scrollbar { display: none; }
         .cat-scroll { -ms-overflow-style: none; scrollbar-width: none; }
         
