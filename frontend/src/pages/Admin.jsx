@@ -23,7 +23,8 @@ import {
   LogIn,
   UserPlus,
   ShoppingBag,
-  RefreshCw
+  RefreshCw,
+  Coins
 } from 'lucide-react';
 import { apiFetch } from '../api.js';
 
