@@ -1,0 +1,430 @@
+{
+  "products": [
+    {
+      "id": "kandla-grey-18-9m2-project-packs",
+      "name": "Kandla Grey Project Pack",
+      "slug": "kandla-grey-project-pack",
+      "category": "Sandstone",
+      "price": 353,
+      "stock": 53,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Premium Kandla Grey Sandstone Project Pack paving slabs feature cool blue-grey tones, straight hand-cut edges, and a consistent riven surface. One pack covers approximately 18.9 m².",
+      "images": [
+        "/images/kandla-grey-18-9m2-project-packs/primary.png",
+        "/images/kandla-grey-18-9m2-project-packs/Kandla_grey_pp.jpg",
+        "/images/kandla-grey-18-9m2-project-packs/Kandla_grey_pp_2.jpg",
+        "/images/kandla-grey-18-9m2-project-packs/ka_3.jpg"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "Kandla Grey Project Pack | JMD Global Stones",
+      "seo_description": "Premium Kandla Grey Sandstone Project Pack paving slabs feature cool blue-grey tones, straight hand-cut edges, and a consistent riven surface. One pac",
+      "variant_group_id": "kandla-grey",
+      "created_at": "2026-07-03T10:45:10.106Z"
+    },
+    {
+      "id": "kandla-grey-900x600x22mm",
+      "name": "Kandla Grey Single Size Pack",
+      "slug": "kandla-grey-single-size-pack",
+      "category": "Sandstone",
+      "price": 292,
+      "stock": 68,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Kandla Grey Sandstone is the most popular garden paving material in the UK. Featuring cool blue-grey tones, straight hand-cut edges, and a consistent riven surface, it creates a clean, elegant look that coordinates with any garden layout. One pack covers approximately 17.0 m².",
+      "images": [
+        "/images/kandla-grey-900x600x22mm/primary.png",
+        "/images/kandla-grey-900x600x22mm/ka_2.jpeg",
+        "/images/kandla-grey-900x600x22mm/ka_p_1.png",
+        "/images/kandla-grey-900x600x22mm/ka_p_2.png",
+        "/images/kandla-grey-900x600x22mm/ka_p_3.jpg",
+        "/images/kandla-grey-900x600x22mm/kandla_grey_sandstone_3.jpg",
+        "/images/kandla-grey-900x600x22mm/one.jpeg",
+        "/images/kandla-grey-900x600x22mm/two.jpeg"
+      ],
+      "is_featured": false,
+      "stars": 4.9,
+      "seo_title": "Kandla Grey Single Size Pack | JMD Global Stones",
+      "seo_description": "Kandla Grey Sandstone is the most popular garden paving material in the UK. Featuring cool blue-grey tones, straight hand-cut edges, and a consistent ",
+      "variant_group_id": "kandla-grey",
+      "created_at": "2026-07-03T10:45:10.106Z"
+    },
+    {
+      "id": "raj-green-18-9m2-project-packs",
+      "name": "Raj Green Project Pack",
+      "slug": "raj-green-project-pack",
+      "category": "Sandstone",
+      "price": 353,
+      "stock": 37,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust paving handles wet conditions excellently and ages beautifully over time. One pack covers approximately 18.9 m².",
+      "images": [
+        "/images/raj-green-18-9m2-project-packs/primary.png",
+        "/images/raj-green-18-9m2-project-packs/raj_green_pp.png",
+        "/images/raj-green-18-9m2-project-packs/raj_green_pp_2.png",
+        "/images/raj-green-18-9m2-project-packs/raj_green_pp_3.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "Raj Green Project Pack | JMD Global Stones",
+      "seo_description": "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust pavi",
+      "variant_group_id": "raj-green",
+      "created_at": "2026-07-03T10:45:10.106Z"
+    },
+    {
+      "id": "raj-green-900x600x22mm",
+      "name": "Raj Green Single Size Pack",
+      "slug": "raj-green-single-size-pack",
+      "category": "Sandstone",
+      "price": 279,
+      "stock": 34,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust paving handles wet conditions excellently and ages beautifully over time. One pack covers approximately 17.0 m².",
+      "images": [
+        "/images/raj-green-900x600x22mm/primary.png",
+        "/images/raj-green-900x600x22mm/raj_green_1.jpeg",
+        "/images/raj-green-900x600x22mm/raj_green_2.png",
+        "/images/raj-green-900x600x22mm/whoa.png"
+      ],
+      "is_featured": false,
+      "stars": 4.9,
+      "seo_title": "Raj Green Single Size Pack | JMD Global Stones",
+      "seo_description": "Raj Green Sandstone paving flagstones mimic traditional English Yorkstone. With blended tones of green, grey, brown, and soft bronze, this robust pavi",
+      "variant_group_id": "raj-green",
+      "created_at": "2026-07-03T10:45:10.106Z"
+    },
+    {
+      "id": "rippon-buff-18-9m2-project-packs",
+      "name": "Rippon Buff Project Pack",
+      "slug": "rippon-buff-project-pack",
+      "category": "Sandstone",
+      "price": 353,
+      "stock": 25,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut, split finish that catches the light wonderfully. One pack covers approximately 18.9 m².",
+      "images": [
+        "/images/rippon-buff-18-9m2-project-packs/Primary.png",
+        "/images/rippon-buff-18-9m2-project-packs/Rippon_Buff_pp_1.jpg",
+        "/images/rippon-buff-18-9m2-project-packs/Rippon_Buff_pp_2.jpg",
+        "/images/rippon-buff-18-9m2-project-packs/one.png"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Rippon Buff Project Pack | JMD Global Stones",
+      "seo_description": "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut,",
+      "variant_group_id": "rippon-buff",
+      "created_at": "2026-07-03T10:45:10.106Z"
+    },
+    {
+      "id": "rippon-buff-900x600x22mm",
+      "name": "Rippon Buff Single Size Pack",
+      "slug": "rippon-buff-single-size-pack",
+      "category": "Sandstone",
+      "price": 279,
+      "stock": 11,
+      "size": "900x600mm Pack 30 Pieces (Single Size)",
+      "description": "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut, split finish that catches the light wonderfully. One pack covers approximately 17.0 m².",
+      "images": [
+        "/images/rippon-buff-900x600x22mm/Primary.png",
+        "/images/rippon-buff-900x600x22mm/3.png",
+        "/images/rippon-buff-900x600x22mm/images (1).jpeg",
+        "/images/rippon-buff-900x600x22mm/images.jpeg",
+        "/images/rippon-buff-900x600x22mm/rippon_buff_1.png",
+        "/images/rippon-buff-900x600x22mm/rippon_buff_2.png"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Rippon Buff Single Size Pack | JMD Global Stones",
+      "seo_description": "Rippon Buff Sandstone paving slabs present warm peach, cream, pink, and orange swirls over a light sandstone base. Features sawn edges and a hand-cut,",
+      "variant_group_id": "rippon-buff",
+      "created_at": "2026-07-03T10:45:10.106Z"
+    },
+    {
+      "id": "autumn-brown-18-9m2-project-packs",
+      "name": "Autumn Brown Project Pack",
+      "slug": "autumn-brown-project-pack",
+      "category": "Sandstone",
+      "price": 353,
+      "stock": 1,
+      "size": "Project Pack 60 Pieces (Mixed Sizes)",
+      "description": "Premium Autumn Brown Indian Sandstone paving slabs are ideal for classic garden patios. Exhibiting warm brown tones mixed with hints of plum, grey, and ochre, this traditional paving stone provides a natural, hand-cut finish and calibrated thickness. One pack covers approximately 18.9 m².",
+      "images": [
+        "/images/autumn-brown-18-9m2-project-packs/Primary.png",
+        "/images/autumn-brown-18-9m2-project-packs/Autumn_Brown_pp_1.jpg",
+        "/images/autumn-brown-18-9m2-project-packs/Autumn_Brown_pp_2.jpg",
+        "/images/autumn-brown-18-9m2-project-packs/Autumn_Brown_pp_3.jpg"
+      ],
+      "is_featured": true,
+      "stars": 4.8,
+      "seo_title": "Autumn Brown Project Pack | JMD Global Stones",
+      "seo_description": "Premium Autumn Brown Indian Sandstone paving slabs are ideal for classic garden patios. Exhibiting warm brown tones mixed with hints of plum, grey, an",
+      "variant_group_id": "autumn-brown",
+      "created_at": "2026-07-03T10:45:10.106Z"
+    },
+    {
+      "id": "county-anthracite-900x600x20mm",
+      "name": "County Anthracite Porcelain Slabs",
+      "slug": "county-anthracite-porcelain-slabs",
+      "category": "Porcelain",
+      "price": 360,
+      "stock": 16,
+      "size": "900x600mm Pack 38 Pieces (Single Size)",
+      "description": "County Anthracite Porcelain offers a sleek, ultra-modern dark grey finish with a refined textured surface. High-grade porcelain paving slabs from JMD present low water absorption, stain resistance, and are completely frost-proof. One pack covers approximately 21.3 m².",
+      "images": [
+        "/images/county-anthracite-900x600x20mm/Primary.png",
+        "/images/county-anthracite-900x600x20mm/Country_Anthracite.jpg",
+        "/images/county-anthracite-900x600x20mm/Country_anthracite_2.jpg",
+        "/images/county-anthracite-900x600x20mm/con_3.png"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "County Anthracite Porcelain Slabs | JMD Global Stones",
+      "seo_description": "County Anthracite Porcelain offers a sleek, ultra-modern dark grey finish with a refined textured surface. High-grade porcelain paving slabs from JMD ",
+      "variant_group_id": "county-anthracite",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "hammer-stone-grey-900x600x20mm",
+      "name": "Hammer Stone Grey Porcelain Slabs",
+      "slug": "hammer-stone-grey-porcelain-slabs",
+      "category": "Porcelain",
+      "price": 360,
+      "stock": 10,
+      "size": "900x600mm Pack 38 Pieces (Single Size)",
+      "description": "Hammer Stone Grey Porcelain paving slabs deliver a luxurious textured grey feel. Offering exceptional durability and clean lines, this product is ideal for transforming patios, pathways, and indoor-outdoor living spaces. One pack covers approximately 21.3 m².",
+      "images": [
+        "/images/hammer-stone-grey-900x600x20mm/primary.png",
+        "/images/hammer-stone-grey-900x600x20mm/h_s_3.png",
+        "/images/hammer-stone-grey-900x600x20mm/hammer_stone_grey_1.png",
+        "/images/hammer-stone-grey-900x600x20mm/hammer_stone_grey_2.png",
+        "/images/hammer-stone-grey-900x600x20mm/one.jpeg"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Hammer Stone Grey Porcelain Slabs | JMD Global Stones",
+      "seo_description": "Hammer Stone Grey Porcelain paving slabs deliver a luxurious textured grey feel. Offering exceptional durability and clean lines, this product is idea",
+      "variant_group_id": "hammer-stone-grey",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "mountain-white-900x600x20mm",
+      "name": "Mountain White Porcelain Slabs",
+      "slug": "mountain-white-porcelain-slabs",
+      "category": "Porcelain",
+      "price": 360,
+      "stock": 2,
+      "size": "900x600mm Pack 38 Pieces (Single Size)",
+      "description": "Mountain White Porcelain paving slabs bring crisp, luminous bright white tones to gardens and patios. These high-grade ceramic tiles reflect light beautifully and possess an R11 anti-slip safety rating. One pack covers approximately 21.3 m².",
+      "images": [
+        "/images/mountain-white-900x600x20mm/primary.png",
+        "/images/mountain-white-900x600x20mm/Mountain_White_1.jpg",
+        "/images/mountain-white-900x600x20mm/Mountain_White_2.jpg",
+        "/images/mountain-white-900x600x20mm/Mountain_White_3.jpg"
+      ],
+      "is_featured": false,
+      "stars": 4.7,
+      "seo_title": "Mountain White Porcelain Slabs | JMD Global Stones",
+      "seo_description": "Mountain White Porcelain paving slabs bring crisp, luminous bright white tones to gardens and patios. These high-grade ceramic tiles reflect light bea",
+      "variant_group_id": "mountain-white",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "earth-core-grey-900x600x20mm",
+      "name": "Earth Core Grey Porcelain Slabs",
+      "slug": "earth-core-grey-porcelain-slabs",
+      "category": "Porcelain",
+      "price": 360,
+      "stock": 3,
+      "size": "900x600mm Pack 38 Pieces (Single Size)",
+      "description": "Earth Core Grey Porcelain paving captures the natural beauty of stone while delivering the strength of premium engineered porcelain. Straight cut edges allow for minimal grout lines for a smooth, high-end look. One pack covers approximately 21.3 m².",
+      "images": [
+        "/images/earth-core-grey-900x600x20mm/primary.png",
+        "/images/earth-core-grey-900x600x20mm/Earth_Core_2.jpg",
+        "/images/earth-core-grey-900x600x20mm/Earth_core_1.jpg",
+        "/images/earth-core-grey-900x600x20mm/e_C_3.png"
+      ],
+      "is_featured": true,
+      "stars": 4.8,
+      "seo_title": "Earth Core Grey Porcelain Slabs | JMD Global Stones",
+      "seo_description": "Earth Core Grey Porcelain paving captures the natural beauty of stone while delivering the strength of premium engineered porcelain. Straight cut edge",
+      "variant_group_id": "earth-core-grey",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "quartz-light-grey-900x600x20mm",
+      "name": "Quartz Light Grey Porcelain Slabs",
+      "slug": "quartz-light-grey-porcelain-slabs",
+      "category": "Porcelain",
+      "price": 360,
+      "stock": 21,
+      "size": "900x600mm Pack 38 Pieces (Single Size)",
+      "description": "Quartz Light Grey Porcelain paving slabs mimic the speckled aggregate texture of natural granite. Stain-proof, scratch-resistant, and offering exceptional slip resistance, this paving is built to survive heavy footfall. One pack covers approximately 21.3 m².",
+      "images": [
+        "/images/quartz-light-grey-900x600x20mm/primary.png",
+        "/images/quartz-light-grey-900x600x20mm/Quartz_light_grey_!.jpg",
+        "/images/quartz-light-grey-900x600x20mm/Quartz_light_grey_2.jpg",
+        "/images/quartz-light-grey-900x600x20mm/crazy.jpg"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Quartz Light Grey Porcelain Slabs | JMD Global Stones",
+      "seo_description": "Quartz Light Grey Porcelain paving slabs mimic the speckled aggregate texture of natural granite. Stain-proof, scratch-resistant, and offering excepti",
+      "variant_group_id": "quartz-light-grey",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "kandla-grey-900x600x20mm",
+      "name": "Kandla Grey Porcelain Slabs",
+      "slug": "kandla-grey-porcelain-slabs",
+      "category": "Porcelain",
+      "price": 360,
+      "stock": 34,
+      "size": "900x600mm Pack 38 Pieces (Single Size)",
+      "description": "Kandla Grey Porcelain captures the contemporary light-grey aesthetic of natural sandstone but with the maintenance-free benefit of engineered vitrified tiles. Extremely resistant to algae, dirt, and stains. One pack covers approximately 21.3 m².",
+      "images": [
+        "/images/kandla-grey-900x600x20mm/primary.png",
+        "/images/kandla-grey-900x600x20mm/Kandla_grey_porcelain.jpg",
+        "/images/kandla-grey-900x600x20mm/Kandla_grey_porcelain_2.jpg",
+        "/images/kandla-grey-900x600x20mm/Kandla_grey_porcelain_3.jpg"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Kandla Grey Porcelain Slabs | JMD Global Stones",
+      "seo_description": "Kandla Grey Porcelain captures the contemporary light-grey aesthetic of natural sandstone but with the maintenance-free benefit of engineered vitrifie",
+      "variant_group_id": "kandla-grey",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "quartz-white-900x600x20mm",
+      "name": "Quartz White Porcelain Slabs",
+      "slug": "quartz-white-porcelain-slabs",
+      "category": "Porcelain",
+      "price": 360,
+      "stock": 35,
+      "size": "900x600mm Pack 38 Pieces (Single Size)",
+      "description": "Quartz White Porcelain provides a pristine, hish-brightness paving surface. Exhibiting extremely subtle grey speckles, it is the perfect flooring choice for high-contrast architectural patio spaces. One pack covers approximately 21.3 m².",
+      "images": [
+        "/images/quartz-white-900x600x20mm/primary.png",
+        "/images/quartz-white-900x600x20mm/Quartz_White.jpg",
+        "/images/quartz-white-900x600x20mm/Quartz_White_1.jpg",
+        "/images/quartz-white-900x600x20mm/Quartz_White_2.jpg"
+      ],
+      "is_featured": false,
+      "stars": 4.6,
+      "seo_title": "Quartz White Porcelain Slabs | JMD Global Stones",
+      "seo_description": "Quartz White Porcelain provides a pristine, hish-brightness paving surface. Exhibiting extremely subtle grey speckles, it is the perfect flooring choi",
+      "variant_group_id": "quartz-white",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "persia-beige-900x600x20mm",
+      "name": "Persia Beige Porcelain Slabs",
+      "slug": "persia-beige-porcelain-slabs",
+      "category": "Porcelain",
+      "price": 360,
+      "stock": 3,
+      "size": "900x600mm Pack 38 Pieces (Single Size)",
+      "description": "Persia Beige Porcelain slabs represent the height of outdoor luxury. Emulating premium ivory travertine with warm cream hues, it provides a bright, sprawling Mediterranean look for residential garden patios. One pack covers approximately 21.3 m².",
+      "images": [
+        "/images/persia-beige-900x600x20mm/primary.png",
+        "/images/persia-beige-900x600x20mm/Persia_Beige_1.jpg",
+        "/images/persia-beige-900x600x20mm/Persia_Beige_2.jpg",
+        "/images/persia-beige-900x600x20mm/Persia_Beige_3.jpg"
+      ],
+      "is_featured": true,
+      "stars": 4.9,
+      "seo_title": "Persia Beige Porcelain Slabs | JMD Global Stones",
+      "seo_description": "Persia Beige Porcelain slabs represent the height of outdoor luxury. Emulating premium ivory travertine with warm cream hues, it provides a bright, sp",
+      "variant_group_id": "persia-beige",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "smeed-dean-yellow",
+      "name": "Smeed Dean Yellow",
+      "slug": "smeed-dean-yellow",
+      "category": "Bricks",
+      "price": 275,
+      "stock": 90,
+      "size": "360 Bricks 230x110x68mm",
+      "description": "Smeed Yellow Dean Bricks from India are traditionally crafted handmade bricks, recognized for their warm yellow tone and refined finish. They are a popular choice for architectural projects that require a classic yet elegant appearance. Perfect for facades, restoration work, and decorative applications, these bricks offer durability, character, and a distinctive charm that enhances any structure.",
+      "images": [
+        "/images/smeed-dean-yellow/primary.png",
+        "/images/smeed-dean-yellow/74e06cea-a07d-4890-a612-e90be5a8a0f5.jpg",
+        "/images/smeed-dean-yellow/8b7f8b72-4634-485c-9964-c3596311bfaf.jpg",
+        "/images/smeed-dean-yellow/IMG_8931.jpg"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Smeed Dean Yellow | JMD Global Stones",
+      "seo_description": "Smeed Yellow Dean Bricks from India are traditionally crafted handmade bricks, recognized for their warm yellow tone and refined finish. They are a po",
+      "variant_group_id": "smeed-dean-yellow",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    },
+    {
+      "id": "smeed-dean-yellow-multi",
+      "name": "Smeed Dean Yellow Multi",
+      "slug": "smeed-dean-yellow-multi",
+      "category": "Bricks",
+      "price": 295,
+      "stock": 45,
+      "size": "30 Pieces 228-232x108-112x68-70mm",
+      "description": "Smeed Dean Yellow Multi Bricks from India are handcrafted clay bricks known for their rich yellow tones with natural variations, adding warmth and character to any build. Their distinctive appearance makes them a popular choice for facades, restoration projects, and feature walls. Durable and versatile, these bricks blend traditional craftsmanship with lasting strength, enhancing both classic and modern designs.",
+      "images": [
+        "/images/smeed-dean-yellow-multi/primary.png",
+        "/images/smeed-dean-yellow-multi/5a2a8a2f-32ed-4933-9bfe-0f503faa6094.jpg",
+        "/images/smeed-dean-yellow-multi/7e4c9167-92f5-481a-a0dd-b31117679d01.jpg",
+        "/images/smeed-dean-yellow-multi/81226635-b43b-457c-bc23-609943fd4cbc.jpg"
+      ],
+      "is_featured": false,
+      "stars": 4.8,
+      "seo_title": "Smeed Dean Yellow Multi | JMD Global Stones",
+      "seo_description": "Smeed Dean Yellow Multi Bricks from India are handcrafted clay bricks known for their rich yellow tones with natural variations, adding warmth and cha",
+      "variant_group_id": "smeed-dean-yellow-multi",
+      "created_at": "2026-07-03T10:45:10.107Z"
+    }
+  ],
+  "orders": [],
+  "reviews": [],
+  "users": [],
+  "shipping_zones": [
+    {
+      "id": 1,
+      "zone_name": "UK Zone 1",
+      "rate": 68
+    },
+    {
+      "id": 2,
+      "zone_name": "UK Zone 2",
+      "rate": 68
+    },
+    {
+      "id": 3,
+      "zone_name": "UK Zone 3",
+      "rate": 68
+    },
+    {
+      "id": 4,
+      "zone_name": "UK Zone 4",
+      "rate": 68
+    },
+    {
+      "id": 5,
+      "zone_name": "UK Zone 5",
+      "rate": 68
+    },
+    {
+      "id": 6,
+      "zone_name": "UK Zone 6",
+      "rate": 68
+    },
+    {
+      "id": 7,
+      "zone_name": "UK Zone 7",
+      "rate": 68
+    },
+    {
+      "id": 8,
+      "zone_name": "UK Zone 8",
+      "rate": 68
+    }
+  ]
+}

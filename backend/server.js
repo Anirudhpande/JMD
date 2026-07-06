@@ -1,0 +1,622 @@
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import Stripe from 'stripe';
+import helmet from 'helmet';
+import { db } from './db.js';
+import { emails } from './emails.js';
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Enable secure HTTP headers
+app.use(helmet());
+
+// Configure CORS policy dynamically
+const allowedOrigins = [
+  process.env.SITE_URL || 'http://localhost:5173',
+  'http://localhost:5173',
+  'https://jmd-beryl.vercel.app',
+  'https://jmd-production.up.railway.app',
+  'https://jmdglobalstones.co.uk',
+  'https://www.jmdglobalstones.co.uk'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // In non-production, allow requests with no origin (like mobile apps, curl, postman) or matching allowed origins
+    if (!origin || process.env.NODE_ENV !== 'production' || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Blocked by CORS policy'));
+    }
+  }
+}));
+
+// Stripe client initialization
+const rawSecretKey = process.env.STRIPE_SECRET_KEY;
+const cleanSecretKey = rawSecretKey ? rawSecretKey.trim().replace(/^['"]|['"]$/g, '') : null;
+const stripe = cleanSecretKey ? new Stripe(cleanSecretKey) : null;
+
+// 1. Stripe Webhook Endpoint (MUST be configured BEFORE global express.json() middleware)
+app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  let event;
+  
+  const rawWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const cleanWebhookSecret = rawWebhookSecret ? rawWebhookSecret.trim().replace(/^['"]|['"]$/g, '') : null;
+  
+  if (stripe && sig && cleanWebhookSecret) {
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, cleanWebhookSecret);
+    } catch (err) {
+      console.error(`Webhook signature verification failed: ${err.message}`);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+  } else {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('[SECURITY ERROR] Stripe webhook signature missing or secret unconfigured in production.');
+      return res.status(400).send('Webhook Error: Webhook signature verification required in production.');
+    }
+    // Fallback mock webhook trigger for testing in development/staging
+    console.log('[MOCK WEBHOOK] Bypassing Stripe signature verification.');
+    const rawBody = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : req.body;
+    event = typeof rawBody === 'string' ? JSON.parse(rawBody) : rawBody;
+  }
+
+  // Handle successful payments
+  if (event.type === 'payment_intent.succeeded') {
+    const paymentIntent = event.data.object;
+    const orderId = paymentIntent.metadata.orderId;
+    console.log(`Payment confirmed for Order ID: ${orderId}`);
+    
+    try {
+      const order = await db.getOrderById(orderId);
+      if (order) {
+        order.payment_status = 'paid';
+        order.status = 'processing';
+        await db.updateOrderStatus(orderId, 'processing');
+        
+        // Dispatch emails (run in background, do not block webhook response)
+        emails.sendOrderConfirmation(order).catch(err => console.error('Webhook customer email error:', err));
+        emails.sendAdminNewOrderAlert(order).catch(err => console.error('Webhook admin email error:', err));
+      }
+    } catch (error) {
+      console.error(`Error updating order #${orderId} on payment success:`, error);
+    }
+  }
+
+  res.json({ received: true });
+});
+
+// Global JSON body parser middleware for all subsequent routes — increased limit for base64 image uploads
+app.use(express.json({ limit: '20mb' }));
+
+// API Health Check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// IMAGE UPLOAD ENDPOINT — accepts base64 file, uploads via backend Supabase service key (bypasses RLS)
+app.post('/api/upload-image', async (req, res) => {
+  const { base64, filename, mimeType } = req.body;
+  if (!base64 || !filename) {
+    return res.status(400).json({ message: 'base64 and filename are required' });
+  }
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const serviceSupabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_KEY,  // service role key — full storage access
+      { auth: { persistSession: false } }
+    );
+    const buffer = Buffer.from(base64, 'base64');
+    const ext = filename.split('.').pop().toLowerCase();
+    const uniqueName = `products/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error } = await serviceSupabase.storage
+      .from('stone-images')
+      .upload(uniqueName, buffer, {
+        contentType: mimeType || 'image/jpeg',
+        upsert: true
+      });
+    if (error) {
+      console.error('Supabase storage upload error:', error);
+      return res.status(500).json({ message: 'Upload failed: ' + error.message });
+    }
+    const { data: { publicUrl } } = serviceSupabase.storage
+      .from('stone-images')
+      .getPublicUrl(uniqueName);
+    return res.json({ url: publicUrl });
+  } catch (err) {
+    console.error('Image upload crash:', err);
+    return res.status(500).json({ message: err.message });
+  }
+});
+
+// Temporary Stripe debug helper
+app.get('/api/debug-stripe', (req, res) => {
+  const rawKey = process.env.STRIPE_SECRET_KEY;
+  if (!rawKey) {
+    return res.json({ status: 'no_key_configured' });
+  }
+  res.json({
+    length: rawKey.length,
+    startsWithRk: rawKey.startsWith('rk_'),
+    endsWithJvog: rawKey.endsWith('jVog'),
+    hasWhitespace: /\s/.test(rawKey),
+    hasQuotes: /^['"]|['"]$/.test(rawKey),
+    trimmedLength: rawKey.trim().length,
+    sanitizedLength: cleanSecretKey ? cleanSecretKey.length : 0
+  });
+});
+
+// AUTH & PROFILES ENDPOINTS
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await db.authenticateUser(email, password);
+    if (user) {
+      db.logActivity({
+        event_type: 'user_login',
+        description: `${user.name || user.email} signed in`,
+        user_name: user.name || null,
+        user_email: user.email
+      }).catch(() => {});
+      res.json({ success: true, user });
+    } else {
+      res.status(401).json({ success: false, message: 'Invalid email or password.' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+app.post('/api/auth/register', async (req, res) => {
+  const { email, password, name, phone, role } = req.body;
+  try {
+    const user = await db.registerUser({ email, password, name, phone, role });
+    db.logActivity({
+      event_type: 'user_registered',
+      description: `New customer registered: ${name || email}`,
+      user_name: name || null,
+      user_email: email
+    }).catch(() => {});
+    res.status(201).json({ success: true, user });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+});
+
+app.post('/api/profiles/upsert', async (req, res) => {
+  const { id, email, name, phone, role } = req.body;
+  try {
+    const profile = await db.updateProfile(id, { email, name, phone, role: role || 'customer' });
+    res.json(profile);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.get('/api/profiles/:userId', async (req, res) => {
+  try {
+    const profile = await db.getProfile(req.params.userId);
+    if (profile) {
+      res.json(profile);
+    } else {
+      res.status(404).json({ message: 'Profile not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// PRODUCTS ENDPOINTS
+app.get('/api/products', async (req, res) => {
+  try {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    const products = await db.getProducts();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/api/products/:slug', async (req, res) => {
+  try {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    const product = await db.getProductBySlug(req.params.slug);
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/api/variant-groups/:id', async (req, res) => {
+  try {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    const related = await db.getProductsByVariantGroup(req.params.id);
+    res.json(related);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post('/api/products', async (req, res) => {
+  try {
+    const product = await db.addProduct(req.body);
+    res.status(201).json(product);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.put('/api/products/:id', async (req, res) => {
+  try {
+    const product = await db.updateProduct(req.params.id, req.body);
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.delete('/api/products/:id', async (req, res) => {
+  try {
+    const deleted = await db.deleteProduct(req.params.id);
+    if (deleted) {
+      res.json({ message: 'Product deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// ORDERS ENDPOINTS
+app.get('/api/orders', async (req, res) => {
+  try {
+    const orders = await db.getOrders();
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/api/orders/track', async (req, res) => {
+  const { orderId, email } = req.query;
+  try {
+    const order = await db.getOrderById(orderId);
+    if (order && order.customer_details.email.toLowerCase() === email.toLowerCase()) {
+      res.json(order);
+    } else {
+      res.status(404).json({ message: 'No order found with those details' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/api/orders/:id', async (req, res) => {
+  try {
+    const order = await db.getOrderById(req.params.id);
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404).json({ message: 'Order not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post('/api/orders', async (req, res) => {
+  try {
+    const orderData = req.body;
+    
+    // Recalculate totals server-side for safety
+    const subtotal = orderData.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const shipping = orderData.shipping;
+    const vat = (subtotal + shipping) * 0.20;
+    const total = subtotal + shipping + vat;
+    
+    const verifiedOrder = {
+      ...orderData,
+      subtotal,
+      vat,
+      total,
+      payment_status: orderData.payment_method === 'stripe' ? 'pending' : 'unpaid'
+    };
+
+    const order = await db.createOrder(verifiedOrder);
+
+    // Log activity
+    const cd = order.customer_details || {};
+    db.logActivity({
+      event_type: 'order_placed',
+      description: `Order #${order.id} placed by ${cd.name || cd.email || 'customer'} — £${total.toFixed(2)}`,
+      user_name: cd.name || null,
+      user_email: cd.email || null,
+      meta: { order_id: order.id, total, payment_method: order.payment_method }
+    }).catch(() => {});
+
+    // If Bank Transfer, send confirmation emails in the background (no await to prevent checkout hang)
+    if (order.payment_method === 'bank_transfer') {
+      emails.sendOrderConfirmation(order).catch(err => console.error('Background customer email error:', err));
+      emails.sendAdminNewOrderAlert(order).catch(err => console.error('Background admin email error:', err));
+    }
+
+    // Trigger low stock alerts
+    const products = await db.getProducts();
+    for (const item of order.items) {
+      const prod = products.find(p => p.id === item.product_id);
+      if (prod && prod.stock <= 5) {
+        await emails.sendAdminLowStockAlert(prod);
+      }
+    }
+
+    res.status(201).json(order);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.put('/api/orders/:id', async (req, res) => {
+  const { status } = req.body;
+  try {
+    const order = await db.updateOrderStatus(req.params.id, status);
+    if (order) {
+      db.logActivity({
+        event_type: 'order_status_changed',
+        description: `Order #${req.params.id} status updated to "${status}" by admin`,
+        meta: { order_id: req.params.id, status }
+      }).catch(() => {});
+      // Trigger status update email on Dispatch in background
+      if (status === 'dispatched') {
+        emails.sendOrderDispatchedEmail(order).catch(err => console.error('Background dispatch email error:', err));
+      }
+      res.json(order);
+    } else {
+      res.status(404).json({ message: 'Order not found' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// PAYMENTS ENDPOINTS
+app.post('/api/payments/create-intent', async (req, res) => {
+  const { amount, orderId } = req.body;
+  try {
+    if (stripe) {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount),
+        currency: 'gbp',
+        metadata: { orderId }
+      });
+      res.json({ clientSecret: paymentIntent.client_secret });
+    } else {
+      console.log(`[MOCK PAYMENT] Simulating clientSecret for Order #${orderId}`);
+      res.json({ clientSecret: `pi_mock_secret_${orderId}_${Date.now()}` });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// REVIEWS ENDPOINTS
+app.get('/api/reviews', async (req, res) => {
+  try {
+    const reviews = await db.getReviews();
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post('/api/reviews', async (req, res) => {
+  try {
+    const review = await db.addReview(req.body);
+    res.status(201).json(review);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.put('/api/reviews/:id/approve', async (req, res) => {
+  try {
+    const review = await db.approveReview(req.params.id);
+    if (review) {
+      res.json(review);
+    } else {
+      res.status(404).json({ message: 'Review not found' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.delete('/api/reviews/:id', async (req, res) => {
+  try {
+    const deleted = await db.deleteReview(req.params.id);
+    if (deleted) {
+      res.json({ message: 'Review deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Review not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// SHIPPING ZONES ENDPOINTS
+app.get('/api/shipping-zones', async (req, res) => {
+  try {
+    const zones = await db.getShippingZones();
+    res.json(zones);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.put('/api/shipping-zones/:id', async (req, res) => {
+  try {
+    const zone = await db.updateShippingZone(req.params.id, req.body.rate);
+    if (zone) {
+      res.json(zone);
+    } else {
+      res.status(404).json({ message: 'Zone not found' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// SITE SETTINGS ENDPOINTS
+app.get('/api/site-settings', async (req, res) => {
+  try {
+    const settings = await db.getSiteSettings();
+    res.json(settings);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.put('/api/site-settings/:key', async (req, res) => {
+  try {
+    const setting = await db.updateSiteSetting(req.params.key, req.body.value);
+    res.json(setting);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// ACTIVITY LOGS ENDPOINTS
+app.get('/api/activity-logs', async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 100;
+    const logs = await db.getActivityLogs(limit);
+    res.json(logs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post('/api/activity-logs', async (req, res) => {
+  try {
+    const { event_type, description, user_name, user_email, meta } = req.body;
+    await db.logActivity({ event_type, description, user_name, user_email, meta });
+    res.status(201).json({ success: true });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// SEO & WEB SERVICE GENERATORS
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const products = await db.getProducts();
+    const siteUrl = process.env.SITE_URL || 'https://jmdglobalstones.co.uk';
+    
+    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+    
+    const pages = ['', '/products', '/delivery', '/care', '/contact', '/track'];
+    pages.forEach(p => {
+      sitemap += `  <url>\n    <loc>${siteUrl}${p}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${p === '' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
+    });
+    
+    products.forEach(p => {
+      sitemap += `  <url>\n    <loc>${siteUrl}/products/${p.slug}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+    });
+    
+    sitemap += `</urlset>`;
+    
+    res.header('Content-Type', 'application/xml');
+    res.send(sitemap);
+  } catch (error) {
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
+app.get('/robots.txt', (req, res) => {
+  const siteUrl = process.env.SITE_URL || 'https://jmdglobalstones.co.uk';
+  res.type('text/plain');
+  res.send(`User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml`);
+});
+
+// ABANDONED CART SAVE ENDPOINT
+app.post('/api/save-cart', async (req, res) => {
+  try {
+    const { user_id, user_email, user_name, cart_items, cart_total } = req.body;
+    if (!user_email || !cart_items || cart_items.length === 0) {
+      return res.json({ success: false, message: 'No cart to save' });
+    }
+    await db.saveAbandonedCart({ user_id, user_email, user_name, cart_items, cart_total });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Start Express Server
+app.listen(PORT, () => {
+  console.log(`JMD Global Stones API Server running on port ${PORT}`);
+
+  // ── CRON: Review Request Emails (runs every 6 hours) ────────────────────────
+  const runReviewEmailCron = async () => {
+    try {
+      const orders = await db.getOrdersForReviewEmail();
+      for (const order of orders) {
+        await emails.sendReviewRequestEmail(order);
+        await db.markReviewEmailSent(order.id);
+        await db.logActivity({
+          event_type: 'review_email_sent',
+          description: `Review request email sent for order #${order.id}`,
+          user_email: (order.customer_details || {}).email
+        }).catch(() => {});
+      }
+      if (orders.length > 0) {
+        console.log(`[Cron] Review emails sent for ${orders.length} order(s)`);
+      }
+    } catch (err) {
+      console.error('[Cron] Review email error:', err.message);
+    }
+  };
+  // Run once on startup, then every 6 hours
+  runReviewEmailCron();
+  setInterval(runReviewEmailCron, 6 * 60 * 60 * 1000);
+
+  // ── CRON: Abandoned Cart Emails (runs every 30 minutes) ─────────────────────
+  const runAbandonedCartCron = async () => {
+    try {
+      const carts = await db.getAbandonedCarts();
+      for (const cart of carts) {
+        await emails.sendAbandonedCartEmail(cart);
+        await db.markAbandonedCartEmailSent(cart.id);
+        await db.logActivity({
+          event_type: 'abandoned_cart_email',
+          description: `Abandoned cart reminder sent to ${cart.user_email}`,
+          user_email: cart.user_email,
+          user_name: cart.user_name
+        }).catch(() => {});
+      }
+      if (carts.length > 0) {
+        console.log(`[Cron] Abandoned cart emails sent to ${carts.length} customer(s)`);
+      }
+    } catch (err) {
+      console.error('[Cron] Abandoned cart email error:', err.message);
+    }
+  };
+  // Run every 30 minutes
+  setInterval(runAbandonedCartCron, 30 * 60 * 1000);
+});
