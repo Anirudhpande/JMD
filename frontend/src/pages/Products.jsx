@@ -324,7 +324,82 @@ export default function Products() {
 
           <div>
             
+            {/* Per-category out-of-stock banners */}
+            {(() => {
+              // Determine which categories the user is browsing
+              const browsingCategories = selectedCategories.length > 0
+                ? selectedCategories
+                : ['Sandstone', 'Porcelain', 'Bricks'];
 
+              return browsingCategories
+                .filter(cat => {
+                  // Category is "completely out of stock" if it has products in the DB
+                  // but none of them have stock > 0
+                  const allInCat = products.filter(p => p.category === cat);
+                  const inStockInCat = allInCat.filter(p => (p.stock || 0) > 0);
+                  return allInCat.length > 0 && inStockInCat.length === 0;
+                })
+                .map(cat => (
+                  <div key={cat} style={{
+                    border: '1px solid #D4C4A0',
+                    backgroundColor: '#FBF8F3',
+                    padding: '2.5rem 2rem',
+                    marginBottom: '1.5rem',
+                    display: 'flex',
+                    gap: '1.5rem',
+                    alignItems: 'flex-start'
+                  }}>
+                    <div style={{
+                      width: '44px', height: '44px', flexShrink: 0,
+                      backgroundColor: 'var(--color-accent)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }}>
+                      <ShoppingBag size={20} style={{ color: '#FFFFFF' }} />
+                    </div>
+                    <div>
+                      <p style={{
+                        fontSize: '0.7rem', textTransform: 'uppercase',
+                        letterSpacing: '0.12em', fontWeight: 700,
+                        color: 'var(--color-accent)', marginBottom: '0.4rem'
+                      }}>
+                        {cat} Collection — Currently Out of Stock
+                      </p>
+                      <p style={{
+                        fontSize: '1.05rem', fontFamily: 'var(--font-heading)',
+                        color: 'var(--text-on-light)', marginBottom: '0.75rem',
+                        fontWeight: 400, lineHeight: 1.4
+                      }}>
+                        Our {cat} range is temporarily out of stock.
+                      </p>
+                      <p style={{
+                        fontSize: '0.875rem', color: 'var(--text-muted-on-light)',
+                        lineHeight: 1.6, marginBottom: '1.25rem'
+                      }}>
+                        We replenish stock regularly from our quarries. Please contact us and we'll let you know as soon as new stock arrives — or arrange a fresh bulk order directly.
+                      </p>
+                      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                        <a
+                          href="/contact"
+                          className="btn btn-primary"
+                          style={{ fontSize: '0.75rem', padding: '0.75rem 1.5rem', letterSpacing: '0.08em' }}
+                        >
+                          Contact Us
+                        </a>
+                        <a
+                          href="tel:07458148586"
+                          style={{
+                            display: 'flex', alignItems: 'center', gap: '0.5rem',
+                            fontSize: '0.85rem', color: 'var(--text-on-light)',
+                            fontWeight: 600, textDecoration: 'none', padding: '0.75rem 0'
+                          }}
+                        >
+                          📞 07458 148 586
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ));
+            })()}
 
             {/* Product Grid - Asymmetric Layout styling */}
             {filteredProducts.length === 0 ? (
