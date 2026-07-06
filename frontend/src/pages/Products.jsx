@@ -324,17 +324,10 @@ export default function Products() {
 
           <div>
             
-            {/* Per-category out-of-stock banners */}
-            {(() => {
-              // Determine which categories the user is browsing
-              const browsingCategories = selectedCategories.length > 0
-                ? selectedCategories
-                : ['Sandstone', 'Porcelain', 'Bricks'];
-
-              return browsingCategories
+            {/* Per-category out-of-stock banners — only when user has filtered to a specific category */}
+            {selectedCategories.length > 0 && (() => {
+              return selectedCategories
                 .filter(cat => {
-                  // Category is "completely out of stock" if it has products in the DB
-                  // but none of them have stock > 0
                   const allInCat = products.filter(p => p.category === cat);
                   const inStockInCat = allInCat.filter(p => (p.stock || 0) > 0);
                   return allInCat.length > 0 && inStockInCat.length === 0;
