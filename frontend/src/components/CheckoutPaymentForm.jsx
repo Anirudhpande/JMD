@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { Check, ShieldCheck, AlertCircle } from 'lucide-react';
+import { CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { ShieldCheck, AlertCircle, CreditCard } from 'lucide-react';
 import { apiFetch } from '../api.js';
 
 export default function CheckoutPaymentForm({
@@ -19,6 +19,7 @@ export default function CheckoutPaymentForm({
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
   const [stripeError, setStripeError] = useState('');
+  const [cardholderName, setCardholderName] = useState(customerDetails.name || '');
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
@@ -103,12 +104,12 @@ export default function CheckoutPaymentForm({
         }
       } else {
         // Real Stripe payment confirmation
-        const cardElement = elements.getElement(CardElement);
+        const cardNumberElement = elements.getElement(CardNumberElement);
         const result = await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
-            card: cardElement,
+            card: cardNumberElement,
             billing_details: {
-              name: customerDetails.name,
+              name: cardholderName,
               email: customerDetails.email,
               phone: customerDetails.phone
             }
@@ -165,24 +166,92 @@ export default function CheckoutPaymentForm({
         </div>
       ) : (
         /* Stripe Credit Card Form */
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Card Information</label>
-          <div className="stripe-element-container">
-            <CardElement 
-              options={{
-                style: {
-                  base: {
-                    fontSize: '15px',
-                    color: '#111111',
-                    fontFamily: 'DM Sans, sans-serif',
-                    '::placeholder': { color: '#8E8A82' }
-                  },
-                  invalid: { color: 'var(--color-danger)' }
-                }
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div>
+            <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.35rem' }}>Cardholder Name</label>
+            <input
+              type="text"
+              value={cardholderName}
+              onChange={(e) => setCardholderName(e.target.value)}
+              placeholder="Name on card"
+              required
+              style={{
+                width: '100%',
+                border: '1px solid var(--color-border-light)',
+                backgroundColor: '#FFFFFF',
+                padding: '0.85rem 1rem',
+                fontSize: '15px',
+                color: '#111111',
+                fontFamily: 'DM Sans, sans-serif',
+                borderRadius: '4px',
+                outline: 'none',
+                boxSizing: 'border-box'
               }}
+              onFocus={(e) => e.target.style.borderColor = 'var(--color-accent)'}
+              onBlur={(e) => e.target.style.borderColor = 'var(--color-border-light)'}
             />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-muted-on-light)', fontSize: '0.7rem', marginTop: '0.25rem' }}>
+
+          <div>
+            <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.35rem' }}>Card Number</label>
+            <div className="stripe-element-container" style={{ borderRadius: '4px' }}>
+              <CardNumberElement 
+                options={{
+                  style: {
+                    base: {
+                      fontSize: '15px',
+                      color: '#111111',
+                      fontFamily: 'DM Sans, sans-serif',
+                      '::placeholder': { color: '•••• •••• •••• ••••' }
+                    },
+                    invalid: { color: 'var(--color-danger)' }
+                  }
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="stripe-row">
+            <div>
+              <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.35rem' }}>Expiry Date</label>
+              <div className="stripe-element-container" style={{ borderRadius: '4px' }}>
+                <CardExpiryElement 
+                  options={{
+                    style: {
+                      base: {
+                        fontSize: '15px',
+                        color: '#111111',
+                        fontFamily: 'DM Sans, sans-serif',
+                        '::placeholder': { color: 'MM/YY' }
+                      },
+                      invalid: { color: 'var(--color-danger)' }
+                    }
+                  }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.35rem' }}>CVV</label>
+              <div className="stripe-element-container" style={{ borderRadius: '4px' }}>
+                <CardCvcElement 
+                  options={{
+                    style: {
+                      base: {
+                        fontSize: '15px',
+                        color: '#111111',
+                        fontFamily: 'DM Sans, sans-serif',
+                        '::placeholder': { color: '•••' }
+                      },
+                      invalid: { color: 'var(--color-danger)' }
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-muted-on-light)', fontSize: '0.7rem', marginTop: '0.5rem' }}>
             <ShieldCheck size={14} style={{ color: 'var(--color-success)' }} />
             <span>Secure 256-bit SSL encrypted card transaction.</span>
           </div>

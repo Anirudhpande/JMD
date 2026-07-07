@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'europe-west2-docker.pkg.dev/jmd-global-stones/jmd-repo/jmd-backend', '.']
+images:
+- 'europe-west2-docker.pkg.dev/jmd-global-stones/jmd-repo/jmd-backend'
+options:
+  logging: GCS_ONLY
